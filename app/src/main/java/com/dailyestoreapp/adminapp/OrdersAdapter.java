@@ -1,11 +1,12 @@
 package com.dailyestoreapp.adminapp;
+
 import android.content.Context;
-import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,33 +15,33 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Locale;
-public class Offers_ItemAdapter extends RecyclerView.Adapter<Offers_ItemAdapter.MyViewHolder> {
+
+public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.MyViewHolder> {
     ArrayList<String> personNames = new ArrayList<String>();
     Context context;
     ArrayList<String> lts=new ArrayList<String>();
     ArrayList personNames_offers = new ArrayList<>(Arrays.asList("ITEM1", "ITEM2", "ITEM3", "ITEM4", "ITEM5", "ITEM6", "ITEM7"));
     int quantity=1;
-    public Offers_ItemAdapter(Context context, ArrayList personNames) {
+    public OrdersAdapter(Context context, ArrayList personNames) {
         this.context = context;
         this.personNames = personNames;
         this.lts.addAll(personNames);
 
     }
     @Override
-    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public OrdersAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // infalte the item Layout
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.offer_items, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.order_items, parent, false);
         // set the view's size, margins, paddings and layout parameters
-        MyViewHolder vh = new MyViewHolder(v); // pass the view to View Holder
+        OrdersAdapter.MyViewHolder vh = new OrdersAdapter.MyViewHolder(v); // pass the view to View Holder
         return vh;
     }
 
     @Override
-    public void onBindViewHolder(final MyViewHolder holder, final int position) {
+    public void onBindViewHolder(final OrdersAdapter.MyViewHolder holder, final int position) {
 
         // set the data in items
         String name = (String) personNames.get(position);
-
 
     }
 
@@ -55,7 +56,6 @@ public class Offers_ItemAdapter extends RecyclerView.Adapter<Offers_ItemAdapter.
         public MyViewHolder(View itemView) {
             super(itemView);
             name = (TextView) itemView.findViewById(R.id.Title);
-
 
 
         }

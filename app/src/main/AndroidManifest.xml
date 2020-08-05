@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".AddCategory"></activity>
+        <activity android:name=".FlyersandDeals"></activity>
+        <activity android:name=".AddCategory" />
         <activity android:name=".Addpost" />
         <activity
             android:name=".MainActivity"

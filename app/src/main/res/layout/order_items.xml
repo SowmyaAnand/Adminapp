@@ -102,14 +102,25 @@
             android:layout_below="@+id/publishNme"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
-            android:textColor="@color/colorPrimary"
+            android:textColor="@color/black"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/img"
             android:textSize="18sp"
             android:text="RS:25000"
             />
-
+        <TextView
+            android:id="@+id/dte"
+            android:layout_below="@+id/prce"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/colorPrimary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/img"
+            android:textSize="18sp"
+            android:text="05-08-2020"
+            />
 
         <TextView
             android:id="@+id/unread_check"
@@ -120,64 +131,6 @@
             android:layout_alignParentRight="true"
             />
 
-        <RelativeLayout
-            android:id="@+id/priceadd"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/prce"
-            android:layout_toRightOf="@+id/img"
-
-            >
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:gravity="end">
-                <Button
-                    android:id="@+id/plus"
-                    android:layout_width="25dp"
-                    android:layout_height="40dp"
-
-                    android:background="@color/colorPrimary"
-                    android:textColor="@color/white"
-                    android:text=""/>
-                <TextView
-                    android:id="@+id/quantity"
-                    android:layout_width="30dp"
-                    android:layout_height="40dp"
-                    android:text="1"
-                    android:gravity="center"
-                    android:textColor="@color/black"
-
-                    android:layout_toRightOf="@+id/plus"
-
-                    />
-                <Button
-                    android:id="@+id/minus"
-                    android:layout_width="30dp"
-                    android:layout_height="40dp"
-                    android:layout_toRightOf="@+id/quantity"
-
-                    android:background="@color/colorPrimary"
-                    android:textColor="@color/white"
-                    android:text=""/>
-            </RelativeLayout>
-            <Button
-                android:layout_marginTop="10dp"
-                android:id="@+id/add"
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:padding="10dp"
-                android:text="Out of stock"
-                android:background="@color/colorPrimary"
-
-                android:layout_marginRight="10dp"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true" />
-
-        </RelativeLayout>
 
 
     </RelativeLayout>

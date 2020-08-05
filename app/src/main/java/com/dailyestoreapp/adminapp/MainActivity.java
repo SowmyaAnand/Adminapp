@@ -27,7 +27,8 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
-    private List<String> categoryNameList, categoryID;
+    private List<String> categoryNameList;
+    private List<Integer>  categoryID;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,15 +39,15 @@ public class MainActivity extends AppCompatActivity {
         categoryNameList = new ArrayList<>();
         categoryID = new ArrayList<>();
         categoryNameList.add("categories");
-        categoryID.add("1");
+        categoryID.add(1);
         categoryNameList.add("Items");
-        categoryID.add("2");
+        categoryID.add(2);
         categoryNameList.add("Deal of the day");
-        categoryID.add("3");
+        categoryID.add(3);
         categoryNameList.add("flyers");
-        categoryID.add("4");
+        categoryID.add(4);
         categoryNameList.add("2nd flyers");
-        categoryID.add("5");
+        categoryID.add(5);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -95,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
     }
     private void alertDialog() {
         final CharSequence[] name = categoryNameList.toArray(new String[categoryNameList.size()]);
-        final CharSequence[] categoryId = categoryID.toArray(new String[categoryID.size()]);
+        final Integer[] categoryId = categoryID.toArray(new Integer[categoryID.size()]);
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Select Your Post");
         builder.setItems(name, new DialogInterface.OnClickListener() {
@@ -103,10 +104,38 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
                 // String selectedCartegoryNme = name[which].toString();
                 String selectedCategoryId = categoryId[which].toString();
+                if(categoryId[which].equals(1))
+                {
+                    Intent i = new Intent(MainActivity.this, AddCategory.class);
+                    i.putExtra("CATEGORYID", selectedCategoryId);
+                    startActivity(i);
+                }
 
-                Intent i = new Intent(MainActivity.this, Addpost.class);
-                i.putExtra("CATEGORYID", selectedCategoryId);
-                startActivity(i);
+                else if(categoryId[which].equals(2))
+                {
+                    Intent i = new Intent(MainActivity.this, Addpost.class);
+                    i.putExtra("CATEGORYID", selectedCategoryId);
+                    startActivity(i);
+                }
+                else if(categoryId[which].equals(3))
+                {
+                    Intent i = new Intent(MainActivity.this, FlyersandDeals.class);
+                    i.putExtra("CATEGORYID", selectedCategoryId);
+                    startActivity(i);
+                }
+                else if(categoryId[which].equals(4))
+                {
+                    Intent i = new Intent(MainActivity.this, FlyersandDeals.class);
+                    i.putExtra("CATEGORYID", selectedCategoryId);
+                    startActivity(i);
+                }
+                else if(categoryId[which].equals(5))
+                {
+                    Intent i = new Intent(MainActivity.this, FlyersandDeals.class);
+                    i.putExtra("CATEGORYID", selectedCategoryId);
+                    startActivity(i);
+                }
+
 
             }
         });
