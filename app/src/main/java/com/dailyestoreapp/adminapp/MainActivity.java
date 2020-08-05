@@ -7,6 +7,7 @@ import android.view.Menu;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.tabs.TabLayout;
 
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -15,6 +16,7 @@ import androidx.navigation.ui.NavigationUI;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.viewpager.widget.ViewPager;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -42,6 +44,20 @@ public class MainActivity extends AppCompatActivity {
                 R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow)
                 .setDrawerLayout(drawer)
                 .build();
+//        SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager());
+//        sectionsPagerAdapter.addFragment(new Fragment1(),"Home");
+//        sectionsPagerAdapter.addFragment(new Fragment2(),"Offers");
+//        sectionsPagerAdapter.addFragment(new Fragment1(),"Contact");
+//        sectionsPagerAdapter.addFragment(new Fragment1(),"My Account");
+//        sectionsPagerAdapter.addFragment(new Fragment2(),"Home");
+//        sectionsPagerAdapter.addFragment(new Fragment1(),"Offers");
+//        sectionsPagerAdapter.addFragment(new Fragment1(),"Contact");
+//        sectionsPagerAdapter.addFragment(new Fragment2(),"My Account");
+//        ViewPager viewPager = findViewById(R.id.view_pager2);
+//        viewPager.setAdapter(sectionsPagerAdapter);
+//        TabLayout tabs = findViewById(R.id.tabs);
+//        tabs.setupWithViewPager(viewPager);
+
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);

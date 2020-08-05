@@ -12,4 +12,9 @@
     <string name="menu_slideshow">Slideshow</string>
 
     <string name="home_second">Home Second</string>
+    <string name="tab1">category1</string>
+    <string name="tab2">category2</string>
+    <string name="tab3">category3</string>
+    <string name="tab4">category4</string>
+    <string name="tab5">category5</string>
 </resources>
