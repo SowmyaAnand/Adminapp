@@ -37,13 +37,13 @@ public class HomeFragment extends Fragment {
 
         SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(getContext(),getChildFragmentManager());
         sectionsPagerAdapter.addFragment(new Fragment1(),"Home");
-        sectionsPagerAdapter.addFragment(new Fragment2(),"Offers");
-        sectionsPagerAdapter.addFragment(new Fragment1(),"Contact");
-        sectionsPagerAdapter.addFragment(new Fragment1(),"My Account");
-        sectionsPagerAdapter.addFragment(new Fragment2(),"Home");
         sectionsPagerAdapter.addFragment(new Fragment1(),"Offers");
         sectionsPagerAdapter.addFragment(new Fragment1(),"Contact");
-        sectionsPagerAdapter.addFragment(new Fragment2(),"My Account");
+        sectionsPagerAdapter.addFragment(new Fragment1(),"My Account");
+        sectionsPagerAdapter.addFragment(new Fragment1(),"Home");
+        sectionsPagerAdapter.addFragment(new Fragment1(),"Offers");
+        sectionsPagerAdapter.addFragment(new Fragment1(),"Contact");
+        sectionsPagerAdapter.addFragment(new Fragment1(),"My Account");
         ViewPager viewPager =root.findViewById(R.id.view_pager2);
         viewPager.setAdapter(sectionsPagerAdapter);
         TabLayout tabs = root.findViewById(R.id.tabs);

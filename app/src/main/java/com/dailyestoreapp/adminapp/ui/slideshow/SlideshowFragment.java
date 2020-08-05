@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.dailyestoreapp.adminapp.OrdersAdapter;
+import com.dailyestoreapp.adminapp.PendingNotificationAdapter;
 import com.dailyestoreapp.adminapp.R;
 import com.dailyestoreapp.adminapp.ui.gallery.GalleryViewModel;
 
@@ -24,7 +25,7 @@ import java.util.Arrays;
 public class SlideshowFragment extends Fragment {
     RecyclerView recyclerView_offers;
     private GalleryViewModel galleryViewModel;
-    OrdersAdapter customAdapter_offers;
+    PendingNotificationAdapter customAdapter_offers;
     ArrayList personNames_offers = new ArrayList<>(Arrays.asList("ITEM1", "ITEM2", "ITEM3", "ITEM4", "ITEM5", "ITEM6", "ITEM7"));
     private SlideshowViewModel slideshowViewModel;
 
@@ -39,7 +40,7 @@ public class SlideshowFragment extends Fragment {
         recyclerView_offers.setLayoutManager(linearLayoutManager);
         //  call the constructor of CustomAdapter to send the reference and data to Adapter
 
-        customAdapter_offers = new OrdersAdapter(root.getContext(), personNames_offers);
+        customAdapter_offers = new PendingNotificationAdapter(root.getContext(), personNames_offers);
         recyclerView_offers.setAdapter(customAdapter_offers);
         return root;
     }
