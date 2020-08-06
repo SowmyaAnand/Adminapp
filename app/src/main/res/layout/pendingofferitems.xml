@@ -144,12 +144,11 @@
             </RelativeLayout>
             <Button
                 android:layout_marginTop="10dp"
-                android:id="@+id/add"
+                android:id="@+id/pending"
                 android:layout_width="90dp"
                 android:layout_height="40dp"
-
-                android:text="Approve"
-                android:background="@color/colorPrimary"
+                android:text="Pending"
+                android:background="@color/yellow"
 
                 android:layout_marginRight="10dp"
                 android:layout_alignParentEnd="true"

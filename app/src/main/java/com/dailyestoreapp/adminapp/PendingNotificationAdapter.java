@@ -8,12 +8,16 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Locale;
+
+import static com.dailyestoreapp.adminapp.R.color.green;
+import static com.dailyestoreapp.adminapp.R.color.white;
 
 public class PendingNotificationAdapter extends RecyclerView.Adapter<PendingNotificationAdapter.MyViewHolder> {
     ArrayList<String> personNames = new ArrayList<String>();
@@ -42,7 +46,14 @@ public class PendingNotificationAdapter extends RecyclerView.Adapter<PendingNoti
         // set the data in items
         String name = (String) personNames.get(position);
         holder.name.setText(name);
-
+        holder.pd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                holder.pd.setText("Approved");
+                holder.pd.setTextColor(ContextCompat.getColor(context, white));
+                holder.pd.setBackgroundColor(ContextCompat.getColor(context, green));
+            }
+        });
 
     }
 
@@ -53,11 +64,11 @@ public class PendingNotificationAdapter extends RecyclerView.Adapter<PendingNoti
     }
     public class MyViewHolder extends RecyclerView.ViewHolder {
         TextView name,quantityy;// init the item view's
-        Button addition,substraction,addbtn;
+        Button pd,addition,substraction,addbtn;
         public MyViewHolder(View itemView) {
             super(itemView);
             name = (TextView) itemView.findViewById(R.id.Title);
-
+            pd=(Button)itemView.findViewById(R.id.pending);
             // get the reference of item view's
 
         }

@@ -3,6 +3,8 @@ package com.dailyestoreapp.adminapp;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
 
@@ -93,6 +95,20 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        Log.e("MAin","Item selected ="+item.getItemId());
+        switch (item.getItemId()) {
+            case R.id.logout:
+                Intent cart = new Intent(MainActivity.this,Login.class);
+                startActivity(cart);
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
     private void alertDialog() {
         final CharSequence[] name = categoryNameList.toArray(new String[categoryNameList.size()]);
