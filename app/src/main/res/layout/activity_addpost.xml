@@ -19,6 +19,21 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="?attr/colorPrimary"
+                app:popupTheme="@style/AppTheme.PopupOverlay" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="ADD NEW ITEMS"
+                android:textColor="@color/black"
+                android:textAlignment="center"
+                android:padding="10dp"
+                android:layout_marginTop="20dp"
+/>
         <androidx.cardview.widget.CardView
             android:id="@+id/userNameCard"
             android:layout_margin="16dp"
@@ -221,45 +236,14 @@
                 android:layout_marginTop="15dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Add Attachment"
+                android:text="Add Image"
                 android:background="@color/colorPrimary"
                 android:textColor="@color/white"
                 />
 
-            <RelativeLayout
-                android:visibility="gone"
-                android:id="@+id/relativeShow"
-                android:layout_margin="10dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <ImageView
-                    android:visibility="gone"
-                    android:id="@+id/showImg"
-                    android:layout_width="70dp"
-                    android:layout_height="70dp"
-                    />
-
-                <TextView
-                    android:id="@+id/showDetailsTxt"
-                    android:padding="10dp"
-                    android:layout_toRightOf="@+id/showImg"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="File name: hhhhhhhh\nFile path: kkkk"/>
 
 
 
-            </RelativeLayout>
-
-            <TextView
-                android:id="@+id/txtAttachResult"
-                android:layout_marginRight="10dp"
-                android:layout_gravity="end"
-                android:padding="10dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=""/>
 
 
         </LinearLayout>
