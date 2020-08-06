@@ -227,11 +227,13 @@
             </androidx.cardview.widget.CardView>
 
             <TextView
+
                 android:id="@+id/txtAttachment"
                 android:layout_marginRight="10dp"
                 android:drawablePadding="10dp"
                 android:drawableLeft="@drawable/ic_attach_file_black_24dp"
                 android:padding="10dp"
+                android:clickable="true"
                 android:layout_gravity="end"
                 android:layout_marginTop="15dp"
                 android:layout_width="wrap_content"
@@ -247,8 +249,11 @@
 
 
         </LinearLayout>
-
-
+<ImageView
+    android:id="@+id/imageitem"
+    android:layout_width="wrap_content"
+    android:layout_height="300dp"
+/>
 
         <Button
             android:id="@+id/btnPost"
