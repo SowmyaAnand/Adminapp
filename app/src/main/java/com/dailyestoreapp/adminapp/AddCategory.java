@@ -33,8 +33,8 @@ public class AddCategory extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 CropImage.activity()
-                        .setMinCropResultSize(300,300)
-                        .setMaxCropResultSize(300,300)
+                        .setMinCropResultSize(913,606)
+                        .setMaxCropResultSize(913,606)
                         .start(AddCategory.this);
             }
         });
@@ -54,7 +54,10 @@ public class AddCategory extends AppCompatActivity {
                 Intent cart = new Intent(AddCategory.this,Login.class);
                 startActivity(cart);
                 return true;
-
+            case R.id.account:
+                Intent account = new Intent(AddCategory.this,MyAccount.class);
+                startActivity(account);
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }

@@ -46,8 +46,8 @@ ImageView img1,img2,img3,img4;
             @Override
             public void onClick(View v) {
                 CropImage.activity()
-                        .setMinCropResultSize(300,300)
-                        .setMaxCropResultSize(300,300)
+                        .setMinCropResultSize(2955,2173)
+                        .setMaxCropResultSize(2955,2173)
                         .start(FlyersandDeals.this);
                 flagpic1=1;
                 flagpic2=0;
@@ -125,6 +125,10 @@ ImageView img1,img2,img3,img4;
             case R.id.logout:
                 Intent cart = new Intent(FlyersandDeals.this,Login.class);
                 startActivity(cart);
+                return true;
+            case R.id.account:
+                Intent account3 = new Intent(FlyersandDeals.this,MyAccount.class);
+                startActivity(account3);
                 return true;
 
             default:

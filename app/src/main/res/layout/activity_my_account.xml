@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="@color/white"
+    android:layout_height="match_parent"
+    tools:context=".MyAccount">
+
+
+<ScrollView
+    android:layout_width="match_parent"
+
+    android:layout_height="match_parent"
+
+    android:fillViewport="true">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:background="@color/white"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/edit_acount"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:text="EDIT"
+            android:clickable="true"
+            android:background="@color/white"
+            android:textColor="#ed1A63"
+            android:layout_marginLeft="15dp"
+            android:gravity="center"
+            android:textSize="15sp"
+            />
+        <ImageView
+            android:id="@+id/prson"
+            android:layout_width="200dp"
+            android:padding="10dp"
+            android:layout_height="200dp"
+
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/frame_18"/>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:elevation="20dp"
+            app:cardBackgroundColor="@color/white"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_below="@+id/prson"
+            app:cardCornerRadius="20dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="vertical"
+                android:layout_height="match_parent">
+                <EditText
+                    android:id="@+id/Name_account"
+                    android:text="Samuel"
+                    android:textSize="20dp"
+                    android:textColor="@color/black"
+                    android:textAlignment="center"
+                    android:enabled="false"
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColorHighlight="@color/colorPrimary"
+                    android:inputType="text"/>
+
+                <EditText
+                    android:id="@+id/Mobilenumber_account"
+                    android:text="123456789"
+                    android:enabled="false"
+
+                    android:textColor="@color/black"
+                    android:textAlignment="center"
+                    android:background="@drawable/customized_edittext"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColorHighlight="@color/colorPrimary"
+                    android:inputType="number"/>
+                <EditText
+                    android:id="@+id/emailid_account"
+                    android:text="test123@gmail.com"
+                    android:enabled="false"
+
+                    android:textColor="@color/black"
+                    android:textAlignment="center"
+                    android:background="@drawable/customized_edittext"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColorHighlight="@color/colorPrimary"
+                    android:inputType="text"/>
+                <EditText
+                    android:id="@+id/Pincode_account"
+                    android:enabled="false"
+
+                    android:textColor="@color/black"
+                    android:textAlignment="center"
+                    android:text="test123@oksbi"
+                    android:background="@drawable/customized_edittext"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColorHighlight="@color/colorPrimary"
+                    android:inputType="text"/>
+                <EditText
+                    android:id="@+id/Place_account"
+                    android:text="Cheruplsery"
+                    android:textColor="@color/black"
+                    android:enabled="false"
+
+                    android:textAlignment="center"
+                    android:background="@drawable/customized_edittext"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColorHighlight="@color/colorPrimary"
+                    android:inputType="text"/>
+
+
+                <Button
+                    android:id="@+id/logout"
+                    android:text="Logout"
+                    android:layout_marginTop="40dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:layout_gravity="center"
+                    android:padding="20dp"
+                    android:background="#ed1a63"
+
+                    />
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+    </RelativeLayout>
+</ScrollView>
+</ScrollView>

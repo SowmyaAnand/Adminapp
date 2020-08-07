@@ -105,7 +105,10 @@ public class MainActivity extends AppCompatActivity {
                 Intent cart = new Intent(MainActivity.this,Login.class);
                 startActivity(cart);
                 return true;
-
+            case R.id.account:
+                Intent account = new Intent(MainActivity.this,MyAccount.class);
+                startActivity(account);
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }

@@ -53,6 +53,10 @@ ImageView imgaeitem;
                 Intent cart = new Intent(Addpost.this,Login.class);
                 startActivity(cart);
                 return true;
+            case R.id.account:
+                Intent account1 = new Intent(Addpost.this,MyAccount.class);
+                startActivity(account1);
+                return true;
 
             default:
                 return super.onOptionsItemSelected(item);
