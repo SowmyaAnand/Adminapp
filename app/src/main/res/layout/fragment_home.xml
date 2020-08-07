@@ -12,9 +12,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:tabIconTint="@color/white"
-        app:tabTextColor="@color/white"
-        android:background="@color/colorPrimary"
-        app:tabIndicatorColor="@color/white"
+
+        app:tabTextColor="@color/tab_selector_file"
+        app:tabIndicatorColor="@color/colorPrimary"
         app:tabMode="scrollable"
         app:tabGravity="fill"
         >
@@ -23,6 +23,7 @@
         android:id="@+id/view_pager2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:layout_below="@+id/tabs"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 

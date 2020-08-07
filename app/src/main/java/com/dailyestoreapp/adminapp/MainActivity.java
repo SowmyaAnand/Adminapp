@@ -37,25 +37,25 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        FloatingActionButton fab = findViewById(R.id.fab);
+       // FloatingActionButton fab = findViewById(R.id.fab);
         categoryNameList = new ArrayList<>();
         categoryID = new ArrayList<>();
-        categoryNameList.add("categories");
+        categoryNameList.add("ADD NEW CATEGORY");
         categoryID.add(1);
-        categoryNameList.add("Items");
+        categoryNameList.add("ADD NEW ITEM");
         categoryID.add(2);
-        categoryNameList.add("Deal of the day");
+        categoryNameList.add("ADD YOUR DEALS OF THE DAY");
         categoryID.add(3);
-        categoryNameList.add("flyers");
+        categoryNameList.add("ADD YOUR FIRST FLYERS ");
         categoryID.add(4);
-        categoryNameList.add("2nd flyers");
+        categoryNameList.add("ADD YOUR SECOND FLYERS");
         categoryID.add(5);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                alertDialog();
-            }
-        });
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                alertDialog();
+//            }
+//        });
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
@@ -108,6 +108,9 @@ public class MainActivity extends AppCompatActivity {
             case R.id.account:
                 Intent account = new Intent(MainActivity.this,MyAccount.class);
                 startActivity(account);
+                return true;
+            case R.id.add:
+                alertDialog();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

@@ -16,5 +16,15 @@
     <string name="tab2">category2</string>
     <string name="tab3">category3</string>
     <string name="tab4">category4</string>
-    <string name="tab5">category5</string>
+    <string name="category1">Food</string>
+    <string name="category2">Vegetables</string>
+    <string name="category3">Grocery</string>
+    <string name="category4">Home Appliances</string>
+    <string name="category5">Cakes</string>
+    <string name="category6">Fashion</string>
+    <string name="category7">Meat</string>
+    <string name="category8">Electronics</string>
+    <string name="category9">Mobile and Accessories</string>
+
+
 </resources>

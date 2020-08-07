@@ -14,7 +14,7 @@
         xmlns:android="http://schemas.android.com/apk/res/android">
 
         <ImageView
-            android:id="@+id/img"
+            android:id="@+id/im"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:src="@drawable/ic_menu_camera"
@@ -81,7 +81,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/black"
-            android:layout_toRightOf="@+id/img"
+            android:layout_toRightOf="@+id/im"
             android:textSize="15sp"
             android:text="Title"/>
         <TextView
@@ -92,7 +92,7 @@
             android:textColor="@color/black"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/img"
+            android:layout_toRightOf="@+id/im"
             android:textSize="15sp"
             android:text="QUANTITY:1"
             />
@@ -105,7 +105,7 @@
             android:textColor="@color/colorPrimary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/img"
+            android:layout_toRightOf="@+id/im"
             android:textSize="18sp"
             android:text="RS:25000"
             />
@@ -125,7 +125,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/prce"
-            android:layout_toRightOf="@+id/img"
+            android:layout_toRightOf="@+id/im"
 
             >
             <RelativeLayout
@@ -171,7 +171,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
                 android:padding="10dp"
-                android:text="Out of stock"
+                android:text="Activate"
+                android:textColor="@color/white"
                 android:background="@color/colorPrimary"
 
                 android:layout_marginRight="10dp"

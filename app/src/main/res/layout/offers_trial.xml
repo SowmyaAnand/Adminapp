@@ -19,8 +19,8 @@
             android:id="@+id/ct_image"
 
             android:layout_gravity="top"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             />
         <TextView
             android:layout_width="match_parent"

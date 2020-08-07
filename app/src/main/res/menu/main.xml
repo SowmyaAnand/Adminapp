@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:id="@+id/add"
+        android:title="add"
+        android:icon="@drawable/ic_edit_black_24dp"
 
+        app:showAsAction="always"
+        />
     <item android:id="@+id/account"
         android:title="account"
         android:icon="@drawable/ic_person_black_24dp"
@@ -9,9 +14,10 @@
         app:showAsAction="always"
         />
     <item android:id="@+id/logout"
-        android:title="logout"
-        android:icon="@drawable/ic_power_settings_new_black_24dp"
+    android:title="logout"
+    android:icon="@drawable/ic_power_settings_new_black_24dp"
 
-        app:showAsAction="always"
-        />
+    app:showAsAction="always"
+    />
+
 </menu>

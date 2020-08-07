@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -22,14 +23,15 @@ import java.util.Locale;
 public class Offers_ItemAdapter extends RecyclerView.Adapter<Offers_ItemAdapter.MyViewHolder> {
     ArrayList<String> personNames = new ArrayList<String>();
     Context context;
-
+    ArrayList Images;
     ArrayList<String> lts = new ArrayList<String>();
     ArrayList personNames_offers = new ArrayList<>(Arrays.asList("ITEM1", "ITEM2", "ITEM3", "ITEM4", "ITEM5", "ITEM6", "ITEM7"));
     int quantity = 1;
 
-    public Offers_ItemAdapter(Context context, ArrayList personNames) {
+    public Offers_ItemAdapter(Context context, ArrayList personNames, ArrayList Images) {
         this.context = context;
         this.personNames = personNames;
+        this.Images=Images;
         this.lts.addAll(personNames);
 
     }
@@ -48,6 +50,15 @@ public class Offers_ItemAdapter extends RecyclerView.Adapter<Offers_ItemAdapter.
 
         // set the data in items
         String name = (String) personNames.get(position);
+        int n= (int) Images.get(position);
+        holder.image_image.setImageResource(n);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+            }
+        });
 holder.outofstock.setOnClickListener(new View.OnClickListener() {
     @Override
     public void onClick(View v) {
@@ -77,17 +88,18 @@ holder.outofstock.setOnClickListener(new View.OnClickListener() {
 
     @Override
     public int getItemCount() {
-        return personNames.size();
+        return Images.size();
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         TextView name, quantityy;// init the item view's
         Button outofstock;
+        ImageView image_image;
         public MyViewHolder(View itemView) {
             super(itemView);
             name = (TextView) itemView.findViewById(R.id.Title);
             outofstock = (Button) itemView.findViewById(R.id.outofstock);
-
+            image_image=(ImageView)itemView.findViewById(R.id.im);
 
         }
     }

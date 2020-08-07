@@ -18,8 +18,10 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.dailyestoreapp.adminapp.Fragment1;
 import com.dailyestoreapp.adminapp.Fragment2;
+import com.dailyestoreapp.adminapp.Fragment4;
 import com.dailyestoreapp.adminapp.R;
 import com.dailyestoreapp.adminapp.SectionsPagerAdapter;
+import com.dailyestoreapp.adminapp.fragment3;
 import com.google.android.material.tabs.TabLayout;
 
 public class HomeFragment extends Fragment {
@@ -37,13 +39,13 @@ public class HomeFragment extends Fragment {
 
         SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(getContext(),getChildFragmentManager());
         sectionsPagerAdapter.addFragment(new Fragment1(),"Home");
-        sectionsPagerAdapter.addFragment(new Fragment1(),"Offers");
-        sectionsPagerAdapter.addFragment(new Fragment1(),"Contact");
-        sectionsPagerAdapter.addFragment(new Fragment1(),"My Account");
-        sectionsPagerAdapter.addFragment(new Fragment1(),"Home");
-        sectionsPagerAdapter.addFragment(new Fragment1(),"Offers");
-        sectionsPagerAdapter.addFragment(new Fragment1(),"Contact");
-        sectionsPagerAdapter.addFragment(new Fragment1(),"My Account");
+        sectionsPagerAdapter.addFragment(new Fragment4(),"Offers");
+        sectionsPagerAdapter.addFragment(new fragment3(),"Contact");
+        sectionsPagerAdapter.addFragment(new Fragment4(),"My Account");
+        sectionsPagerAdapter.addFragment(new fragment3(),"Home");
+        sectionsPagerAdapter.addFragment(new fragment3(),"Offers");
+        sectionsPagerAdapter.addFragment(new Fragment4(),"Contact");
+        sectionsPagerAdapter.addFragment(new fragment3(),"My Account");
         ViewPager viewPager =root.findViewById(R.id.view_pager2);
         viewPager.setAdapter(sectionsPagerAdapter);
         TabLayout tabs = root.findViewById(R.id.tabs);

@@ -15,7 +15,7 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
     private final List<Fragment> mFragmentList = new ArrayList<>();
     private final List<String> mFragmentTitleList = new ArrayList<>();
     @StringRes
-    private static final int[] TAB_TITLES = new int[]{R.string.tab1, R.string.tab2, R.string.tab3, R.string.tab4,R.string.tab1, R.string.tab2, R.string.tab3, R.string.tab4};
+    private static final int[] TAB_TITLES = new int[]{R.string.category1, R.string.category4, R.string.category7, R.string.category2,R.string.category5, R.string.category6, R.string.category3, R.string.category8,R.string.category9};
     private final Context mContext;
 
     public SectionsPagerAdapter(Context context, FragmentManager fm) {

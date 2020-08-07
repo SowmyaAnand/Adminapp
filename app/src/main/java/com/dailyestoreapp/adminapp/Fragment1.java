@@ -24,12 +24,12 @@ public class Fragment1  extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    ArrayList Images_offers = new ArrayList<>(Arrays.asList(R.drawable.ic_menu_camera,R.drawable.ic_menu_camera, R.drawable.ic_menu_camera, R.drawable.ic_menu_camera, R.drawable.ic_menu_camera));
-
+    ArrayList Images_offers = new ArrayList<>(Arrays.asList(R.drawable.newvegetable,R.drawable.fried_chicken_clip_art_8_1, R.drawable.newvegetable, R.drawable.fried_chicken_clip_art_8_1, R.drawable.newvegetable));
+    ArrayList Images_images = new ArrayList<>(Arrays.asList(R.drawable.rest1,R.drawable.rest2, R.drawable.rest1, R.drawable.rest2, R.drawable.rest1));
     ArrayList personNames_offers = new ArrayList<>(Arrays.asList("ITEM1", "ITEM2", "ITEM3", "ITEM4", "ITEM5", "ITEM6", "ITEM7"));
     RecyclerView recyclerView_offers,itemlistingcategory_offers;
     LinearLayoutManager linearLayoutManager_offers,linearLayoutManager2_offers;
-    Offers_ItemAdapter customAdapter_offers;
+    Offers_ItemAdapterFood customAdapter_offers;
     OffersListingsubcategoryadapter customadapter2_offers;
     public Fragment1() {
         // Required empty public constructor
@@ -83,7 +83,7 @@ public class Fragment1  extends Fragment {
         recyclerView_offers.setLayoutManager(linearLayoutManager);
         //  call the constructor of CustomAdapter to send the reference and data to Adapter
 
-        customAdapter_offers = new Offers_ItemAdapter(rootView.getContext(), personNames_offers);
+        customAdapter_offers = new Offers_ItemAdapterFood(rootView.getContext(), personNames_offers,Images_images);
         recyclerView_offers.setAdapter(customAdapter_offers);
         // GridView gridview = (GridView) rootView.findViewById(R.id.gridview);
         // gridview.setAdapter(new ImageAdapter(rootView.getContext()));
