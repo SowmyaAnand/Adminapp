@@ -27,6 +27,8 @@
                 android:textAlignment="center"
                 android:padding="10dp"
                 android:layout_marginTop="20dp"
+                android:textSize="16sp"
+               android:fontFamily="@font/roboto_medium"
                 android:textColor="@color/black"/>
 
     <androidx.cardview.widget.CardView
@@ -52,7 +54,8 @@
                 android:id="@+id/edit1"
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
-                android:text="Edit"
+                android:text="EDIT"
+                android:fontFamily="@font/roboto_light"
                 android:layout_gravity="end"
                 />
         </LinearLayout>
@@ -80,7 +83,8 @@
                 android:id="@+id/edit2"
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
-                android:text="Edit"
+                android:text="EDIT"
+                android:fontFamily="@font/roboto_light"
                 android:layout_gravity="end"
                 />
         </LinearLayout>
@@ -108,7 +112,8 @@
                 android:id="@+id/edit3"
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
-                android:text="Edit"
+                android:text="EDIT"
+                android:fontFamily="@font/roboto_light"
                 android:layout_gravity="end"
                 />
         </LinearLayout>
@@ -136,7 +141,8 @@
                 android:id="@+id/edit4"
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
-                android:text="Edit"
+                android:text="EDIT"
+                android:fontFamily="@font/roboto_light"
                 android:layout_gravity="end"
                 />
         </LinearLayout>

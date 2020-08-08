@@ -99,15 +99,15 @@ ImageView img1,img2,img3,img4;
         setSupportActionBar(toolbar);
         if(id==3)
         {
-            txt.setText("Select Deals of the day");
+            txt.setText("SELECT DEALS OF THE DAY");
         }
         if(id==4)
         {
-            txt.setText("Select 1st Flyers");
+            txt.setText("SELECT 1st FLYERS");
         }
         if(id==5)
         {
-            txt.setText("Select 2nd Flyers");
+            txt.setText("SELECT 2nd FLYERS");
         }
 
     }

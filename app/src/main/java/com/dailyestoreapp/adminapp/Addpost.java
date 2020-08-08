@@ -24,6 +24,7 @@ ImageView imgaeitem;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_addpost);
         Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.setTitle("ADD ITEM");
         toolbar.setTitleTextColor(Color.WHITE);
         setSupportActionBar(toolbar);
         addattach=(TextView)findViewById(R.id.txtAttachment);

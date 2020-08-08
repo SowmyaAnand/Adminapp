@@ -33,9 +33,9 @@
             />
         <ImageView
             android:id="@+id/prson"
-            android:layout_width="200dp"
+            android:layout_width="180dp"
             android:padding="10dp"
-            android:layout_height="200dp"
+            android:layout_height="180dp"
 
             android:layout_centerHorizontal="true"
             android:src="@drawable/frame_18"/>
@@ -56,12 +56,13 @@
                 android:layout_height="match_parent">
                 <EditText
                     android:id="@+id/Name_account"
-                    android:text="Samuel"
-                    android:textSize="20dp"
+                    android:hint="ENTER YOUR NAME"
+                    android:textColorHint="@color/Gray"
+                    android:textSize="15sp"
                     android:textColor="@color/black"
                     android:textAlignment="center"
                     android:enabled="false"
-
+                    android:fontFamily="@font/roboto_medium"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColorHighlight="@color/colorPrimary"
@@ -69,9 +70,11 @@
 
                 <EditText
                     android:id="@+id/Mobilenumber_account"
-                    android:text="123456789"
+                    android:hint="MOBILE NUMBER"
+                    android:textColorHint="@color/Gray"
+                    android:textSize="15sp"
                     android:enabled="false"
-
+                    android:fontFamily="@font/roboto_medium"
                     android:textColor="@color/black"
                     android:textAlignment="center"
                     android:background="@drawable/customized_edittext"
@@ -81,11 +84,13 @@
                     android:inputType="number"/>
                 <EditText
                     android:id="@+id/emailid_account"
-                    android:text="test123@gmail.com"
+                    android:hint="EMAIL ID"
                     android:enabled="false"
-
+                    android:textColorHint="@color/Gray"
+                    android:fontFamily="@font/roboto_medium"
                     android:textColor="@color/black"
                     android:textAlignment="center"
+                    android:textSize="15sp"
                     android:background="@drawable/customized_edittext"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -94,10 +99,12 @@
                 <EditText
                     android:id="@+id/Pincode_account"
                     android:enabled="false"
-
+                    android:textColorHint="@color/Gray"
+                    android:fontFamily="@font/roboto_medium"
                     android:textColor="@color/black"
                     android:textAlignment="center"
-                    android:text="test123@oksbi"
+                    android:textSize="15sp"
+                    android:hint="UPI ID"
                     android:background="@drawable/customized_edittext"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -105,10 +112,12 @@
                     android:inputType="text"/>
                 <EditText
                     android:id="@+id/Place_account"
-                    android:text="Cheruplsery"
+                    android:hint="ADDRESS"
                     android:textColor="@color/black"
                     android:enabled="false"
-
+                    android:textSize="15sp"
+                    android:textColorHint="@color/Gray"
+                    android:fontFamily="@font/roboto_medium"
                     android:textAlignment="center"
                     android:background="@drawable/customized_edittext"
                     android:layout_width="match_parent"
@@ -119,15 +128,17 @@
 
                 <Button
                     android:id="@+id/logout"
-                    android:text="Logout"
-                    android:layout_marginTop="40dp"
-                    android:layout_width="wrap_content"
+                    android:text="SAVE"
+
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@color/white"
                     android:layout_gravity="center"
                     android:padding="20dp"
                     android:background="#ed1a63"
-
+                    android:layout_marginLeft="50dp"
+                    android:layout_marginRight="50dp"
+                    android:layout_marginTop="50dp"
                     />
 
             </LinearLayout>

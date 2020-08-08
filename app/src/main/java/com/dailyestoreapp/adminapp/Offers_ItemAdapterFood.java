@@ -39,7 +39,7 @@ public class Offers_ItemAdapterFood extends RecyclerView.Adapter<Offers_ItemAdap
     @Override
     public Offers_ItemAdapterFood.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // infalte the item Layout
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.offer_items, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.restaurants_list, parent, false);
         // set the view's size, margins, paddings and layout parameters
         Offers_ItemAdapterFood.MyViewHolder vh = new Offers_ItemAdapterFood.MyViewHolder(v); // pass the view to View Holder
         return vh;

@@ -82,8 +82,9 @@
             android:layout_height="wrap_content"
             android:textColor="@color/black"
             android:layout_toRightOf="@+id/im"
-            android:textSize="15sp"
-            android:text="Title"/>
+            android:fontFamily="@font/roboto_medium"
+            android:textSize="16sp"
+            android:text="TITLE"/>
         <TextView
             android:id="@+id/publishNme"
             android:layout_below="@+id/Title"
@@ -93,7 +94,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/im"
-            android:textSize="15sp"
+            android:textSize="13sp"
+            android:fontFamily="@font/roboto_light"
             android:text="QUANTITY:1"
             />
 
@@ -102,12 +104,13 @@
             android:layout_below="@+id/publishNme"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
-            android:textColor="@color/colorPrimary"
+            android:textColor="@color/black"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/im"
-            android:textSize="18sp"
-            android:text="RS:25000"
+            android:textSize="13sp"
+            android:fontFamily="@font/roboto_light"
+            android:text="RS:250"
             />
 
 
@@ -174,7 +177,7 @@
                 android:text="Activate"
                 android:textColor="@color/white"
                 android:background="@color/colorPrimary"
-
+                android:fontFamily="@font/roboto_light"
                 android:layout_marginRight="10dp"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true" />

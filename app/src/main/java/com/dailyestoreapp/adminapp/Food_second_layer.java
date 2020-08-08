@@ -1,10 +1,16 @@
 package com.dailyestoreapp.adminapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -15,12 +21,16 @@ public class Food_second_layer extends AppCompatActivity {
     ArrayList personNames_offers = new ArrayList<>(Arrays.asList("ITEM1", "ITEM2", "ITEM3", "ITEM4", "ITEM5", "ITEM6", "ITEM7"));
     RecyclerView recyclerView_offers,itemlistingcategory_offers;
     LinearLayoutManager linearLayoutManager_offers,linearLayoutManager2_offers;
-   ItemAdapterFood customAdapter_offers;
+    Offers_ItemAdapter customAdapter_offers;
     OffersListingsubcategoryadapter customadapter2_offers;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_food_second_layer);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.setTitle("FOOD");
+        toolbar.setTitleTextColor(Color.WHITE);
+        setSupportActionBar(toolbar);
         itemlistingcategory_offers = (RecyclerView)findViewById(R.id.recyclerView_categories_offer_categories);
         // set a LinearLayoutManager with default vertical orientation
         LinearLayoutManager linearLayoutManager2_offers = new LinearLayoutManager(getApplicationContext(),LinearLayoutManager.HORIZONTAL,false);
@@ -35,7 +45,30 @@ public class Food_second_layer extends AppCompatActivity {
         recyclerView_offers.setLayoutManager(linearLayoutManager);
         //  call the constructor of CustomAdapter to send the reference and data to Adapter
 
-        customAdapter_offers = new ItemAdapterFood(getApplicationContext(), personNames_offers,Images_images);
+        customAdapter_offers = new Offers_ItemAdapter(getApplicationContext(), personNames_offers,Images_images);
         recyclerView_offers.setAdapter(customAdapter_offers);
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        Log.e("MAin","Item selected ="+item.getItemId());
+        switch (item.getItemId()) {
+            case R.id.logout:
+                Intent cart = new Intent(Food_second_layer.this,Login.class);
+                startActivity(cart);
+                return true;
+            case R.id.account:
+                Intent account = new Intent(Food_second_layer.this,MyAccount.class);
+                startActivity(account);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

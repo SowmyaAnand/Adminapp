@@ -120,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
         final CharSequence[] name = categoryNameList.toArray(new String[categoryNameList.size()]);
         final Integer[] categoryId = categoryID.toArray(new Integer[categoryID.size()]);
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("SELECT YOUR ACTION");
+
         builder.setItems(name, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {

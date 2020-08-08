@@ -17,7 +17,7 @@ Button logout;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_account);
-        logout=findViewById(R.id.logout);
+
         name_account = (EditText) findViewById(R.id.Name_account);
         mob_account = (EditText) findViewById(R.id.Mobilenumber_account);
         email_account = (EditText)findViewById(R.id.emailid_account);
@@ -37,12 +37,6 @@ Button logout;
 
             }
         });
-        logout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent next = new Intent(MyAccount.this,Login.class);
-                startActivity(next);
-            }
-        });
+
     }
 }

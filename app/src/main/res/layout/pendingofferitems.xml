@@ -82,8 +82,9 @@
             android:layout_height="wrap_content"
             android:textColor="@color/black"
             android:layout_toRightOf="@+id/img"
-            android:textSize="15sp"
-            android:text="Title"/>
+            android:textSize="16sp"
+            android:fontFamily="@font/roboto_medium"
+            android:text="TITLE"/>
         <TextView
             android:id="@+id/publishNme"
             android:layout_below="@+id/Title"
@@ -93,7 +94,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/img"
-            android:textSize="15sp"
+            android:textSize="13sp"
+            android:fontFamily="@font/roboto_light"
             android:text="Address"
             />
 
@@ -148,6 +150,7 @@
                 android:layout_width="90dp"
                 android:layout_height="40dp"
                 android:text="Pending"
+                android:fontFamily="@font/roboto_medium"
                 android:background="@color/red"
                 android:textColor="@color/white"
                 android:layout_marginRight="10dp"

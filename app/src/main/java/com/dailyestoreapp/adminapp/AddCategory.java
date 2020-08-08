@@ -25,6 +25,8 @@ public class AddCategory extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_category);
         Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.setTitle("ADD CATERGORY");
+
         toolbar.setTitleTextColor(Color.WHITE);
         setSupportActionBar(toolbar);
         addattachcategory=(Button)findViewById(R.id.addcategoryimage);
