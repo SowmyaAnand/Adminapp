@@ -107,29 +107,75 @@ android:orientation="vertical">
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>
+        <Button
+            android:id="@+id/addcategory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="ADD CATEGORY"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="40dp"
+            android:fontFamily="@font/roboto_medium"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            android:background="@color/colorPrimary"/>
         <TextView
+            android:id="@+id/subcategoryheading"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="ADD NEW RELATED SUB CATEGORY"
             android:textAlignment="center"
             android:padding="10dp"
+            android:visibility="invisible"
             android:layout_marginTop="40dp"
             android:fontFamily="@font/roboto_medium"
             android:textColor="@color/black"/>
     <androidx.cardview.widget.CardView
         android:layout_margin="16dp"
-        android:id="@+id/headerTextCard1"
+        android:id="@+id/headersub1"
         android:layout_width="match_parent"
+        android:visibility="invisible"
         android:layout_height="wrap_content"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         app:cardBackgroundColor="@color/white"
         app:cardElevation="15dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:gravity="center"
+                android:orientation="vertical">
+                <ImageView
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:layout_margin="5dp"
+                    android:id="@+id/subcategoryImg"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:src="@drawable/ic_image_black_24dp"
+                    />
+                <Button
+                    android:id="@+id/subaddcategoryimage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Add Image"
+                    android:fontFamily="@font/roboto_light"
+                    android:background="@color/colorPrimary"
+                    android:textColor="@color/white"
+                    />
+
+            </LinearLayout>
+
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical">
             <TextView
+                android:id="@+id/subcat1head"
                 android:padding="10dp"
 
                 android:layout_width="match_parent"
@@ -140,15 +186,16 @@ android:orientation="vertical">
                 android:fontFamily="@font/roboto_light"
                 android:textSize="16dp"></TextView>
             <View
+                android:id="@+id/subcat1headview"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="@color/Gray"></View>
 
             <EditText
                 android:padding="15dp"
-                android:id="@+id/category"
+                android:id="@+id/subcatvalue1"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:background="#FFF"
                 android:textColor="@color/black"
                 android:hint="Enter your new sub category"
@@ -159,11 +206,13 @@ android:orientation="vertical">
                 android:singleLine="true"
                 android:maxLength="60"/>
         </LinearLayout>
+        </LinearLayout>
     </androidx.cardview.widget.CardView>
     <androidx.cardview.widget.CardView
         android:layout_margin="16dp"
-        android:id="@+id/headerTextCard2"
+        android:id="@+id/headersub2"
         android:layout_width="match_parent"
+        android:visibility="invisible"
         android:layout_height="wrap_content"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         app:cardBackgroundColor="@color/white"
@@ -174,7 +223,7 @@ android:orientation="vertical">
             android:orientation="vertical">
             <TextView
                 android:padding="10dp"
-
+                android:id="@+id/subcat2head"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Sub Category"
@@ -183,13 +232,14 @@ android:orientation="vertical">
                 android:fontFamily="@font/roboto_light"
                 android:textSize="16dp"></TextView>
             <View
+                android:id="@+id/subcat2headview"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="@color/Gray"></View>
 
             <EditText
                 android:padding="15dp"
-                android:id="@+id/edtxtHeader2"
+                android:id="@+id/subcatvalue2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="#FFF"
@@ -205,8 +255,9 @@ android:orientation="vertical">
     </androidx.cardview.widget.CardView>
     <androidx.cardview.widget.CardView
         android:layout_margin="16dp"
-        android:id="@+id/headerTextCard3"
+        android:id="@+id/headersub3"
         android:layout_width="match_parent"
+        android:visibility="invisible"
         android:layout_height="wrap_content"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         app:cardBackgroundColor="@color/white"
@@ -217,7 +268,7 @@ android:orientation="vertical">
             android:orientation="vertical">
             <TextView
                 android:padding="10dp"
-
+                android:id="@+id/subcat3head"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Sub Category"
@@ -226,13 +277,14 @@ android:orientation="vertical">
                 android:textColor="@color/colorPrimary"
                 android:textSize="16dp"></TextView>
             <View
+                android:id="@+id/subcat3headview"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="@color/Gray"></View>
 
             <EditText
                 android:padding="15dp"
-                android:id="@+id/edtxtHeader3"
+                android:id="@+id/subcatvalue3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="#FFF"
@@ -248,9 +300,10 @@ android:orientation="vertical">
     </androidx.cardview.widget.CardView>
     <androidx.cardview.widget.CardView
         android:layout_margin="16dp"
-        android:id="@+id/headerTextCard4"
+        android:id="@+id/headersub4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:visibility="invisible"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         app:cardBackgroundColor="@color/white"
         app:cardElevation="15dp">
@@ -259,6 +312,7 @@ android:orientation="vertical">
             android:layout_height="wrap_content"
             android:orientation="vertical">
             <TextView
+                android:id="@+id/subcat4head"
                 android:padding="10dp"
                 android:fontFamily="@font/roboto_light"
                 android:layout_width="match_parent"
@@ -268,13 +322,14 @@ android:orientation="vertical">
                 android:textColor="@color/colorPrimary"
                 android:textSize="16dp"></TextView>
             <View
+                android:id="@+id/subcat4headview"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="@color/Gray"></View>
 
             <EditText
                 android:padding="15dp"
-                android:id="@+id/edtxtHeader4"
+                android:id="@+id/subcatvalue4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="#FFF"
@@ -290,8 +345,9 @@ android:orientation="vertical">
     </androidx.cardview.widget.CardView>
     <androidx.cardview.widget.CardView
         android:layout_margin="16dp"
-        android:id="@+id/headerTextCard5"
+        android:id="@+id/headersub5"
         android:layout_width="match_parent"
+        android:visibility="invisible"
         android:layout_height="wrap_content"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         app:cardBackgroundColor="@color/white"
@@ -301,6 +357,7 @@ android:orientation="vertical">
             android:layout_height="wrap_content"
             android:orientation="vertical">
             <TextView
+                android:id="@+id/subcat5head"
                 android:padding="10dp"
                 android:fontFamily="@font/roboto_light"
                 android:layout_width="match_parent"
@@ -310,13 +367,14 @@ android:orientation="vertical">
                 android:textColor="@color/colorPrimary"
                 android:textSize="16dp"></TextView>
             <View
+                android:id="@+id/subcat5headview"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="@color/Gray"></View>
 
             <EditText
                 android:padding="15dp"
-                android:id="@+id/edtxtHeader5"
+                android:id="@+id/subcatvalue5"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/black"
@@ -332,8 +390,9 @@ android:orientation="vertical">
     </androidx.cardview.widget.CardView>
     <androidx.cardview.widget.CardView
         android:layout_margin="16dp"
-        android:id="@+id/headerTextCard6"
+        android:id="@+id/headersub6"
         android:layout_width="match_parent"
+        android:visibility="invisible"
         android:layout_height="wrap_content"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         app:cardBackgroundColor="@color/white"
@@ -343,24 +402,27 @@ android:orientation="vertical">
             android:layout_height="wrap_content"
             android:orientation="vertical">
             <TextView
+                android:id="@+id/subcat6head"
                 android:padding="10dp"
                 android:fontFamily="@font/roboto_light"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Category"
+                android:text="Sub Category"
                 android:textAlignment="center"
                 android:textColor="@color/colorPrimary"
                 android:textSize="16dp"></TextView>
             <View
+                android:id="@+id/subcat6headview"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="@color/Gray"></View>
 
             <EditText
                 android:padding="15dp"
-                android:id="@+id/edtxtHeader6"
+                android:id="@+id/subcatvalue6"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+
                 android:background="#FFF"
                 android:textColorHint="@color/Gray"
                 android:textColor="@color/black"
@@ -374,7 +436,8 @@ android:orientation="vertical">
     </androidx.cardview.widget.CardView>
     <androidx.cardview.widget.CardView
         android:layout_margin="16dp"
-        android:id="@+id/headerTextCard7"
+        android:id="@+id/headersub7"
+        android:visibility="invisible"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -385,6 +448,7 @@ android:orientation="vertical">
             android:layout_height="wrap_content"
             android:orientation="vertical">
             <TextView
+                android:id="@+id/subcat7head"
                 android:padding="10dp"
                 android:fontFamily="@font/roboto_light"
                 android:layout_width="match_parent"
@@ -394,13 +458,14 @@ android:orientation="vertical">
                 android:textColor="@color/colorPrimary"
                 android:textSize="16dp"></TextView>
             <View
+                android:id="@+id/subcat7headview"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="@color/Gray"></View>
 
             <EditText
                 android:padding="15dp"
-                android:id="@+id/edtxtHeader7"
+                android:id="@+id/subcatvalue7"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="#FFF"
@@ -416,7 +481,8 @@ android:orientation="vertical">
     </androidx.cardview.widget.CardView>
     <androidx.cardview.widget.CardView
         android:layout_margin="16dp"
-        android:id="@+id/headerTextCard8"
+        android:id="@+id/headersub8"
+        android:visibility="invisible"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -427,6 +493,7 @@ android:orientation="vertical">
             android:layout_height="wrap_content"
             android:orientation="vertical">
             <TextView
+                android:id="@+id/subcat8head"
                 android:padding="10dp"
                 android:fontFamily="@font/roboto_light"
                 android:layout_width="match_parent"
@@ -436,13 +503,14 @@ android:orientation="vertical">
                 android:textColor="@color/colorPrimary"
                 android:textSize="16dp"></TextView>
             <View
+                android:id="@+id/subcat8headview"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="@color/Gray"></View>
 
             <EditText
                 android:padding="15dp"
-                android:id="@+id/edtxtHeader8"
+                android:id="@+id/subcatvalue8"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="#FFF"
@@ -456,6 +524,20 @@ android:orientation="vertical">
                 android:maxLength="60"/>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
+        <Button
+            android:id="@+id/savesubcategory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="SAVE SUB CATEGORY"
+            android:visibility="invisible"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="40dp"
+            android:fontFamily="@font/roboto_medium"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            android:background="@color/colorPrimary"/>
     </LinearLayout>
+
     </RelativeLayout>
 </ScrollView>
