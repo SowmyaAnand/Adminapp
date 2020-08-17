@@ -18,7 +18,7 @@ Button lg;
         lg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent next = new Intent(Login.this,MainActivity.class);
+                Intent next = new Intent(Login.this,Main2Activity.class);
                 startActivity(next);
             }
         });

@@ -36,4 +36,5 @@
         <item name="background">@color/white</item>
         <!-- your other custom widget styles -->
     </style>
+
 </resources>

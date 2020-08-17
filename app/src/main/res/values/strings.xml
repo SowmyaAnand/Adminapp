@@ -10,6 +10,8 @@
     <string name="menu_home">HOME</string>
     <string name="menu_gallery">ORDERS</string>
     <string name="menu_slideshow">PENDING REQUESTS</string>
+    <string name="msg">Messages</string>
+    <string name="categories">Edit Categories</string>
     <string name="logout">Logout</string>
     <string name="home_second">Home Second</string>
     <string name="tab1">category1</string>

@@ -11,6 +11,17 @@ import android.widget.TextView;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -49,6 +60,86 @@ public class PendingNotificationAdapter extends RecyclerView.Adapter<PendingNoti
         holder.pd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                String url = "http://dailyestoreapp.com/dailyestore/api/orderStatus";
+                JSONObject obj = new JSONObject();
+                try {
+                    obj.put("orderId", 1);
+                    obj.put("status", "delivered");
+                    //  obj.put(Constant.SESSION_USERID_KEY,adid );
+                    // obj.put(Constant.SESSION_USERID_KEY,adid );
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
+
+
+                RequestQueue queue = Volley.newRequestQueue(context);
+
+                JsonObjectRequest jsObjRequest = new JsonObjectRequest(Request.Method.POST,url,obj,
+                        new Response.Listener<JSONObject>() {
+                            @Override
+                            public void onResponse(JSONObject response) {
+                                System.out.println(response);
+
+                                Log.e("RESPONSE",""+response.toString());
+//                        try{
+//                            JSONObject jsonObject=new JSONObject(response.toString());
+//                            if(jsonObject.has("output")){
+//                                String result=jsonObject.getString("output");
+//                                // String token = jsonObject.getString("token");
+//                                if (result.contains("Success")&& jsonObject.has("token")) {
+//                                    String token = jsonObject.getString("token");
+//                                    String text[] = result.split(",");
+//                                    //String status=text[0];
+//                                    //String resp=str.trim();
+//                                    String groupId = text[1];
+//                                    String empNme = text[2];
+////                                    sharedPreferences = getSharedPreferences(Constant.LOGIN_CREDENTIAL, Context.MODE_PRIVATE);
+////                                    SharedPreferences.Editor editor = sharedPreferences.edit();
+////                                    editor.putString(Constant.LOGIN_ADID, adid);
+////                                    editor.putString(Constant.LOGIN_SECTION, groupId);
+////                                    editor.putString(Constant.LOGIN_NAME, empNme);
+////
+////                                    editor.putString(Constant.SHARED_PREF_REFRESH_TOKEN,token);
+////
+////
+////                                    editor.apply();
+//
+////                                    ApplicationLoader.getPreferences().userID(adid);
+////
+////                                    Intent i = new Intent(LoginActivity.this, HomeActivity.class);
+////                                    startActivity(i);
+////                                    finish();
+//                                } else {
+//                                  //  showToast(result);
+//                                }
+//                            }
+//                        }
+//                        catch(Exception e){
+//                            e.printStackTrace();
+//                        }
+
+
+                            }
+                        },
+                        new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                // progressDialog.dismiss();
+                                // showToast("Unable to connect Server,please try after sometime!");
+                                Log.e("ERROR",""+error);
+                            }
+                        });
+
+                jsObjRequest.setRetryPolicy(new DefaultRetryPolicy(
+                        20000,
+                        DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                        DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+                queue.add(jsObjRequest);
+                Log.d("request>>>>>>", queue.toString());
                 holder.pd.setText("Approved");
                 holder.pd.setTextColor(ContextCompat.getColor(context, white));
                 holder.pd.setBackgroundColor(ContextCompat.getColor(context, green));
