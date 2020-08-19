@@ -22,10 +22,10 @@ public class EditCategories extends Fragment {
     ArrayList Images_offers = new ArrayList<>(Arrays.asList(R.drawable.newvegetable,R.drawable.fried_chicken_clip_art_8_1, R.drawable.newvegetable, R.drawable.fried_chicken_clip_art_8_1, R.drawable.newvegetable));
     ArrayList Images_images = new ArrayList<>(Arrays.asList(R.drawable.wp2375838_1,R.drawable.wp2375838_1, R.drawable.wp2375838_1, R.drawable.wp2375838_1, R.drawable.wp2375838_1));
     ArrayList personNames_offers = new ArrayList<>(Arrays.asList("ITEM1", "ITEM2", "ITEM3", "ITEM4", "ITEM5", "ITEM6", "ITEM7"));
-    RecyclerView recyclerView_offers,itemlistingcategory_offers;
+    RecyclerView categories;
     LinearLayoutManager linearLayoutManager_offers,linearLayoutManager2_offers;
-    Offers_ItemAdapter customAdapter_offers;
-    OffersListingsubcategoryadapter customadapter2_offers;
+    EditCategoriesAdapter customAdapter_offers;
+
     public EditCategories() {
         // Required empty public constructor
     }
@@ -56,22 +56,16 @@ public class EditCategories extends Fragment {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
-        itemlistingcategory_offers = (RecyclerView) rootView.findViewById(R.id.recyclerView_categories_offer);
-        // set a LinearLayoutManager with default vertical orientation
-        LinearLayoutManager linearLayoutManager2_offers = new LinearLayoutManager(rootView.getContext(),LinearLayoutManager.HORIZONTAL,false);
-        itemlistingcategory_offers.setLayoutManager(linearLayoutManager2_offers);
-        //  call the constructor of CustomAdapter to send the reference and data to Adapter
-        customadapter2_offers = new OffersListingsubcategoryadapter(rootView.getContext(), personNames_offers,Images_offers);
-        itemlistingcategory_offers.setAdapter(customadapter2_offers);
+
         //second recyclerview
-        recyclerView_offers = (RecyclerView) rootView.findViewById(R.id.itemrecycler_offers);
+        categories = (RecyclerView) rootView.findViewById(R.id.categorieslist);
         // set a LinearLayoutManager with default vertical orientation
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(rootView.getContext());
-        recyclerView_offers.setLayoutManager(linearLayoutManager);
+        categories.setLayoutManager(linearLayoutManager);
         //  call the constructor of CustomAdapter to send the reference and data to Adapter
 
-        customAdapter_offers = new Offers_ItemAdapter(rootView.getContext(), personNames_offers,Images_images);
-        recyclerView_offers.setAdapter(customAdapter_offers);
+        customAdapter_offers = new EditCategoriesAdapter(rootView.getContext(), personNames_offers,Images_images);
+        categories.setAdapter(customAdapter_offers);
         // GridView gridview = (GridView) rootView.findViewById(R.id.gridview);
         // gridview.setAdapter(new ImageAdapter(rootView.getContext()));
         return rootView;

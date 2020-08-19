@@ -12,13 +12,9 @@
         android:orientation="vertical"
         android:layout_height="match_parent">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView_categories_offer"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/itemrecycler_offers"
+            android:id="@+id/categorieslist"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             />
