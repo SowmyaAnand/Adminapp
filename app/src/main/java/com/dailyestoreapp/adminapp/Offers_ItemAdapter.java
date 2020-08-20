@@ -75,87 +75,6 @@ holder.outofstock.setOnClickListener(new View.OnClickListener() {
     @Override
     public void onClick(View v) {
         String text = holder.outofstock.getText().toString();
-        String url = "http://dailyestoreapp.com/dailyestore/api/activateItem";
-        JSONObject obj = new JSONObject();
-        try {
-            obj.put("itemId", 1);
-            obj.put("status", "activate");
-            //  obj.put(Constant.SESSION_USERID_KEY,adid );
-            // obj.put(Constant.SESSION_USERID_KEY,adid );
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-
-
-
-        RequestQueue queue = Volley.newRequestQueue(context);
-
-        JsonObjectRequest jsObjRequest = new JsonObjectRequest(Request.Method.POST,url,obj,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        System.out.println(response);
-
-                        Log.e("RESPONSE",""+response.toString());
-//                        try{
-//                            JSONObject jsonObject=new JSONObject(response.toString());
-//                            if(jsonObject.has("output")){
-//                                String result=jsonObject.getString("output");
-//                                // String token = jsonObject.getString("token");
-//                                if (result.contains("Success")&& jsonObject.has("token")) {
-//                                    String token = jsonObject.getString("token");
-//                                    String text[] = result.split(",");
-//                                    //String status=text[0];
-//                                    //String resp=str.trim();
-//                                    String groupId = text[1];
-//                                    String empNme = text[2];
-////                                    sharedPreferences = getSharedPreferences(Constant.LOGIN_CREDENTIAL, Context.MODE_PRIVATE);
-////                                    SharedPreferences.Editor editor = sharedPreferences.edit();
-////                                    editor.putString(Constant.LOGIN_ADID, adid);
-////                                    editor.putString(Constant.LOGIN_SECTION, groupId);
-////                                    editor.putString(Constant.LOGIN_NAME, empNme);
-////
-////                                    editor.putString(Constant.SHARED_PREF_REFRESH_TOKEN,token);
-////
-////
-////                                    editor.apply();
-//
-////                                    ApplicationLoader.getPreferences().userID(adid);
-////
-////                                    Intent i = new Intent(LoginActivity.this, HomeActivity.class);
-////                                    startActivity(i);
-////                                    finish();
-//                                } else {
-//                                  //  showToast(result);
-//                                }
-//                            }
-//                        }
-//                        catch(Exception e){
-//                            e.printStackTrace();
-//                        }
-
-
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                       // progressDialog.dismiss();
-                       // showToast("Unable to connect Server,please try after sometime!");
-                        Log.e("ERROR",""+error);
-                    }
-                });
-
-        jsObjRequest.setRetryPolicy(new DefaultRetryPolicy(
-                20000,
-                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-        queue.add(jsObjRequest);
-        Log.d("request>>>>>>", queue.toString());
-
-
 
         if(text.equals("Activate"))
         {
@@ -264,4 +183,97 @@ holder.outofstock.setOnClickListener(new View.OnClickListener() {
 
         }
     }
+    private void Activate(final int itemIdparam, final String statusparam){
+        final String url = "http://dailyestoreapp.com/dailyestore/api/activateItem";
+        final JSONObject obj = new JSONObject();
+        try {
+            obj.put("itemId", 1);
+            obj.put("status", statusparam);
+             } catch (JSONException e)
+            {
+            e.printStackTrace();
+            }
+        RequestQueue queue = Volley.newRequestQueue(context);
+        JsonObjectRequest jsObjRequest = new JsonObjectRequest(Request.Method.POST,url,obj,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        System.out.println(response);
+
+                        Log.e("url",""+url);
+                        Log.e("obj",""+obj);
+                        Log.e("RESPONSE",""+response.toString());
+                        JSONObject jsonObject=new JSONObject(response.toString());
+                        if(jsonObject.has("output")) {
+                            String result = jsonObject.getString("output");
+                            // String token = jsonObject.getString("token");
+                        }
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // progressDialog.dismiss();
+                        // showToast("Unable to connect Server,please try after sometime!");
+                        Log.e("ERROR",""+error);
+                    }
+                });
+
+        jsObjRequest.setRetryPolicy(new DefaultRetryPolicy(
+                20000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        queue.add(jsObjRequest);
+        Log.d("request>>>>>>", queue.toString());
+        //                String URL ="http://dailyestoreapp.com/dailyestore/api/userDetails";
+//                JSONObject jsonBody = new JSONObject();
+//                try {
+//                    jsonBody.put("userId", "1");
+//                    final String requestBody = jsonBody.toString();
+//
+//                    StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
+//                        @Override
+//                        public void onResponse(String response) {
+//                            Log.e("VOLLEY", response);
+//                        }
+//                    }, new Response.ErrorListener() {
+//                        @Override
+//                        public void onErrorResponse(VolleyError error) {
+//                            Log.e("VOLLEY", error.toString());
+//                        }
+//                    }) {
+//                        @Override
+//                        public String getBodyContentType() {
+//                            return "application/json; charset=utf-8";
+//                        }
+//
+//                        @Override
+//                        public byte[] getBody() throws AuthFailureError {
+//                            try {
+//                                return requestBody == null ? null : requestBody.getBytes("utf-8");
+//                            } catch (UnsupportedEncodingException uee) {
+//                                VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", requestBody, "utf-8");
+//                                return null;
+//                            }
+//                        }
+//
+//                        @Override
+//                        protected Response<String> parseNetworkResponse(NetworkResponse response) {
+//                            String responseString = "";
+//                            if (response != null) {
+//                                responseString = String.valueOf(response.statusCode);
+//                                // can get more details such as response.headers
+//                            }
+//                            Log.e("tresponse","the response"+response);
+//                            return  super.parseNetworkResponse(response);
+//                        }
+//                    };
+//                    queue.add(stringRequest);
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                    Log.e("error","error"+e);
+//                }
+    }
+
 }
