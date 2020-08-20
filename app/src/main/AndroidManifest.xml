@@ -13,8 +13,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar">
-        <activity android:name=".Main2Activity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".editsubcategory"></activity>
+        <activity
+            android:name=".Main2Activity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".Food_second_layer" />
         <activity android:name=".MyAccount" />
         <activity

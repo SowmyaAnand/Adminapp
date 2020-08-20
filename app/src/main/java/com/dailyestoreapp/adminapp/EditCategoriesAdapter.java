@@ -2,6 +2,7 @@ package com.dailyestoreapp.adminapp;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -61,12 +62,12 @@ public class EditCategoriesAdapter extends RecyclerView.Adapter<EditCategoriesAd
 
         // set the data in items
         String name = (String) personNames.get(position);
-        int n= (int) Images.get(position);
-        holder.image_image.setImageResource(n);
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent next= new Intent(context,editsubcategory.class);
+                context.startActivity(next);
 
             }
         });
@@ -84,7 +85,6 @@ public class EditCategoriesAdapter extends RecyclerView.Adapter<EditCategoriesAd
                    holder.ed.setText("SAVE");
                    holder.ed_pic.setVisibility(View.VISIBLE);
                }
-               //
 
            }
        });
@@ -95,7 +95,7 @@ public class EditCategoriesAdapter extends RecyclerView.Adapter<EditCategoriesAd
 
     @Override
     public int getItemCount() {
-        return Images.size();
+        return personNames_offers.size();
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
@@ -107,73 +107,10 @@ public class EditCategoriesAdapter extends RecyclerView.Adapter<EditCategoriesAd
             name = (EditText) itemView.findViewById(R.id.Title);
            ed = (Button) itemView.findViewById(R.id.edit);
            ed_pic =(Button)itemView.findViewById(R.id.editpic);
+            image_image=(ImageView) itemView.findViewById(R.id.im);
         }
     }
 
-    public void filter(String charText) {
-        Log.e("texting if", "persons=" + charText);
-        charText = charText.toLowerCase(Locale.getDefault());
-        Log.e("texting if2", "persons=" + charText);
-        personNames.clear();
-        Iterator itr = personNames.iterator();
-        if (charText.length() == 0) {
-            Log.e("texting if3", "persons=" + charText);
-            personNames.addAll(lts);
-        } else {
-            for (int i = 0; i < lts.size(); i++) {
-                Log.e("texting else", "persons=" + lts.get(i));
-                String s = (String) lts.get(i);
-                if (s.toLowerCase(Locale.getDefault()).contains(charText)) {
-                    personNames.add(s);
-                }
-            }
-        }
-        Log.e("text", "persons=" + personNames);
-        notifyDataSetChanged();
-    }
-
-    public class CustomDialogClass1 extends Dialog implements
-            android.view.View.OnClickListener {
-
-        public Context c;
-        public Dialog d;
-        public Button yes, no;
-        String txt;
-        public TextView textdisplayed;
-
-        public CustomDialogClass1(Context a,String t) {
-            super(a);
-            // TODO Auto-generated constructor stub
-            this.c = a;
-            this.txt = t;
-        }
 
 
-        @Override
-        protected void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            requestWindowFeature(Window.FEATURE_NO_TITLE);
-            setContentView(R.layout.approve_dialog);
-            yes = (Button) findViewById(R.id.btn_yes);
-
-            textdisplayed=(TextView)findViewById(R.id.txt_dia);
-            textdisplayed.setText("Your Item is marked as "+this.txt);
-            yes.setOnClickListener(this);
-
-
-        }
-
-        @Override
-        public void onClick(View v) {
-            switch (v.getId()) {
-                case R.id.btn_yes:
-                    dismiss();
-                    break;
-
-                default:
-                    break;
-            }
-
-        }
-    }
 }

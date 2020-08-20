@@ -36,34 +36,27 @@
             android:textSize="16sp"
             android:text="TITLE"/>
 
-<ImageView
-    android:id="@+id/nextsub"
-    android:layout_width="30dp"
-    android:layout_height="30dp"
-    android:src="@drawable/ic_keyboard_arrow_right_black_24dp"
-android:layout_alignParentEnd="true"
-    android:layout_alignParentRight="true"
-    android:layout_toRightOf="@+id/title"/>
 
 
 
 
 
-            <Button
 
-                android:layout_marginTop="10dp"
-                android:id="@+id/edit"
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:padding="10dp"
-                android:text="Edit"
-                android:textColor="@color/white"
-                android:background="@color/colorPrimary"
-                android:fontFamily="@font/roboto_light"
-                android:layout_marginRight="10dp"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:layout_below="@+id/im"/>
+        <Button
+
+            android:layout_marginTop="10dp"
+            android:id="@+id/edit"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:padding="10dp"
+            android:text="Edit"
+            android:textColor="@color/white"
+            android:background="@color/colorPrimary"
+            android:fontFamily="@font/roboto_light"
+            android:layout_marginRight="10dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/im"/>
         <Button
 
             android:layout_marginTop="10dp"
