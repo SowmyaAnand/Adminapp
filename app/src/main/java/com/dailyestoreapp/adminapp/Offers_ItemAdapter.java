@@ -3,6 +3,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,6 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -23,6 +25,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.gson.JsonObject;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -32,14 +35,20 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Locale;
+
+import cc.cloudist.acplibrary.ACProgressConstant;
+import cc.cloudist.acplibrary.ACProgressFlower;
+import cc.cloudist.acplibrary.ACProgressPie;
+
 public class Offers_ItemAdapter extends RecyclerView.Adapter<Offers_ItemAdapter.MyViewHolder> {
     ArrayList<String> personNames = new ArrayList<String>();
     Context context;
     ArrayList Images;
+
     ArrayList<String> lts = new ArrayList<String>();
     ArrayList personNames_offers = new ArrayList<>(Arrays.asList("ITEM1", "ITEM2", "ITEM3", "ITEM4", "ITEM5", "ITEM6", "ITEM7"));
     int quantity = 1;
-
+    ACProgressFlower dialog;
     public Offers_ItemAdapter(Context context, ArrayList personNames, ArrayList Images) {
         this.context = context;
         this.personNames = personNames;
@@ -74,22 +83,114 @@ public class Offers_ItemAdapter extends RecyclerView.Adapter<Offers_ItemAdapter.
 holder.outofstock.setOnClickListener(new View.OnClickListener() {
     @Override
     public void onClick(View v) {
-        String text = holder.outofstock.getText().toString();
+        Log.e("url","url");
+        dialog = new ACProgressFlower.Builder(context)
+                .direction(ACProgressConstant.DIRECT_CLOCKWISE)
+                .themeColor(Color.WHITE)
+                .borderPadding(1)
 
-        if(text.equals("Activate"))
+                .fadeColor(Color.DKGRAY).build();
+        dialog.show();
+
+        final String url = "http://dailyestoreapp.com/dailyestore/api/activateItem";
+
+        final JSONObject obj = new JSONObject();
+        try {
+            obj.put("itemId", 1);
+            obj.put("status", "activate");
+        } catch (JSONException e)
         {
-            text="OUT OF STOCK";
-            holder.outofstock.setText(text);
-             CustomDialogClass1 cdd1=new CustomDialogClass1(context,text);
-             cdd1.show();
+            e.printStackTrace();
         }
-        else
-        {
-            text="Activate";
-            holder.outofstock.setText(text);
-            CustomDialogClass1 cdd2=new CustomDialogClass1(context,text);
-            cdd2.show();
-        }
+        RequestQueue queue = Volley.newRequestQueue(context);
+        JsonObjectRequest jsObjRequest = new JsonObjectRequest(Request.Method.POST,url,obj,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        System.out.println(response);
+
+                        Log.e("url",""+url);
+                        Log.e("obj",""+obj);
+                        Log.e("RESPONSE",""+response.toString());
+
+                        // response start
+                        JSONObject sub = new JSONObject();
+                        try {
+                            sub.put("success","0");
+                            sub.put("data",0);
+                            response.put("responsedata",sub);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+//response end
+                        try {
+                            JSONObject jsonObject = new JSONObject(response.toString());
+                            if(jsonObject.has("responsedata")) {
+                                Log.e("jsonObject","jsonObject is "+jsonObject);
+                                JSONObject json2 = new JSONObject(String.valueOf(jsonObject));
+                                JSONObject res = (JSONObject) json2.get("responsedata");
+                                JSONObject actualvalue = new JSONObject(res.toString());
+                                Log.e("json2","json2is "+json2);
+                                Log.e("res","res is"+res);
+                                Log.e("actualvalue","actualvalue is"+actualvalue);
+                                String result = actualvalue.getString("success");
+                                Log.e("actualvalue","success  is"+result);
+                                dialog.dismiss();
+                                if(result.equals("0"))
+                                {
+                                    String text = holder.outofstock.getText().toString();
+                                    if(text.equals("Activate"))
+                                    {
+                                        text="OUT OF STOCK";
+                                        holder.outofstock.setText(text);
+                                        CustomDialogClass1 cdd1=new CustomDialogClass1(context,text);
+                                        cdd1.show();
+                                    }
+                                    else
+                                    {
+                                        text="Activate";
+                                        holder.outofstock.setText(text);
+                                        CustomDialogClass1 cdd2=new CustomDialogClass1(context,text);
+                                        cdd2.show();
+                                    }
+                                }
+                                else
+                                {
+                                    Toast.makeText(context,"Something Went Wrong .Try After Sometime",Toast.LENGTH_LONG).show();
+                                }
+                                // Object json2 = jsonObject.get("responsedata");
+                                // Log.e("json2","json2 is "+json2);
+
+                                // Object result = jsonObject.get("success");
+                                //  Log.e("success","success is "+result);
+
+
+                                // String token = jsonObject.getString("token");
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // progressDialog.dismiss();
+                        // showToast("Unable to connect Server,please try after sometime!");
+                        Log.e("ERROR",""+error);
+                    }
+                });
+
+        jsObjRequest.setRetryPolicy(new DefaultRetryPolicy(
+                20000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        queue.add(jsObjRequest);
+        Log.d("request>>>>>>", queue.toString());
+
        // CustomDialogClass1 cdd1=new CustomDialogClass1(context,position);
        // cdd1.show();
     }
@@ -185,9 +286,10 @@ holder.outofstock.setOnClickListener(new View.OnClickListener() {
     }
     private void Activate(final int itemIdparam, final String statusparam){
         final String url = "http://dailyestoreapp.com/dailyestore/api/activateItem";
+
         final JSONObject obj = new JSONObject();
         try {
-            obj.put("itemId", 1);
+            obj.put("itemId", itemIdparam);
             obj.put("status", statusparam);
              } catch (JSONException e)
             {
@@ -203,10 +305,50 @@ holder.outofstock.setOnClickListener(new View.OnClickListener() {
                         Log.e("url",""+url);
                         Log.e("obj",""+obj);
                         Log.e("RESPONSE",""+response.toString());
-                        JSONObject jsonObject=new JSONObject(response.toString());
-                        if(jsonObject.has("output")) {
-                            String result = jsonObject.getString("output");
-                            // String token = jsonObject.getString("token");
+
+                        // response start
+                        JSONObject sub = new JSONObject();
+                        try {
+                            sub.put("success","0");
+                            sub.put("data",0);
+                            response.put("responsedata",sub);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+//response end
+                        try {
+                            JSONObject jsonObject = new JSONObject(response.toString());
+                            if(jsonObject.has("responsedata")) {
+                                Log.e("jsonObject","jsonObject is "+jsonObject);
+                                JSONObject json2 = new JSONObject(String.valueOf(jsonObject));
+                                JSONObject res = (JSONObject) json2.get("responsedata");
+                                JSONObject actualvalue = new JSONObject(res.toString());
+                                Log.e("json2","json2is "+json2);
+                                Log.e("res","res is"+res);
+                                Log.e("actualvalue","actualvalue is"+actualvalue);
+                                String result = actualvalue.getString("success");
+                                Log.e("actualvalue","success  is"+result);
+                                if(result.equals("0"))
+                                {
+
+                                }
+                                else
+                                {
+
+                                }
+                              // Object json2 = jsonObject.get("responsedata");
+                               // Log.e("json2","json2 is "+json2);
+
+                               // Object result = jsonObject.get("success");
+                                 //  Log.e("success","success is "+result);
+
+
+                                // String token = jsonObject.getString("token");
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
                         }
 
                     }
