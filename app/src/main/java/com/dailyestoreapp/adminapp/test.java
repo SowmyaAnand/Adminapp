@@ -1,6 +1,7 @@
 package com.dailyestoreapp.adminapp;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,7 +33,7 @@ public class test  extends RecyclerView.Adapter<test.MyViewHolder2> {
 
     @Override
     public void onBindViewHolder(test.MyViewHolder2 holder, final int position) {
-String selectedname;
+        Log.e("test","personanames="+personNames);
         // set the data in items
         String name = (String) personNames.get(position);
         int n= (int) Imagesoffer.get(position);
@@ -44,7 +45,7 @@ String selectedname;
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // display a toast with person name on item click
+
                 String selectedname = (String) personNames.get(position);
 mComminication.respond(selectedname);
             }

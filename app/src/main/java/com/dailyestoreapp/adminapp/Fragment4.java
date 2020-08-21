@@ -23,6 +23,8 @@ public class Fragment4 extends Fragment {
     private String mParam2;
     ArrayList Images_offers = new ArrayList<>(Arrays.asList(R.drawable.h1,R.drawable.h2, R.drawable.h1, R.drawable.h2, R.drawable.h1));
     ArrayList Images_images = new ArrayList<>(Arrays.asList(R.drawable.home,R.drawable.home, R.drawable.home, R.drawable.home, R.drawable.home,R.drawable.home));
+    ArrayList personNames = new ArrayList<>(Arrays.asList("ITEM1", "ITEM2", "ITEM3", "ITEM4", "ITEM5", "ITEM6"));
+
     ArrayList personNames_offers = new ArrayList<>(Arrays.asList("ITEM1", "ITEM2", "ITEM3", "ITEM4", "ITEM5", "ITEM6"));
     RecyclerView recyclerView_offers,itemlistingcategory_offers;
     LinearLayoutManager linearLayoutManager_offers,linearLayoutManager2_offers;
@@ -71,7 +73,7 @@ public class Fragment4 extends Fragment {
         LinearLayoutManager linearLayoutManager2_offers = new LinearLayoutManager(rootView.getContext(),LinearLayoutManager.HORIZONTAL,false);
         itemlistingcategory_offers.setLayoutManager(linearLayoutManager2_offers);
         //  call the constructor of CustomAdapter to send the reference and data to Adapter
-        customadapter2_offers = new test(rootView.getContext(), personNames_offers,Images_offers,communication);
+        customadapter2_offers = new test(rootView.getContext(), personNames,Images_offers,communication);
         itemlistingcategory_offers.setAdapter(customadapter2_offers);
         //second recyclerview
         recyclerView_offers = (RecyclerView) rootView.findViewById(R.id.itemrecycler_offers);
@@ -90,8 +92,11 @@ public class Fragment4 extends Fragment {
         @Override
         public void respond(String name) {
             Log.e("name","name is"+name);
+            personNames_offers.clear();
             personNames_offers.add("Item7");
-            customAdapter_offers = new Offers_ItemAdapter(getContext(), personNames_offers,Images_images);
+            personNames_offers.add("Item8");
+            personNames_offers.add("Item9");
+
             customAdapter_offers.notifyDataSetChanged();
 
            //Toast.makeText(getContext(),name,Toast.LENGTH_LONG).show();
