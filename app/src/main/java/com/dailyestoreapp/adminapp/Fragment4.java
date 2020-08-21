@@ -1,9 +1,11 @@
 package com.dailyestoreapp.adminapp;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -20,12 +22,12 @@ public class Fragment4 extends Fragment {
     private String mParam1;
     private String mParam2;
     ArrayList Images_offers = new ArrayList<>(Arrays.asList(R.drawable.h1,R.drawable.h2, R.drawable.h1, R.drawable.h2, R.drawable.h1));
-    ArrayList Images_images = new ArrayList<>(Arrays.asList(R.drawable.home,R.drawable.home, R.drawable.home, R.drawable.home, R.drawable.home));
-    ArrayList personNames_offers = new ArrayList<>(Arrays.asList("ITEM1", "ITEM2", "ITEM3", "ITEM4", "ITEM5", "ITEM6", "ITEM7"));
+    ArrayList Images_images = new ArrayList<>(Arrays.asList(R.drawable.home,R.drawable.home, R.drawable.home, R.drawable.home, R.drawable.home,R.drawable.home));
+    ArrayList personNames_offers = new ArrayList<>(Arrays.asList("ITEM1", "ITEM2", "ITEM3", "ITEM4", "ITEM5", "ITEM6"));
     RecyclerView recyclerView_offers,itemlistingcategory_offers;
     LinearLayoutManager linearLayoutManager_offers,linearLayoutManager2_offers;
     Offers_ItemAdapter customAdapter_offers;
-    OffersListingsubcategoryadapter customadapter2_offers;
+    test customadapter2_offers;
     public Fragment4() {
         // Required empty public constructor
     }
@@ -69,7 +71,7 @@ public class Fragment4 extends Fragment {
         LinearLayoutManager linearLayoutManager2_offers = new LinearLayoutManager(rootView.getContext(),LinearLayoutManager.HORIZONTAL,false);
         itemlistingcategory_offers.setLayoutManager(linearLayoutManager2_offers);
         //  call the constructor of CustomAdapter to send the reference and data to Adapter
-        customadapter2_offers = new OffersListingsubcategoryadapter(rootView.getContext(), personNames_offers,Images_offers);
+        customadapter2_offers = new test(rootView.getContext(), personNames_offers,Images_offers,communication);
         itemlistingcategory_offers.setAdapter(customadapter2_offers);
         //second recyclerview
         recyclerView_offers = (RecyclerView) rootView.findViewById(R.id.itemrecycler_offers);
@@ -84,4 +86,17 @@ public class Fragment4 extends Fragment {
         // gridview.setAdapter(new ImageAdapter(rootView.getContext()));
         return rootView;
     }
+    categorySubcategoryCommunicaion communication=new categorySubcategoryCommunicaion() {
+        @Override
+        public void respond(String name) {
+            Log.e("name","name is"+name);
+            personNames_offers.add("Item7");
+            customAdapter_offers = new Offers_ItemAdapter(getContext(), personNames_offers,Images_images);
+            customAdapter_offers.notifyDataSetChanged();
+
+           //Toast.makeText(getContext(),name,Toast.LENGTH_LONG).show();
+        }
+
+    };
+
 }
