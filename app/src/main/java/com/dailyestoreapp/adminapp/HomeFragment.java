@@ -20,15 +20,28 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.dailyestoreapp.adminapp.ui.home.HomeViewModel;
 import com.google.android.material.tabs.TabLayout;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.converter.scalars.ScalarsConverterFactory;
+
 public class HomeFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-
+        ArrayList<String> categories = new ArrayList<>();
 
         View root = inflater.inflate(R.layout.fragment_home, container, false);
 Activate();
@@ -50,127 +63,53 @@ Activate();
     }
     private void Activate()
     {
-        String url = "http://dailyestoreapp.com/dailyestore/api/listcategory";
-        JSONObject obj = new JSONObject();
-        RequestQueue queue = Volley.newRequestQueue(getContext());
+        String url = "http://dailyestoreapp.com/dailyestore/api/";
+        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
+        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        OkHttpClient okHttpClient = new OkHttpClient.Builder()
+                .addInterceptor(loggingInterceptor)
+                .build();
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(url)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(okHttpClient)
+                .build();
+        ResponseInterface1 mainInterface = retrofit.create(ResponseInterface1.class);
+        Call<ListCategoryResponse> call = mainInterface.CategoryList();
+        call.enqueue(new Callback<ListCategoryResponse>() {
+            @Override
+            public void onResponse(Call<ListCategoryResponse> call, retrofit2.Response<ListCategoryResponse> response) {
+                String res= new GsonBuilder().setPrettyPrinting().create().toJson(response.body().getResponsedata().getData());
 
-        JsonObjectRequest jsObjRequest = new JsonObjectRequest(Request.Method.GET,url,null,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        System.out.println(response);
-// response start
-                        JSONObject student1 = new JSONObject();
-                        try {
-                            student1.put("typeId", "3");
-                            student1.put("itemName", "NAME OF STUDENT");
-                            student1.put("itemImage", "3rd");
-                            student1.put("createdBy", "Arts");
-                            student1.put("createdAt", "5/5/1993");
 
-                        } catch (JSONException e) {
-                            // TODO Auto-generated catch block
-                            e.printStackTrace();
-                        }
+                Log.e("response je","post result"+res);
+            }
 
-                        JSONObject student2 = new JSONObject();
-                        try {
-                            student2.put("typeId", "3");
-                            student2.put("itemName", "NAME OF STUDENT");
-                            student2.put("itemImage", "3rd");
-                            student2.put("createdBy", "Arts");
-                            student2.put("createdAt", "5/5/1993");
+            @Override
+            public void onFailure(Call<ListCategoryResponse> call, Throwable t) {
 
-                        } catch (JSONException e) {
-                            // TODO Auto-generated catch block
-                            e.printStackTrace();
-                        }
-                        JSONObject student3 = new JSONObject();
-                        try {
-                            student3.put("typeId", "3");
-                            student3.put("itemName", "NAME OF STUDENT");
-                            student3.put("itemImage", "3rd");
-                            student3.put("createdBy", "Arts");
-                            student3.put("createdAt", "5/5/1993");
+                Log.e("error","er"+t.getMessage());
+            }
+        });
 
-                        } catch (JSONException e) {
-                            // TODO Auto-generated catch block
-                            e.printStackTrace();
-                        }
-                        JSONObject student4 = new JSONObject();
-                        try {
-                            student4.put("typeId", "3");
-                            student4.put("itemName", "NAME OF STUDENT");
-                            student4.put("itemImage", "3rd");
-                            student4.put("createdBy", "Arts");
-                            student4.put("createdAt", "5/5/1993");
-
-                        } catch (JSONException e) {
-                            // TODO Auto-generated catch block
-                            e.printStackTrace();
-                        }
-                        JSONArray jsonArray = new JSONArray();
-
-                        jsonArray.put(student1);
-                        jsonArray.put(student2);
-                        jsonArray.put(student3);
-                        jsonArray.put(student4);
-                        JSONObject sub = new JSONObject();
-                        try {
-
-                            sub.put("success","0");
-                            sub.put("data",jsonArray);
-                            response.put("responsedata",sub);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
-//response end
-                        Log.e("RESPONSE",""+response.toString());
-                        try {
-                            JSONObject jsonObject = new JSONObject(response.toString());
-                            if(jsonObject.has("responsedata")) {
-                                Log.e("jsonObject","jsonObject is "+jsonObject);
-                                JSONObject json2 = new JSONObject(String.valueOf(jsonObject));
-                                JSONObject res = (JSONObject) json2.get("responsedata");
-                                JSONObject actualvalue = new JSONObject(res.toString());
-                                Log.e("json2","json2is "+json2);
-                                Log.e("res","res is"+res);
-                                Log.e("actualvalue","actualvalue is"+actualvalue);
-                                String result = actualvalue.getString("success");
-                                Log.e("actualvalue","success  is"+result);
-                                if(result.equals("0"))
-                                {
-
-                                }
-                                else
-                                {
-
-                                }
-
-                            }
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-
-                        Log.e("ERROR",""+error);
-                    }
-                });
-
-        jsObjRequest.setRetryPolicy(new DefaultRetryPolicy(
-                20000,
-                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-        queue.add(jsObjRequest);
-        Log.d("request>>>>>>", queue.toString());
 
     }
+//    private void parseJson(JSONArray jsonArray) {
+//        for(int i =0; i<jsonArray.length();i++)
+//        {
+//            try {
+//                JSONObject object = jsonArray.getJSONObject(i);
+//                Items dt = new Items();
+//                dt.setImage(object.getString("download_url"));
+//                dt.setName(object.getString("author"));
+//                dataarraylist.add(dt);
+//                customAdapter_offers = new Offers_ItemAdapter(getApplicationContext(),dataarraylist);
+//                recyclerView_offers.setAdapter(customAdapter_offers);
+//            } catch (JSONException e) {
+//                e.printStackTrace();
+//                Log.e("error","er"+e);
+//            }
+//        }
+//    }
 
 }
