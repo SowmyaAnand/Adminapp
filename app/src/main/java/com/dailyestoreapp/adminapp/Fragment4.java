@@ -30,8 +30,10 @@ public class Fragment4 extends Fragment {
     LinearLayoutManager linearLayoutManager_offers,linearLayoutManager2_offers;
     Offers_ItemAdapter customAdapter_offers;
     test customadapter2_offers;
+
+
     public Fragment4() {
-        // Required empty public constructor
+
     }
 
     /**
@@ -48,6 +50,7 @@ public class Fragment4 extends Fragment {
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
+
         fragment.setArguments(args);
         return fragment;
     }
@@ -59,6 +62,7 @@ public class Fragment4 extends Fragment {
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
+            Log.e("mparam","test"+mParam2);
         }
     }
 

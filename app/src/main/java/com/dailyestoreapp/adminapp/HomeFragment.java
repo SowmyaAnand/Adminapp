@@ -1,5 +1,6 @@
 package com.dailyestoreapp.adminapp;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,6 +22,8 @@ import com.android.volley.toolbox.Volley;
 import com.dailyestoreapp.adminapp.ui.home.HomeViewModel;
 import com.google.android.material.tabs.TabLayout;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
@@ -29,6 +32,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Set;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -38,22 +42,43 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 
+import static android.content.Context.MODE_PRIVATE;
+
 public class HomeFragment extends Fragment {
+
+    public static final String MY_PREFS_NAME = "AdminApp";
+    ArrayList<String> categoriesHome = new ArrayList<>();
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        ArrayList<String> categories = new ArrayList<>();
+
 
         View root = inflater.inflate(R.layout.fragment_home, container, false);
-Activate();
-        SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(getContext(),getChildFragmentManager());
-        sectionsPagerAdapter.addFragment(new Fragment1(),"Home");
-        sectionsPagerAdapter.addFragment(new Fragment4(),"Offers");
-        sectionsPagerAdapter.addFragment(new Fragment4(),"Contact");
-        sectionsPagerAdapter.addFragment(new Fragment4(),"My Account");
-        sectionsPagerAdapter.addFragment(new Fragment4(),"Home");
-        sectionsPagerAdapter.addFragment(new Fragment4(),"Offers");
-        sectionsPagerAdapter.addFragment(new Fragment4(),"Contact");
-        sectionsPagerAdapter.addFragment(new Fragment4(),"My Account");
+        SharedPreferences shared = getActivity().getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
+        Set<String> set = shared.getStringSet("categories", null);
+        categoriesHome.addAll(set);
+        Log.e("cat","cat home"+categoriesHome);
+
+        SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(getContext(),getChildFragmentManager(),categoriesHome);
+        for(int i = 0;i<categoriesHome.size();i++)
+        {
+            Log.e("tag","tag cat"+categoriesHome.get(i));
+            if(i==0)
+            {
+                sectionsPagerAdapter.addFragment(new Fragment1(),categoriesHome.get(i));
+            }
+            else
+            {
+                sectionsPagerAdapter.addFragment(new Fragment4(),categoriesHome.get(i));
+            }
+        }
+//        sectionsPagerAdapter.addFragment(new Fragment1(),"Home");
+//        sectionsPagerAdapter.addFragment(new Fragment4(),"Offers");
+//        sectionsPagerAdapter.addFragment(new Fragment4(),"Contact");
+//        sectionsPagerAdapter.addFragment(new Fragment4(),"My Account");
+//        sectionsPagerAdapter.addFragment(new Fragment4(),"Home");
+//        sectionsPagerAdapter.addFragment(new Fragment4(),"Offers");
+//        sectionsPagerAdapter.addFragment(new Fragment4(),"Contact");
+//        sectionsPagerAdapter.addFragment(new Fragment4(),"My Account");
         ViewPager viewPager =root.findViewById(R.id.view_pager2);
         viewPager.setAdapter(sectionsPagerAdapter);
         TabLayout tabs = root.findViewById(R.id.tabs);
@@ -61,39 +86,7 @@ Activate();
 
         return root;
     }
-    private void Activate()
-    {
-        String url = "http://dailyestoreapp.com/dailyestore/api/";
-        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
-        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-        OkHttpClient okHttpClient = new OkHttpClient.Builder()
-                .addInterceptor(loggingInterceptor)
-                .build();
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(url)
-                .addConverterFactory(GsonConverterFactory.create())
-                .client(okHttpClient)
-                .build();
-        ResponseInterface1 mainInterface = retrofit.create(ResponseInterface1.class);
-        Call<ListCategoryResponse> call = mainInterface.CategoryList();
-        call.enqueue(new Callback<ListCategoryResponse>() {
-            @Override
-            public void onResponse(Call<ListCategoryResponse> call, retrofit2.Response<ListCategoryResponse> response) {
-                String res= new GsonBuilder().setPrettyPrinting().create().toJson(response.body().getResponsedata().getData());
 
-
-                Log.e("response je","post result"+res);
-            }
-
-            @Override
-            public void onFailure(Call<ListCategoryResponse> call, Throwable t) {
-
-                Log.e("error","er"+t.getMessage());
-            }
-        });
-
-
-    }
 //    private void parseJson(JSONArray jsonArray) {
 //        for(int i =0; i<jsonArray.length();i++)
 //        {
