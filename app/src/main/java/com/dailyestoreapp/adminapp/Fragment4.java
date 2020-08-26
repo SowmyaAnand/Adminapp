@@ -1,5 +1,7 @@
 package com.dailyestoreapp.adminapp;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,8 +14,25 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Fragment4 extends Fragment   {
     private static final String ARG_PARAM1 = "param1";
@@ -32,9 +51,10 @@ public class Fragment4 extends Fragment   {
     Offers_ItemAdapter customAdapter_offers;
     test customadapter2_offers;
  private static String cat_selected ;
-
-    public Fragment4(String categoryy) {
+    private static Integer cat_number ;
+    public Fragment4(String categoryy,Integer cat_no) {
 cat_selected=categoryy;
+cat_number=cat_no;
     }
 
     /**
@@ -42,8 +62,8 @@ cat_selected=categoryy;
      * this fragment using the provided parameters.
      */
     // TODO: Rename and change types and number of parameters
-    public static Fragment4 newInstance(String param1) {
-        Fragment4 fragment = new Fragment4(param1);
+    public static Fragment4 newInstance(String param1,String param2) {
+        Fragment4 fragment = new Fragment4(param1,1);
         Bundle args = new Bundle();
         args.putString("category", param1);
         fragment.setArguments(args);
@@ -64,6 +84,7 @@ public void pageselect(String param)
 
 
             Log.e("fragment2","oncreate"+cat_selected);
+            Log.e("fragment","oncreate"+cat_number);
         }
 
     }
@@ -86,19 +107,65 @@ public void pageselect(String param)
 //    }
 public void change()
 {  Log.e("fragment2","change"+this.cat_selected);
-    personNames_offers = new ArrayList<>(Arrays.asList("farg4ITEM1", "frag4ITEM2", "ITEM3", "ITEM4", "ITEM5", "ITEM6"));
+   // personNames_offers = new ArrayList<>(Arrays.asList("farg4ITEM1", "frag4ITEM2", "ITEM3", "ITEM4", "ITEM5", "ITEM6"));
 
 }
+    private void Activate()
+    {
+        Log.e("fragment2","Inside Activate"+cat_number);
+        int type = cat_number;
+        String url = "http://dailyestoreapp.com/dailyestore/api/";
+        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
+        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        OkHttpClient okHttpClient = new OkHttpClient.Builder()
+                .addInterceptor(loggingInterceptor)
+                .build();
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(url)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(okHttpClient)
+                .build();
+        ResponseInterface1 mainInterface = retrofit.create(ResponseInterface1.class);
+        Call<ListCategoryResponse> call = mainInterface.SubCategory(1);
+        call.enqueue(new Callback<ListCategoryResponse>() {
+            @Override
+            public void onResponse(Call<ListCategoryResponse> call, retrofit2.Response<ListCategoryResponse> response) {
+                String res= new GsonBuilder().setPrettyPrinting().create().toJson(response.body().getResponsedata());
+                JsonObject obj = new JsonParser().parse(res).getAsJsonObject();
+                try {
+                    JSONObject jo2 = new JSONObject(obj.toString());
+                    JSONArray categoriesarray = jo2.getJSONArray("data");
+                    Log.e("Fragment4","subcategories="+jo2);
+
+
+                    //personNames_offers = new ArrayList<>(Arrays.asList("farg4ITEM1", "frag4ITEM2", "ITEM3", "ITEM4", "ITEM5", "ITEM6"));
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<ListCategoryResponse> call, Throwable t) {
+
+            }
+        });
+
+
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         change();
+        Activate();
         if (getArguments() != null) {
             mParam1 = getArguments().getString("category");
 
 
             Log.e("fragment2","**"+this.cat_selected);
+            Log.e("fragment2","**"+this.cat_number);
         }
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 

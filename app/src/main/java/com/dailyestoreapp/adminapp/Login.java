@@ -8,17 +8,24 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 
 import okhttp3.OkHttpClient;
@@ -30,7 +37,10 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Login extends AppCompatActivity {
 Button lg;
+    StringBuilder strbul  = new StringBuilder();
     ArrayList<String> categories = new ArrayList<>();
+    List<String>cat_no = new ArrayList<String>();
+    ArrayList<Integer> nums = new ArrayList<>();
     public static final String MY_PREFS_NAME = "AdminApp";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,26 +78,46 @@ Button lg;
                 try {
                     JSONObject jo2 = new JSONObject(obj.toString());
                     JSONArray categoriesarray = jo2.getJSONArray("data");
+                    Set<Integer> set3 = new HashSet<Integer>();
+
                     for(int i=0; i<categoriesarray.length(); i++)
                     {
                         JSONObject j1= categoriesarray.getJSONObject(i);
                         String item = j1.getString("itemName");
-                        //categories.add(item);
+                        int item_no = Integer.parseInt(j1.getString("typeId"));
+                        nums.add(item_no);
+                        categories.add(item);
 
                     }
-                    categories.add("Food");
-                    categories.add("Home Appliences");
-                    categories.add("Grocery");
+
+                    Iterator<Integer> iter = nums.iterator();
+                    while(iter.hasNext())
+                    {
+                        strbul.append(iter.next());
+                        if(iter.hasNext()){
+                            strbul.append(",");
+                        }
+                    }
+                    strbul.toString();
+                    Log.e("res","res="+strbul);
+
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                Log.e("cat","cat"+categories);
+
 
                 SharedPreferences.Editor editor = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
                 Set<String> set = new HashSet<String>();
                 set.addAll(categories);
                 editor.putStringSet("categories", set);
                 editor.apply();
+
+                SharedPreferences.Editor editor2 = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
+                editor.putString("categories_no", strbul.toString());
+                editor.apply();
+
+
                 Intent next = new Intent(Login.this,Main2Activity.class);
                 startActivity(next);
 
@@ -101,4 +131,5 @@ Button lg;
 
 
     }
+
 }

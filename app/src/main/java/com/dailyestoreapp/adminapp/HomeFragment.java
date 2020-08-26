@@ -33,6 +33,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Set;
+import java.util.StringTokenizer;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -46,9 +47,16 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class HomeFragment extends Fragment {
     String category_selected;
+
     public static final String MY_PREFS_NAME = "AdminApp";
     ArrayList<String> categoriesHome = new ArrayList<>();
+
+    ArrayList<Integer> categoriesHomeNo2 = new ArrayList<>();
 Fragment4 frag4;
+
+
+
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
@@ -58,16 +66,30 @@ Fragment4 frag4;
         SharedPreferences shared = getActivity().getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
         Set<String> set = shared.getStringSet("categories", null);
         categoriesHome.addAll(set);
-        Log.e("cat","cat home"+categoriesHome);
+
+        SharedPreferences shared2 = getActivity().getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
+        String savedString = shared2.getString("categories_no", "");
+//        StringTokenizer st = new StringTokenizer(savedString, ",");
+//        int[] savedList = new int[10];
+//        for (int i = 0; i < 10; i++) {
+//            savedList[i] = Integer.parseInt(st.nextToken());
+//        }
+        String[] numbers = savedString.split(",");//if spaces are uneven, use \\s+ instead of " "
+        for (String number : numbers) {
+            categoriesHomeNo2.add(Integer.valueOf(number));
+        }
+        Log.e("cat_home","cat home num="+categoriesHomeNo2);
 category_selected=categoriesHome.get(0);
-Log.e("cat","cat_home selected"+category_selected);
+
+
 
         final SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(getContext(),getChildFragmentManager(),categoriesHome);
        // frag4 = new Fragment4();
         for(int i = 0;i<categoriesHome.size();i++)
         {
 category_selected=categoriesHome.get(i);
-            if(i==0)
+
+            if(i==1)
             {
                 Bundle bundle = new Bundle();
                 bundle.putString("category", category_selected);
@@ -79,15 +101,16 @@ category_selected=categoriesHome.get(i);
 
 
             }
-            else if(i==1)
+            else if(i==0)
             {
                 Bundle bundle = new Bundle();
                 bundle.putString("category", category_selected);
-                Fragment4 mapFragment2 = new Fragment4(category_selected);
+                Fragment4 mapFragment2 = new Fragment4(category_selected,categoriesHomeNo2.get(i));
                 mapFragment2.setArguments(bundle);
 
 
-                Log.e("tag","tag cat"+categoriesHome.get(i));
+                Log.e("tag","tag cat fragment4"+categoriesHome.get(i));
+
                 sectionsPagerAdapter.addFragment(mapFragment2,categoriesHome.get(i));
 
            }
@@ -108,58 +131,7 @@ category_selected=categoriesHome.get(i);
         viewPager.setAdapter(sectionsPagerAdapter);
         TabLayout tabs = root.findViewById(R.id.tabs);
         tabs.setupWithViewPager(viewPager);
-//        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-//            @Override
-//            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-//
-//            }
-//
-//            @Override
-//            public void onPageSelected(int position) {
-//                category_selected = String.valueOf(sectionsPagerAdapter.getPageTitle(position));
-//                Log.e("onpageselected",""+sectionsPagerAdapter.getPageTitle(position));
-//                Bundle bundle = new Bundle();
-//                bundle.putString("category", category_selected);
-//                Fragment4 p = new Fragment4(String.valueOf(sectionsPagerAdapter.getPageTitle(position)));
-//                p.setArguments(bundle);
-//                p.pageselect(category_selected);
-//
-//
-//            }
-//
-//            @Override
-//            public void onPageScrollStateChanged(int state) {
-//
-//            }
-//        });
-//        tabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-//            @Override
-//            public void onTabSelected(TabLayout.Tab tab) {
-//            Log.e("home","tab selected"+tab.getPosition());
-//           // category_selected=categoriesHome.get(tab.getPosition());
-//                category_selected=categoriesHome.get(tab.getPosition());
-//                Log.e("cat","cat_home selected"+category_selected);
-//                Bundle bundle = new Bundle();
-//                bundle.putString("category", category_selected);
-//                Fragment4 mapFragment = new Fragment4();
-//                mapFragment.setArguments(bundle);
-//
-//                SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(getContext(),getChildFragmentManager(),categoriesHome);
-//
-//                sectionsPagerAdapter.addFragment(mapFragment,category_selected);
-//
-//            }
-//
-//            @Override
-//            public void onTabUnselected(TabLayout.Tab tab) {
-//
-//            }
-//
-//            @Override
-//            public void onTabReselected(TabLayout.Tab tab) {
-//
-//            }
-//        });
+
         return root;
     }
 

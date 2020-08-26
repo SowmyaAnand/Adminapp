@@ -1,36 +1,37 @@
-//Data package for  main category
+//Data package for Sub category in main category
 package com.dailyestoreapp.adminapp;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class ListCategoryResponseData {
+public class ResponseSubCategoryData {
 
-    @SerializedName("typeId")
-    @Expose
-    private String typeId;
-    @SerializedName("itemName")
-    @Expose
-    private String itemName;
-    @SerializedName("itemImage")
-    @Expose
-    private String itemImage;
-    @SerializedName("createdBy")
-    @Expose
-    private String createdBy;
-    @SerializedName("createdAt")
-    @Expose
-    private String createdAt;
     @SerializedName("subId")
     @Expose
     private String subId;
-
+    @SerializedName("typeId")
+    @Expose
+    private String typeId;
     @SerializedName("subName")
     @Expose
     private String subName;
     @SerializedName("subItemImage")
     @Expose
     private String subItemImage;
+    @SerializedName("createdBy")
+    @Expose
+    private String createdBy;
+    @SerializedName("createdAt")
+    @Expose
+    private String createdAt;
+
+    public String getSubId() {
+        return subId;
+    }
+
+    public void setSubId(String subId) {
+        this.subId = subId;
+    }
 
     public String getTypeId() {
         return typeId;
@@ -40,20 +41,20 @@ public class ListCategoryResponseData {
         this.typeId = typeId;
     }
 
-    public String getItemName() {
-        return itemName;
+    public String getSubName() {
+        return subName;
     }
 
-    public void setItemName(String itemName) {
-        this.itemName = itemName;
+    public void setSubName(String subName) {
+        this.subName = subName;
     }
 
-    public String getItemImage() {
-        return itemImage;
+    public String getSubItemImage() {
+        return subItemImage;
     }
 
-    public void setItemImage(String itemImage) {
-        this.itemImage = itemImage;
+    public void setSubItemImage(String subItemImage) {
+        this.subItemImage = subItemImage;
     }
 
     public String getCreatedBy() {
@@ -73,3 +74,5 @@ public class ListCategoryResponseData {
     }
 
 }
+
+

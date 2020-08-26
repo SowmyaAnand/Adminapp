@@ -1,3 +1,4 @@
+//Package for retrieving all types of get data and get success
 package com.dailyestoreapp.adminapp;
 
 import java.util.List;
@@ -12,7 +13,7 @@ public class ListCategoryResponseResponseData {
     @SerializedName("data")
     @Expose
     private List<ListCategoryResponseData> data = null;
-
+    private List<ResponseSubCategoryData> sub_data = null;
     public String getSuccess() {
         return success;
     }
@@ -21,11 +22,12 @@ public class ListCategoryResponseResponseData {
         this.success = success;
     }
 
-    public List<ListCategoryResponseData> getData() {
+
+      //listing all categories
+        public List<ListCategoryResponseData> getData() {
         return data;
     }
-
-    public void setData(List<ListCategoryResponseData> data) {
+        public void setData(List<ListCategoryResponseData> data) {
         this.data = data;
     }
 
