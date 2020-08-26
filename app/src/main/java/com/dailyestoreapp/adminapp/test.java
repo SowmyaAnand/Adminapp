@@ -55,7 +55,7 @@ mComminication.respond(selectedname);
 
     @Override
     public int getItemCount() {
-        return Imagesoffer.size();
+        return personNames.size();
     }
     public class MyViewHolder2 extends RecyclerView.ViewHolder {
         TextView name;// init the item view's

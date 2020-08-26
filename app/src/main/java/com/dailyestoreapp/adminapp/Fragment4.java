@@ -37,14 +37,14 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class Fragment4 extends Fragment   {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
+private String tag = "fragment4";
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
     ArrayList Images_offers = new ArrayList<>(Arrays.asList(R.drawable.h1,R.drawable.h2, R.drawable.h1, R.drawable.h2, R.drawable.h1));
     ArrayList Images_images = new ArrayList<>(Arrays.asList(R.drawable.home,R.drawable.home, R.drawable.home, R.drawable.home, R.drawable.home,R.drawable.home));
     ArrayList personNames = new ArrayList<>(Arrays.asList("ITEM1", "ITEM2", "ITEM3", "ITEM4", "ITEM5", "ITEM6"));
-
+    ArrayList<String> Sub_categories = new ArrayList<>();
     ArrayList personNames_offers = new ArrayList<>(Arrays.asList("farg4ITEM1", "ITEM2", "ITEM3", "ITEM4", "ITEM5", "ITEM6"));
     RecyclerView recyclerView_offers,itemlistingcategory_offers;
     LinearLayoutManager linearLayoutManager_offers,linearLayoutManager2_offers;
@@ -137,6 +137,17 @@ public void change()
                     JSONArray categoriesarray = jo2.getJSONArray("data");
                     Log.e("Fragment4","subcategories="+jo2);
 
+                    for(int i=0; i<categoriesarray.length(); i++)
+                    {
+                        JSONObject j1= categoriesarray.getJSONObject(i);
+                        String sub_name = j1.getString("subName");
+                        if(!Sub_categories.contains(sub_name))
+                        Sub_categories.add(sub_name);
+                        }
+
+                    customadapter2_offers.notifyDataSetChanged();
+                    Log.e(tag,"sub_cat inside Activate"+Sub_categories);
+
 
                     //personNames_offers = new ArrayList<>(Arrays.asList("farg4ITEM1", "frag4ITEM2", "ITEM3", "ITEM4", "ITEM5", "ITEM6"));
 
@@ -160,6 +171,7 @@ public void change()
         // Inflate the layout for this fragment
         change();
         Activate();
+        Log.e(tag,"onactivityview called");
         if (getArguments() != null) {
             mParam1 = getArguments().getString("category");
 
@@ -174,7 +186,8 @@ public void change()
         LinearLayoutManager linearLayoutManager2_offers = new LinearLayoutManager(rootView.getContext(),LinearLayoutManager.HORIZONTAL,false);
         itemlistingcategory_offers.setLayoutManager(linearLayoutManager2_offers);
         //  call the constructor of CustomAdapter to send the reference and data to Adapter
-        customadapter2_offers = new test(rootView.getContext(), personNames,Images_offers,communication);
+        Log.e(tag,"sub_cat inside oncreate"+Sub_categories);
+        customadapter2_offers = new test(rootView.getContext(), Sub_categories,Images_offers,communication);
         itemlistingcategory_offers.setAdapter(customadapter2_offers);
         //second recyclerview
         recyclerView_offers = (RecyclerView) rootView.findViewById(R.id.itemrecycler_offers);
@@ -192,7 +205,7 @@ public void change()
     categorySubcategoryCommunicaion communication=new categorySubcategoryCommunicaion() {
         @Override
         public void respond(String name) {
-            Log.e("name","name is"+name);
+            Log.e(tag," sub name is"+name);
             personNames_offers.clear();
             personNames_offers.add("Item7");
             personNames_offers.add("Item8");
