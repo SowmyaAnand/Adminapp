@@ -72,8 +72,12 @@ Button lg;
                     {
                         JSONObject j1= categoriesarray.getJSONObject(i);
                         String item = j1.getString("itemName");
-                        categories.add(item);
+                        //categories.add(item);
+
                     }
+                    categories.add("Food");
+                    categories.add("Home Appliences");
+                    categories.add("Grocery");
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

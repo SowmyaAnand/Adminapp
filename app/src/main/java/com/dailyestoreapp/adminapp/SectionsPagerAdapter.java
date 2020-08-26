@@ -1,6 +1,7 @@
 package com.dailyestoreapp.adminapp;
 
 import android.content.Context;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.StringRes;
@@ -35,8 +36,11 @@ this.text=cat;
     public Fragment getItem(int position) {
         return mFragmentList.get(position);
     }
+
+
     @Override
     public CharSequence getPageTitle(int position) {
+
         return mFragmentTitleList.get(position);
     }
     @Override
@@ -44,10 +48,12 @@ this.text=cat;
         return text.size();
     }
     public void addFragment(Fragment fragment, String title) {
-
+Log.e("add","add");
         mFragmentList.add(fragment);
         mFragmentTitleList.add(title);
 
 
     }
+
+
 }

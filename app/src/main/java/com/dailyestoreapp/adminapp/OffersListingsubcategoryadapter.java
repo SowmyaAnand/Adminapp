@@ -35,6 +35,7 @@ public class OffersListingsubcategoryadapter extends RecyclerView.Adapter<Offers
         String name = (String) personNames.get(position);
         int n= (int) Imagesoffer.get(position);
         holder.img.setImageResource(n);
+        holder.name.setText(name);
         // holder.name.setText(name);
         // implement setOnClickListener event on item view.
 //        holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -57,6 +58,7 @@ public class OffersListingsubcategoryadapter extends RecyclerView.Adapter<Offers
         public MyViewHolder2(View itemView) {
             super(itemView);
             img = (ImageView) itemView.findViewById(R.id.ct_image);
+            name =(TextView)itemView.findViewById(R.id.ct_text);
             // get the reference of item view's
 
         }

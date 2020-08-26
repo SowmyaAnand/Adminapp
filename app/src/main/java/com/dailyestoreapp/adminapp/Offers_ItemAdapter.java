@@ -41,7 +41,7 @@ import cc.cloudist.acplibrary.ACProgressFlower;
 import cc.cloudist.acplibrary.ACProgressPie;
 
 public class Offers_ItemAdapter extends RecyclerView.Adapter<Offers_ItemAdapter.MyViewHolder> {
-    ArrayList<String> personNames = new ArrayList<String>();
+    ArrayList personNames = new ArrayList<String>();
     Context context;
     ArrayList Images;
 
@@ -73,7 +73,7 @@ public class Offers_ItemAdapter extends RecyclerView.Adapter<Offers_ItemAdapter.
         String name = (String) personNames.get(position);
         int n= (int) Images.get(position);
         holder.image_image.setImageResource(n);
-
+holder.name.setText(name);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

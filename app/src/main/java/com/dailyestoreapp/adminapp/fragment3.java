@@ -1,10 +1,12 @@
 package com.dailyestoreapp.adminapp;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -21,12 +23,14 @@ public class fragment3 extends Fragment {
     private String mParam2;
     ArrayList Images_offers = new ArrayList<>(Arrays.asList(R.drawable.newvegetable,R.drawable.fried_chicken_clip_art_8_1, R.drawable.newvegetable, R.drawable.fried_chicken_clip_art_8_1, R.drawable.newvegetable));
     ArrayList Images_images = new ArrayList<>(Arrays.asList(R.drawable.wp2375838_1,R.drawable.wp2375838_1, R.drawable.wp2375838_1, R.drawable.wp2375838_1, R.drawable.wp2375838_1));
-    ArrayList personNames_offers = new ArrayList<>(Arrays.asList("ITEM1", "ITEM2", "ITEM3", "ITEM4", "ITEM5", "ITEM6", "ITEM7"));
+    ArrayList personNames_offers = new ArrayList<>(Arrays.asList("frag3ITEM1", "ITEM2", "ITEM3", "ITEM4", "ITEM5", "ITEM6", "ITEM7"));
     RecyclerView recyclerView_offers,itemlistingcategory_offers;
     LinearLayoutManager linearLayoutManager_offers,linearLayoutManager2_offers;
     Offers_ItemAdapter customAdapter_offers;
     OffersListingsubcategoryadapter customadapter2_offers;
-    public fragment3() {
+    private static String ct;
+    public fragment3(String nm) {
+        ct=nm;
         // Required empty public constructor
     }
 
@@ -40,7 +44,7 @@ public class fragment3 extends Fragment {
      */
     // TODO: Rename and change types and number of parameters
     public static fragment3 newInstance(String param1, String param2) {
-        fragment3 fragment = new fragment3();
+        fragment3 fragment = new fragment3("test");
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -57,13 +61,18 @@ public class fragment3 extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
+    public void change()
+    { Log.e("fragment3","change"+this.ct);
+        personNames_offers = new ArrayList<>(Arrays.asList("frag3ITEM1", "frag3ITEM2", "ITEM3", "ITEM4", "ITEM5", "ITEM6", "ITEM7"));
 
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        Log.e("fragment3","oncreateview called"+this.ct);
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-
+change();
         itemlistingcategory_offers = (RecyclerView) rootView.findViewById(R.id.recyclerView_categories_offer);
         // set a LinearLayoutManager with default vertical orientation
         LinearLayoutManager linearLayoutManager2_offers = new LinearLayoutManager(rootView.getContext(),LinearLayoutManager.HORIZONTAL,false);
@@ -84,4 +93,17 @@ public class fragment3 extends Fragment {
         // gridview.setAdapter(new ImageAdapter(rootView.getContext()));
         return rootView;
     }
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        Log.e("fragment3", "onactivitycreated  category from pass" + this.ct);
+//        if (getArguments() != null) {
+//            cat = getArguments().getString("category");
+//            Log.e("frag", "onactivitycreated  category from pass" + cat);
+//        }
+
+    }
 }
+
+

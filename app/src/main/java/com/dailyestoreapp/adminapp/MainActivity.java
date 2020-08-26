@@ -181,8 +181,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId())
         {
+
             case R.id.nav_msg:
-                getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment,new fragment3()).commit();
+                //changed during home fragment PLEASE CHECK
+                getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment,new fragment3("test")).commit();
                 break;
         }
         drawer.closeDrawer(GravityCompat.START);
