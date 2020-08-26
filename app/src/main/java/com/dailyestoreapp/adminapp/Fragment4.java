@@ -45,6 +45,10 @@ private String tag = "fragment4";
     ArrayList Images_images = new ArrayList<>(Arrays.asList(R.drawable.home,R.drawable.home, R.drawable.home, R.drawable.home, R.drawable.home,R.drawable.home));
     ArrayList personNames = new ArrayList<>(Arrays.asList("ITEM1", "ITEM2", "ITEM3", "ITEM4", "ITEM5", "ITEM6"));
     ArrayList<String> Sub_categories = new ArrayList<>();
+    ArrayList<String> Item_categories = new ArrayList<>();
+    ArrayList<Integer> Item_Quantity = new ArrayList<>();
+    ArrayList<Integer> Item_Price = new ArrayList<>();
+    ArrayList<Integer> Sub_categories_id = new ArrayList<>();
     ArrayList personNames_offers = new ArrayList<>(Arrays.asList("farg4ITEM1", "ITEM2", "ITEM3", "ITEM4", "ITEM5", "ITEM6"));
     RecyclerView recyclerView_offers,itemlistingcategory_offers;
     LinearLayoutManager linearLayoutManager_offers,linearLayoutManager2_offers;
@@ -110,7 +114,7 @@ public void change()
    // personNames_offers = new ArrayList<>(Arrays.asList("farg4ITEM1", "frag4ITEM2", "ITEM3", "ITEM4", "ITEM5", "ITEM6"));
 
 }
-    private void Activate()
+    private void subcategoryactivate()
     {
         Log.e("fragment2","Inside Activate"+cat_number);
         int type = cat_number;
@@ -126,7 +130,7 @@ public void change()
                 .client(okHttpClient)
                 .build();
         ResponseInterface1 mainInterface = retrofit.create(ResponseInterface1.class);
-        Call<ListCategoryResponse> call = mainInterface.SubCategory(1);
+        Call<ListCategoryResponse> call = mainInterface.SubCategory(cat_number);
         call.enqueue(new Callback<ListCategoryResponse>() {
             @Override
             public void onResponse(Call<ListCategoryResponse> call, retrofit2.Response<ListCategoryResponse> response) {
@@ -142,11 +146,18 @@ public void change()
                         JSONObject j1= categoriesarray.getJSONObject(i);
                         String sub_name = j1.getString("subName");
                         if(!Sub_categories.contains(sub_name))
-                        Sub_categories.add(sub_name);
+                        {
+                            Sub_categories.add(sub_name);
+                            int sub_Cat_id = Integer.parseInt(j1.getString("subId"));
+                            Sub_categories_id.add(sub_Cat_id);
+
                         }
+
+                    }
 
                     customadapter2_offers.notifyDataSetChanged();
                     Log.e(tag,"sub_cat inside Activate"+Sub_categories);
+                    ItemsList(1);
 
 
                     //personNames_offers = new ArrayList<>(Arrays.asList("farg4ITEM1", "frag4ITEM2", "ITEM3", "ITEM4", "ITEM5", "ITEM6"));
@@ -165,12 +176,72 @@ public void change()
 
 
     }
+    private void ItemsList(Integer subId)
+    {
+
+
+        String url = "http://dailyestoreapp.com/dailyestore/api/";
+        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
+        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        OkHttpClient okHttpClient = new OkHttpClient.Builder()
+                .addInterceptor(loggingInterceptor)
+                .build();
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(url)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(okHttpClient)
+                .build();
+        ResponseInterface1 mainInterface = retrofit.create(ResponseInterface1.class);
+        Call<ListCategoryResponse> call = mainInterface.Items(subId);
+        call.enqueue(new Callback<ListCategoryResponse>() {
+            @Override
+            public void onResponse(Call<ListCategoryResponse> call, retrofit2.Response<ListCategoryResponse> response) {
+                String res= new GsonBuilder().setPrettyPrinting().create().toJson(response.body().getResponsedata());
+                JsonObject obj = new JsonParser().parse(res).getAsJsonObject();
+                try {
+                    JSONObject jo2 = new JSONObject(obj.toString());
+                    JSONArray categoriesarray = jo2.getJSONArray("data");
+                    Log.e(tag,"items="+jo2);
+                    for(int i=0; i<categoriesarray.length(); i++)
+                    {
+                        JSONObject j1= categoriesarray.getJSONObject(i);
+                        String item_name = j1.getString("itemName");
+
+                        if(!Item_categories.contains(item_name))
+                        {
+                            Integer item_quant = Integer.valueOf(j1.getString("quantity"));
+                            Integer item_price = Integer.valueOf(j1.getString("price"));
+                            Item_categories.add(item_name);
+                            Item_Quantity.add(item_quant);
+                            Item_Price.add(item_price);
+
+
+                        }
+
+                    }
+
+                    customAdapter_offers.notifyDataSetChanged();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<ListCategoryResponse> call, Throwable t) {
+
+            }
+        });
+
+
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         change();
-        Activate();
+        subcategoryactivate();
         Log.e(tag,"onactivityview called");
         if (getArguments() != null) {
             mParam1 = getArguments().getString("category");
@@ -187,7 +258,7 @@ public void change()
         itemlistingcategory_offers.setLayoutManager(linearLayoutManager2_offers);
         //  call the constructor of CustomAdapter to send the reference and data to Adapter
         Log.e(tag,"sub_cat inside oncreate"+Sub_categories);
-        customadapter2_offers = new test(rootView.getContext(), Sub_categories,Images_offers,communication);
+        customadapter2_offers = new test(rootView.getContext(), Sub_categories,Images_offers,Sub_categories_id,communication);
         itemlistingcategory_offers.setAdapter(customadapter2_offers);
         //second recyclerview
         recyclerView_offers = (RecyclerView) rootView.findViewById(R.id.itemrecycler_offers);
@@ -196,7 +267,7 @@ public void change()
         recyclerView_offers.setLayoutManager(linearLayoutManager);
         //  call the constructor of CustomAdapter to send the reference and data to Adapter
 
-        customAdapter_offers = new Offers_ItemAdapter(rootView.getContext(), personNames_offers,Images_images);
+        customAdapter_offers = new Offers_ItemAdapter(rootView.getContext(), Item_categories,Images_images,Item_Quantity,Item_Price);
         recyclerView_offers.setAdapter(customAdapter_offers);
         // GridView gridview = (GridView) rootView.findViewById(R.id.gridview);
         // gridview.setAdapter(new ImageAdapter(rootView.getContext()));
@@ -204,14 +275,12 @@ public void change()
     }
     categorySubcategoryCommunicaion communication=new categorySubcategoryCommunicaion() {
         @Override
-        public void respond(String name) {
+        public void respond(Integer name) {
             Log.e(tag," sub name is"+name);
             personNames_offers.clear();
-            personNames_offers.add("Item7");
-            personNames_offers.add("Item8");
-            personNames_offers.add("Item9");
+           ItemsList(name);
 
-            customAdapter_offers.notifyDataSetChanged();
+           // customAdapter_offers.notifyDataSetChanged();
 
            //Toast.makeText(getContext(),name,Toast.LENGTH_LONG).show();
         }

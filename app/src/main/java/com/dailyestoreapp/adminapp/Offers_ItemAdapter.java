@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.telephony.CellInfoNr;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,15 +45,18 @@ public class Offers_ItemAdapter extends RecyclerView.Adapter<Offers_ItemAdapter.
     ArrayList personNames = new ArrayList<String>();
     Context context;
     ArrayList Images;
-
+ArrayList<Integer> it_quantity = new ArrayList<>() ;
+    ArrayList<Integer> it_price = new ArrayList<>();
     ArrayList<String> lts = new ArrayList<String>();
     ArrayList personNames_offers = new ArrayList<>(Arrays.asList("ITEM1", "ITEM2", "ITEM3", "ITEM4", "ITEM5", "ITEM6", "ITEM7"));
     int quantity = 1;
     ACProgressFlower dialog;
-    public Offers_ItemAdapter(Context context, ArrayList personNames, ArrayList Images) {
+    public Offers_ItemAdapter(Context context, ArrayList personNames, ArrayList Images,ArrayList itm_quantity,ArrayList itm_price) {
         this.context = context;
         this.personNames = personNames;
         this.Images=Images;
+        this.it_price=itm_price;
+        this.it_quantity=itm_quantity;
         this.lts.addAll(personNames);
 
     }
@@ -73,6 +77,11 @@ public class Offers_ItemAdapter extends RecyclerView.Adapter<Offers_ItemAdapter.
         String name = (String) personNames.get(position);
         int n= (int) Images.get(position);
         holder.image_image.setImageResource(n);
+
+
+
+
+
 holder.name.setText(name);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -207,12 +216,14 @@ holder.outofstock.setOnClickListener(new View.OnClickListener() {
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        TextView name, quantityy;// init the item view's
+        TextView name, i_quantityy,i_price;// init the item view's
         Button outofstock;
         ImageView image_image;
         public MyViewHolder(View itemView) {
             super(itemView);
             name = (TextView) itemView.findViewById(R.id.Title);
+            i_quantityy = (TextView)itemView.findViewById(R.id.publishNme);
+            i_price = (TextView)itemView.findViewById(R.id.prce);
             outofstock = (Button) itemView.findViewById(R.id.outofstock);
             image_image=(ImageView)itemView.findViewById(R.id.im);
 

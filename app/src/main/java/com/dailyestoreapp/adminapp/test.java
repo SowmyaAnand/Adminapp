@@ -15,12 +15,14 @@ import java.util.ArrayList;
 public class test  extends RecyclerView.Adapter<test.MyViewHolder2> {
     ArrayList personNames,Imagesoffer;
     Context context;
+    ArrayList subid;
     categorySubcategoryCommunicaion mComminication;
-    public test(Context context, ArrayList personNames, ArrayList Imagesoffer,categorySubcategoryCommunicaion communication) {
+    public test(Context context, ArrayList personNames, ArrayList Imagesoffer, ArrayList subid,categorySubcategoryCommunicaion communication) {
         this.context = context;
         this.personNames = personNames;
         this.Imagesoffer =Imagesoffer;
         this.mComminication=communication;
+        this.subid=subid;
     }
     @Override
     public test.MyViewHolder2 onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -47,7 +49,8 @@ public class test  extends RecyclerView.Adapter<test.MyViewHolder2> {
             public void onClick(View view) {
 
                 String selectedname = (String) personNames.get(position);
-mComminication.respond(selectedname);
+                Integer selectedid = (Integer)subid.get(position);
+mComminication.respond(selectedid);
             }
         });
     }

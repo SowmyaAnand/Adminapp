@@ -13,4 +13,7 @@ public interface ResponseInterface1 {
     @FormUrlEncoded
     @POST("listSubCategory")
     Call<ListCategoryResponse> SubCategory(@Field("typeId") int id);
+    @FormUrlEncoded
+    @POST("itemList")
+    Call<ListCategoryResponse> Items(@Field("typeId") int id);
 }
