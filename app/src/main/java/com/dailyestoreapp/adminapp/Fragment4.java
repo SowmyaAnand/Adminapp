@@ -45,10 +45,12 @@ private String tag = "fragment4";
     private String mParam1;
     private String mParam2;
     ACProgressFlower dialog;
+
     ArrayList Images_offers = new ArrayList<>(Arrays.asList(R.drawable.h1,R.drawable.h2, R.drawable.h1, R.drawable.h2, R.drawable.h1));
     ArrayList Images_images = new ArrayList<>(Arrays.asList(R.drawable.home,R.drawable.home, R.drawable.home, R.drawable.home, R.drawable.home,R.drawable.home));
     ArrayList personNames = new ArrayList<>(Arrays.asList("ITEM1", "ITEM2", "ITEM3", "ITEM4", "ITEM5", "ITEM6"));
     ArrayList<String> Sub_categories = new ArrayList<>();
+    ArrayList<String> item_image = new ArrayList<>();
     ArrayList<String> Item_categories = new ArrayList<>();
     ArrayList<Integer> Item_Quantity = new ArrayList<>();
     ArrayList<Integer> Item_Price = new ArrayList<>();
@@ -132,6 +134,7 @@ public void change()
         Log.e("fragment2","Inside Activate"+cat_number);
         int type = cat_number;
         String url = "http://dailyestoreapp.com/dailyestore/api/";
+
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
@@ -202,6 +205,7 @@ public void change()
 
 
         String url = "http://dailyestoreapp.com/dailyestore/api/";
+       final String url1 = "http://dailyestoreapp.com/dailyestore/";
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
@@ -254,13 +258,15 @@ public void change()
                             Integer item_price = Integer.valueOf(response.body().getResponsedata().getData().get(i).getPrice());
                             Integer item_status = Integer.valueOf(response.body().getResponsedata().getData().get(i).getStatus());
                             int it_id = Integer.parseInt(response.body().getResponsedata().getData().get(i).getItemId());
-                            String imageurl = response.body().getResponsedata().getData().get(i).getImage();
+                           // String imageurl = response.body().getResponsedata().getData().get(i).getImage();
+                          String imageurl=url1+"uploads/items/1.jpeg";
+                            Log.e(tag,"imageurl"+url1+imageurl);
                             Item_categories.add(item_name);
                             Item_Quantity.add(item_quant);
                             Item_Price.add(item_price);
                             item_id.add(it_id);
                            item_id_status.add(item_status);
-
+                            item_image.add(imageurl);
 
                         }
 
@@ -319,7 +325,7 @@ dialog.dismiss();
         recyclerView_offers.setLayoutManager(linearLayoutManager);
         //  call the constructor of CustomAdapter to send the reference and data to Adapter
 
-        customAdapter_offers = new Offers_ItemAdapter(rootView.getContext(), Item_categories,Images_images,Item_Quantity,Item_Price,item_id,item_id_status);
+        customAdapter_offers = new Offers_ItemAdapter(rootView.getContext(), Item_categories,item_image,Item_Quantity,Item_Price,item_id,item_id_status);
         recyclerView_offers.setAdapter(customAdapter_offers);
         // GridView gridview = (GridView) rootView.findViewById(R.id.gridview);
         // gridview.setAdapter(new ImageAdapter(rootView.getContext()));

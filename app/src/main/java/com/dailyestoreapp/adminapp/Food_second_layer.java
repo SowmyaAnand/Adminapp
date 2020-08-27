@@ -18,6 +18,7 @@ import java.util.Arrays;
 public class Food_second_layer extends AppCompatActivity {
     ArrayList Images_offers = new ArrayList<>(Arrays.asList(R.drawable.newvegetable,R.drawable.fried_chicken_clip_art_8_1, R.drawable.newvegetable, R.drawable.fried_chicken_clip_art_8_1, R.drawable.newvegetable));
     ArrayList Images_images = new ArrayList<>(Arrays.asList(R.drawable.wp2375838_1,R.drawable.wp2375838_1, R.drawable.wp2375838_1, R.drawable.wp2375838_1, R.drawable.wp2375838_1));
+    ArrayList<String> item_image = new ArrayList<>();
     ArrayList personNames_offers = new ArrayList<>(Arrays.asList("ITEM1", "ITEM2", "ITEM3", "ITEM4", "ITEM5", "ITEM6", "ITEM7"));
     RecyclerView recyclerView_offers,itemlistingcategory_offers;
     LinearLayoutManager linearLayoutManager_offers,linearLayoutManager2_offers;
@@ -49,7 +50,7 @@ public class Food_second_layer extends AppCompatActivity {
         recyclerView_offers.setLayoutManager(linearLayoutManager);
         //  call the constructor of CustomAdapter to send the reference and data to Adapter
 
-        customAdapter_offers = new Offers_ItemAdapter(getApplicationContext(), personNames_offers,Images_images,Item_Quantity,Item_Price,item_id,item_id_status);
+        customAdapter_offers = new Offers_ItemAdapter(getApplicationContext(), personNames_offers,item_image,Item_Quantity,Item_Price,item_id,item_id_status);
         recyclerView_offers.setAdapter(customAdapter_offers);
     }
     @Override

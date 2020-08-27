@@ -254,7 +254,7 @@ public class AddCategory extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 Uri resultUri = result.getUri();
                 filePath = data.getData();
-               // selectedPath = FileUtils.getPath(getApplicationContext(), selectedFileUri);
+                //selectedPath = FileUtils.getPath(getApplicationContext(), selectedFileUri);
                 Log.e("selected img","selected img"+resultUri);
                 if(flag==1)
                 {

@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.media.Image;
 import android.os.Bundle;
 import android.telephony.CellInfoNr;
 import android.util.Log;
@@ -26,6 +27,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -54,7 +57,7 @@ public class Offers_ItemAdapter extends RecyclerView.Adapter<Offers_ItemAdapter.
     Context context;
 
     ArrayList<Integer> adapteritem_id = new ArrayList<>();
-    ArrayList Images;
+    ArrayList<String>Images=new ArrayList<>();
 ArrayList<Integer> it_quantity = new ArrayList<>() ;
     ArrayList<Integer> it_price = new ArrayList<>();
     ArrayList<String> lts = new ArrayList<String>();
@@ -64,7 +67,7 @@ ArrayList<Integer> it_quantity = new ArrayList<>() ;
     String text_item_status;
     private String tag ="OfferItemadapter";
     ACProgressFlower dialog;
-    public Offers_ItemAdapter(Context context, ArrayList personNames, ArrayList Images,ArrayList itm_quantity,ArrayList itm_price,ArrayList adpaterit_id,ArrayList item_status) {
+    public Offers_ItemAdapter(Context context, ArrayList personNames, ArrayList<String> Images,ArrayList itm_quantity,ArrayList itm_price,ArrayList adpaterit_id,ArrayList item_status) {
         this.context = context;
         this.personNames = personNames;
         this.Images=Images;
@@ -90,9 +93,18 @@ ArrayList<Integer> it_quantity = new ArrayList<>() ;
 Log.e(tag,"items price"+it_price);
         // set the data in items
         String name = (String) personNames.get(position);
-        int n= (int) Images.get(position);
-        holder.image_image.setImageResource(n);
+
+
+        //holder.image_image.setImageResource(n);
         holder.name.setText(name);
+        if(Images.size()>0)
+        {String imageurl=  Images.get(position);
+            Log.e(tag,"onbined image"+imageurl);
+            Glide.with(context).load(imageurl)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .into(holder.image_image);
+
+        }
 if(item_status_adapter.size()>0)
 {
     if(item_status_adapter.get(position)==1)
