@@ -22,9 +22,11 @@ public class Food_second_layer extends AppCompatActivity {
     RecyclerView recyclerView_offers,itemlistingcategory_offers;
     LinearLayoutManager linearLayoutManager_offers,linearLayoutManager2_offers;
     Offers_ItemAdapter customAdapter_offers;
+    ArrayList<Integer> item_id = new ArrayList<>();
     OffersListingsubcategoryadapter customadapter2_offers;
     ArrayList<Integer> Item_Quantity = new ArrayList<>();
     ArrayList<Integer> Item_Price = new ArrayList<>();
+    ArrayList<Integer> item_id_status = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,7 +49,7 @@ public class Food_second_layer extends AppCompatActivity {
         recyclerView_offers.setLayoutManager(linearLayoutManager);
         //  call the constructor of CustomAdapter to send the reference and data to Adapter
 
-        customAdapter_offers = new Offers_ItemAdapter(getApplicationContext(), personNames_offers,Images_images,Item_Quantity,Item_Price);
+        customAdapter_offers = new Offers_ItemAdapter(getApplicationContext(), personNames_offers,Images_images,Item_Quantity,Item_Price,item_id,item_id_status);
         recyclerView_offers.setAdapter(customAdapter_offers);
     }
     @Override

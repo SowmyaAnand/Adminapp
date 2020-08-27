@@ -26,7 +26,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -40,24 +42,37 @@ import java.util.Locale;
 import cc.cloudist.acplibrary.ACProgressConstant;
 import cc.cloudist.acplibrary.ACProgressFlower;
 import cc.cloudist.acplibrary.ACProgressPie;
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Offers_ItemAdapter extends RecyclerView.Adapter<Offers_ItemAdapter.MyViewHolder> {
     ArrayList personNames = new ArrayList<String>();
     Context context;
+
+    ArrayList<Integer> adapteritem_id = new ArrayList<>();
     ArrayList Images;
 ArrayList<Integer> it_quantity = new ArrayList<>() ;
     ArrayList<Integer> it_price = new ArrayList<>();
     ArrayList<String> lts = new ArrayList<String>();
+    ArrayList<Integer> item_status_adapter = new ArrayList<>();
     ArrayList personNames_offers = new ArrayList<>(Arrays.asList("ITEM1", "ITEM2", "ITEM3", "ITEM4", "ITEM5", "ITEM6", "ITEM7"));
     int quantity = 1;
+    String text_item_status;
+    private String tag ="OfferItemadapter";
     ACProgressFlower dialog;
-    public Offers_ItemAdapter(Context context, ArrayList personNames, ArrayList Images,ArrayList itm_quantity,ArrayList itm_price) {
+    public Offers_ItemAdapter(Context context, ArrayList personNames, ArrayList Images,ArrayList itm_quantity,ArrayList itm_price,ArrayList adpaterit_id,ArrayList item_status) {
         this.context = context;
         this.personNames = personNames;
         this.Images=Images;
         this.it_price=itm_price;
         this.it_quantity=itm_quantity;
+        this.item_status_adapter=item_status;
         this.lts.addAll(personNames);
+        this.adapteritem_id= adpaterit_id;
 
     }
 
@@ -72,17 +87,37 @@ ArrayList<Integer> it_quantity = new ArrayList<>() ;
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
-
+Log.e(tag,"items price"+it_price);
         // set the data in items
         String name = (String) personNames.get(position);
         int n= (int) Images.get(position);
         holder.image_image.setImageResource(n);
+        holder.name.setText(name);
+if(item_status_adapter.size()>0)
+{
+    if(item_status_adapter.get(position)==1)
+    {
+        holder.outofstock.setText("Active");
+    }
+    else
+    {
+        holder.outofstock.setText("Out of stock");
+    }
+}
 
-
-
-
-
-holder.name.setText(name);
+        Log.e(tag,"price + quantity "+it_quantity+it_quantity.size());
+        if(it_quantity.size()>0)
+        {
+            String text = "Quantity:"+String.valueOf(it_quantity.get(position));
+            holder.i_quantityy.setText(text);
+        }
+        if(it_price.size()>0)
+        {
+            String prce  = String.valueOf(it_price.get(position));
+            holder.i_price.setText(prce);
+        }
+        //holder.i_price.setText(it_price.get(position));
+        //holder.i_quantityy.setText(it_quantity.get(position));
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -93,6 +128,18 @@ holder.name.setText(name);
 holder.outofstock.setOnClickListener(new View.OnClickListener() {
     @Override
     public void onClick(View v) {
+        int clicked_itemId = adapteritem_id.get(position);
+        text_item_status = holder.outofstock.getText().toString();
+        int status_param;
+        if(text_item_status.equals("Active"))
+        {
+         status_param=0;
+        }
+        else
+        {
+status_param=1;
+        }
+         final int item_clicked_id = adapteritem_id.get(position);
         Log.e("url","url");
         dialog = new ACProgressFlower.Builder(context)
                 .direction(ACProgressConstant.DIRECT_CLOCKWISE)
@@ -102,107 +149,58 @@ holder.outofstock.setOnClickListener(new View.OnClickListener() {
                 .fadeColor(Color.DKGRAY).build();
         dialog.show();
 
-        final String url = "http://dailyestoreapp.com/dailyestore/api/activateItem";
 
-        final JSONObject obj = new JSONObject();
-        try {
-            obj.put("itemId", 1);
-            obj.put("status", "activate");
-        } catch (JSONException e)
-        {
-            e.printStackTrace();
-        }
-        RequestQueue queue = Volley.newRequestQueue(context);
-        JsonObjectRequest jsObjRequest = new JsonObjectRequest(Request.Method.POST,url,obj,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        System.out.println(response);
-
-                        Log.e("url",""+url);
-                        Log.e("obj",""+obj);
-                        Log.e("RESPONSE",""+response.toString());
-
-                        // response start
-                        JSONObject sub = new JSONObject();
-                        try {
-                            sub.put("success","0");
-                            sub.put("data",0);
-                            response.put("responsedata",sub);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
-//response end
-                        try {
-                            JSONObject jsonObject = new JSONObject(response.toString());
-                            if(jsonObject.has("responsedata")) {
-                                Log.e("jsonObject","jsonObject is "+jsonObject);
-                                JSONObject json2 = new JSONObject(String.valueOf(jsonObject));
-                                JSONObject res = (JSONObject) json2.get("responsedata");
-                                JSONObject actualvalue = new JSONObject(res.toString());
-                                Log.e("json2","json2is "+json2);
-                                Log.e("res","res is"+res);
-                                Log.e("actualvalue","actualvalue is"+actualvalue);
-                                String result = actualvalue.getString("success");
-                                Log.e("actualvalue","success  is"+result);
-                                dialog.dismiss();
-                                if(result.equals("0"))
-                                {
-                                    String text = holder.outofstock.getText().toString();
-                                    if(text.equals("Activate"))
-                                    {
-                                        text="OUT OF STOCK";
-                                        holder.outofstock.setText(text);
-                                        CustomDialogClass1 cdd1=new CustomDialogClass1(context,text);
-                                        cdd1.show();
-                                    }
-                                    else
-                                    {
-                                        text="Activate";
-                                        holder.outofstock.setText(text);
-                                        CustomDialogClass1 cdd2=new CustomDialogClass1(context,text);
-                                        cdd2.show();
-                                    }
-                                }
-                                else
-                                {
-                                    Toast.makeText(context,"Something Went Wrong .Try After Sometime",Toast.LENGTH_LONG).show();
-                                }
-                                // Object json2 = jsonObject.get("responsedata");
-                                // Log.e("json2","json2 is "+json2);
-
-                                // Object result = jsonObject.get("success");
-                                //  Log.e("success","success is "+result);
+        String url = "http://dailyestoreapp.com/dailyestore/api/";
+        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
+        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        OkHttpClient okHttpClient = new OkHttpClient.Builder()
+                .addInterceptor(loggingInterceptor)
+                .build();
 
 
-                                // String token = jsonObject.getString("token");
-                            }
 
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
 
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(url)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(okHttpClient)
+                .build();
+        ResponseInterface1 mainInterface = retrofit.create(ResponseInterface1.class);
+        Call<ItemActivateResponse> call = mainInterface.ItemActivate(clicked_itemId,status_param);
+        call.enqueue(new Callback<ItemActivateResponse>() {
+            @Override
+            public void onResponse(Call<ItemActivateResponse> call, retrofit2.Response<ItemActivateResponse> response) {
+                ItemActivateResponse obj =response.body();
+                int success = Integer.parseInt(obj.getResponsedata().getSuccess());
+                Log.e(tag,"success="+obj.getResponsedata().getSuccess());
+                if(success==1)
+                {
+                    if(text_item_status.equals("Active"))
+                    {
+                        text_item_status="OUT OF STOCK";
+                        holder.outofstock.setText(text_item_status);
+                        CustomDialogClass1 cdd1=new CustomDialogClass1(context,text_item_status);
+                        cdd1.show();
                     }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        // progressDialog.dismiss();
-                        // showToast("Unable to connect Server,please try after sometime!");
-                        Log.e("ERROR",""+error);
+                    else
+                    {
+                        text_item_status="Active";
+                        holder.outofstock.setText(text_item_status);
+                        CustomDialogClass1 cdd2=new CustomDialogClass1(context,text_item_status);
+                        cdd2.show();
                     }
-                });
+                }
+                  dialog.dismiss();
+            }
 
-        jsObjRequest.setRetryPolicy(new DefaultRetryPolicy(
-                20000,
-                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-        queue.add(jsObjRequest);
-        Log.d("request>>>>>>", queue.toString());
+            @Override
+            public void onFailure(Call<ItemActivateResponse> call, Throwable t) {
+Log.e(tag,"error"+t.getMessage());
+dialog.dismiss();
+            }
+        });
 
-       // CustomDialogClass1 cdd1=new CustomDialogClass1(context,position);
-       // cdd1.show();
+
     }
 });
 

@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -28,6 +29,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import cc.cloudist.acplibrary.ACProgressConstant;
+import cc.cloudist.acplibrary.ACProgressFlower;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
@@ -41,6 +44,7 @@ Button lg;
     ArrayList<String> categories = new ArrayList<>();
     List<String>cat_no = new ArrayList<String>();
     ArrayList<Integer> nums = new ArrayList<>();
+    ACProgressFlower dialog;
     public static final String MY_PREFS_NAME = "AdminApp";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +61,14 @@ Button lg;
     }
     private void Activate()
     {
+        dialog = new ACProgressFlower.Builder(Login.this)
+                .direction(ACProgressConstant.DIRECT_CLOCKWISE)
+                .themeColor(Color.WHITE)
+                .borderPadding(1)
+
+                .fadeColor(Color.DKGRAY).build();
+        dialog.show();
+
         String url = "http://dailyestoreapp.com/dailyestore/api/";
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
@@ -117,7 +129,7 @@ Button lg;
                 editor.putString("categories_no", strbul.toString());
                 editor.apply();
 
-
+dialog.dismiss();
                 Intent next = new Intent(Login.this,Main2Activity.class);
                 startActivity(next);
 

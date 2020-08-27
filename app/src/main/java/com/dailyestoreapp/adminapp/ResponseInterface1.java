@@ -16,4 +16,8 @@ public interface ResponseInterface1 {
     @FormUrlEncoded
     @POST("itemList")
     Call<ListCategoryResponse> Items(@Field("typeId") int id);
+    @FormUrlEncoded
+    @POST("activateItem")
+    Call<ItemActivateResponse> ItemActivate(@Field("itemId") int id,
+                                            @Field("status") int status);
 }

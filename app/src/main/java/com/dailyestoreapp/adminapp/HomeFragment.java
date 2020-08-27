@@ -89,7 +89,8 @@ category_selected=categoriesHome.get(0);
         {
 category_selected=categoriesHome.get(i);
 
-            if(i==1)
+
+            if(category_selected.equals("Food"))
             {
                 Bundle bundle = new Bundle();
                 bundle.putString("category", category_selected);
@@ -101,7 +102,7 @@ category_selected=categoriesHome.get(i);
 
 
             }
-            else if(i==0)
+           else if (i==0)
             {
                 Bundle bundle = new Bundle();
                 bundle.putString("category", category_selected);
@@ -113,18 +114,18 @@ category_selected=categoriesHome.get(i);
 
                 sectionsPagerAdapter.addFragment(mapFragment2,categoriesHome.get(i));
 
-           }
-            else if(i==2)
+            }
+            else
             {
                 Bundle bundle = new Bundle();
                 bundle.putString("category", category_selected);
                 fragment3 mapFragment3 = new fragment3(category_selected);
                 mapFragment3.setArguments(bundle);
 
-
                 Log.e("tag","tag cat"+categoriesHome.get(i));
-                sectionsPagerAdapter.addFragment(mapFragment3,categoriesHome.get(i));
-            }
+               sectionsPagerAdapter.addFragment(mapFragment3,categoriesHome.get(i));
+           }
+
         }
 
         ViewPager viewPager =root.findViewById(R.id.view_pager2);

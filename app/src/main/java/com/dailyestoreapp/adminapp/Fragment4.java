@@ -2,6 +2,7 @@ package com.dailyestoreapp.adminapp;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -27,6 +28,8 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
+import cc.cloudist.acplibrary.ACProgressConstant;
+import cc.cloudist.acplibrary.ACProgressFlower;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
@@ -41,6 +44,7 @@ private String tag = "fragment4";
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    ACProgressFlower dialog;
     ArrayList Images_offers = new ArrayList<>(Arrays.asList(R.drawable.h1,R.drawable.h2, R.drawable.h1, R.drawable.h2, R.drawable.h1));
     ArrayList Images_images = new ArrayList<>(Arrays.asList(R.drawable.home,R.drawable.home, R.drawable.home, R.drawable.home, R.drawable.home,R.drawable.home));
     ArrayList personNames = new ArrayList<>(Arrays.asList("ITEM1", "ITEM2", "ITEM3", "ITEM4", "ITEM5", "ITEM6"));
@@ -49,6 +53,8 @@ private String tag = "fragment4";
     ArrayList<Integer> Item_Quantity = new ArrayList<>();
     ArrayList<Integer> Item_Price = new ArrayList<>();
     ArrayList<Integer> Sub_categories_id = new ArrayList<>();
+    ArrayList<Integer> item_id = new ArrayList<>();
+    ArrayList<Integer> item_id_status = new ArrayList<>();
     ArrayList personNames_offers = new ArrayList<>(Arrays.asList("farg4ITEM1", "ITEM2", "ITEM3", "ITEM4", "ITEM5", "ITEM6"));
     RecyclerView recyclerView_offers,itemlistingcategory_offers;
     LinearLayoutManager linearLayoutManager_offers,linearLayoutManager2_offers;
@@ -116,6 +122,13 @@ public void change()
 }
     private void subcategoryactivate()
     {
+        dialog = new ACProgressFlower.Builder(getContext())
+                .direction(ACProgressConstant.DIRECT_CLOCKWISE)
+                .themeColor(Color.WHITE)
+                .borderPadding(1)
+
+                .fadeColor(Color.DKGRAY).build();
+        dialog.show();
         Log.e("fragment2","Inside Activate"+cat_number);
         int type = cat_number;
         String url = "http://dailyestoreapp.com/dailyestore/api/";
@@ -157,6 +170,7 @@ public void change()
 
                     customadapter2_offers.notifyDataSetChanged();
                     Log.e(tag,"sub_cat inside Activate"+Sub_categories);
+                    dialog.dismiss();
                     ItemsList(1);
 
 
@@ -178,6 +192,13 @@ public void change()
     }
     private void ItemsList(Integer subId)
     {
+        dialog = new ACProgressFlower.Builder(getContext())
+                .direction(ACProgressConstant.DIRECT_CLOCKWISE)
+                .themeColor(Color.WHITE)
+                .borderPadding(1)
+
+                .fadeColor(Color.DKGRAY).build();
+        dialog.show();
 
 
         String url = "http://dailyestoreapp.com/dailyestore/api/";
@@ -196,24 +217,49 @@ public void change()
         call.enqueue(new Callback<ListCategoryResponse>() {
             @Override
             public void onResponse(Call<ListCategoryResponse> call, retrofit2.Response<ListCategoryResponse> response) {
-                String res= new GsonBuilder().setPrettyPrinting().create().toJson(response.body().getResponsedata());
-                JsonObject obj = new JsonParser().parse(res).getAsJsonObject();
+                ListCategoryResponse listCategoryResponseobject = response.body();
+                int success = Integer.parseInt(response.body().getResponsedata().getSuccess());
+                dialog.dismiss();
+//                if(success==1)
+//                {
+//                    int data_length = response.body().getResponsedata().getData().size();
+//                    String item_name = response.body().getResponsedata().getData().get(1).getItemName();
+//                }
+//                String res= new GsonBuilder().setPrettyPrinting().create().toJson(response.body().getResponsedata());
+//                JsonObject obj = new JsonParser().parse(res).getAsJsonObject();
+//                dialog.dismiss();
                 try {
-                    JSONObject jo2 = new JSONObject(obj.toString());
-                    JSONArray categoriesarray = jo2.getJSONArray("data");
-                    Log.e(tag,"items="+jo2);
-                    for(int i=0; i<categoriesarray.length(); i++)
+//                    JSONObject jo2 = new JSONObject(obj.toString());
+//                    JSONArray categoriesarray = jo2.getJSONArray("data");
+//                    Log.e(tag,"items="+jo2);
+                    Item_categories.clear();
+                    if(success==1)
                     {
-                        JSONObject j1= categoriesarray.getJSONObject(i);
-                        String item_name = j1.getString("itemName");
+                        int data_length = response.body().getResponsedata().getData().size();
 
+
+
+                    for(int i=0; i<data_length; i++)
+                    {
+//                        JSONObject j1= categoriesarray.getJSONObject(i);
+//                        String item_name = j1.getString("itemName");
+                        String item_name = response.body().getResponsedata().getData().get(i).getItemName();
                         if(!Item_categories.contains(item_name))
                         {
-                            Integer item_quant = Integer.valueOf(j1.getString("quantity"));
-                            Integer item_price = Integer.valueOf(j1.getString("price"));
+//                            Integer item_quant = Integer.valueOf(j1.getString("quantity"));
+//                            Integer item_price = Integer.valueOf(j1.getString("price"));
+//                            Integer item_status = Integer.valueOf(j1.getString("price"));
+//                            int it_id = Integer.parseInt(j1.getString("itemId"));
+                            Integer item_quant = Integer.valueOf(response.body().getResponsedata().getData().get(i).getQuantity());
+                            Integer item_price = Integer.valueOf(response.body().getResponsedata().getData().get(i).getPrice());
+                            Integer item_status = Integer.valueOf(response.body().getResponsedata().getData().get(i).getStatus());
+                            int it_id = Integer.parseInt(response.body().getResponsedata().getData().get(i).getItemId());
+                            String imageurl = response.body().getResponsedata().getData().get(i).getImage();
                             Item_categories.add(item_name);
                             Item_Quantity.add(item_quant);
                             Item_Price.add(item_price);
+                            item_id.add(it_id);
+                           item_id_status.add(item_status);
 
 
                         }
@@ -221,15 +267,21 @@ public void change()
                     }
 
                     customAdapter_offers.notifyDataSetChanged();
-                } catch (JSONException e) {
+                    }
+                    else {
+                        Toast.makeText(getContext(),"No Data found",Toast.LENGTH_LONG).show();
+                    }
+                } catch (Exception e) {
                     e.printStackTrace();
+                    Toast.makeText(getContext(),"something went wrong",Toast.LENGTH_SHORT).show();
                 }
 
             }
 
             @Override
             public void onFailure(Call<ListCategoryResponse> call, Throwable t) {
-
+dialog.dismiss();
+                Toast.makeText(getContext(),t.getMessage(),Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -267,7 +319,7 @@ public void change()
         recyclerView_offers.setLayoutManager(linearLayoutManager);
         //  call the constructor of CustomAdapter to send the reference and data to Adapter
 
-        customAdapter_offers = new Offers_ItemAdapter(rootView.getContext(), Item_categories,Images_images,Item_Quantity,Item_Price);
+        customAdapter_offers = new Offers_ItemAdapter(rootView.getContext(), Item_categories,Images_images,Item_Quantity,Item_Price,item_id,item_id_status);
         recyclerView_offers.setAdapter(customAdapter_offers);
         // GridView gridview = (GridView) rootView.findViewById(R.id.gridview);
         // gridview.setAdapter(new ImageAdapter(rootView.getContext()));
@@ -277,10 +329,10 @@ public void change()
         @Override
         public void respond(Integer name) {
             Log.e(tag," sub name is"+name);
-            personNames_offers.clear();
+            Item_categories.clear();
            ItemsList(name);
 
-           // customAdapter_offers.notifyDataSetChanged();
+            customAdapter_offers.notifyDataSetChanged();
 
            //Toast.makeText(getContext(),name,Toast.LENGTH_LONG).show();
         }

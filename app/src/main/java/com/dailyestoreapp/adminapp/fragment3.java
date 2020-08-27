@@ -20,6 +20,7 @@ public class fragment3 extends Fragment {
 
     // TODO: Rename and change types of parameters
     private String mParam1;
+    ArrayList<Integer> item_id = new ArrayList<>();
     private String mParam2;
     ArrayList<Integer> Item_Quantity = new ArrayList<>();
     ArrayList<Integer> Item_Price = new ArrayList<>();
@@ -31,6 +32,7 @@ public class fragment3 extends Fragment {
     Offers_ItemAdapter customAdapter_offers;
     OffersListingsubcategoryadapter customadapter2_offers;
     private static String ct;
+    ArrayList<Integer> item_id_status = new ArrayList<>();
     public fragment3(String nm) {
         ct=nm;
         // Required empty public constructor
@@ -89,7 +91,7 @@ change();
         recyclerView_offers.setLayoutManager(linearLayoutManager);
         //  call the constructor of CustomAdapter to send the reference and data to Adapter
 
-        customAdapter_offers = new Offers_ItemAdapter(rootView.getContext(), personNames_offers,Images_images,Item_Quantity,Item_Price);
+        customAdapter_offers = new Offers_ItemAdapter(rootView.getContext(), personNames_offers,Images_images,Item_Quantity,Item_Price,item_id,item_id_status);
         recyclerView_offers.setAdapter(customAdapter_offers);
         // GridView gridview = (GridView) rootView.findViewById(R.id.gridview);
         // gridview.setAdapter(new ImageAdapter(rootView.getContext()));
