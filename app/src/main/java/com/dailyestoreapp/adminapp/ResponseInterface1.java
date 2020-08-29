@@ -22,4 +22,7 @@ public interface ResponseInterface1 {
                                             @Field("status") int status);
     @GET("viewComments")
     Call<ListCategoryResponse> messagelist();
+    @FormUrlEncoded
+    @POST("userDetails")
+    Call<ListCategoryResponse> Myaccount(@Field("userId") int id);
 }

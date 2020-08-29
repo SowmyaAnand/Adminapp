@@ -60,15 +60,6 @@ MsgList();
     }
     private void MsgList()
     {
-//        dialog = new ACProgressFlower.Builder(getContext())
-//                .direction(ACProgressConstant.DIRECT_CLOCKWISE)
-//                .themeColor(Color.WHITE)
-//                .borderPadding(1)
-//
-//                .fadeColor(Color.DKGRAY).build();
-//        dialog.show();
-
-
         String url = "http://dailyestoreapp.com/dailyestore/api/";
 
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
