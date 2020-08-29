@@ -20,4 +20,6 @@ public interface ResponseInterface1 {
     @POST("activateItem")
     Call<ItemActivateResponse> ItemActivate(@Field("itemId") int id,
                                             @Field("status") int status);
+    @GET("viewComments")
+    Call<ListCategoryResponse> messagelist();
 }

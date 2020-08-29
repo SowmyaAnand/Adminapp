@@ -47,7 +47,7 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class HomeFragment extends Fragment {
     String category_selected;
-
+private String tag ="HomeFragment";
     public static final String MY_PREFS_NAME = "AdminApp";
     ArrayList<String> categoriesHome = new ArrayList<>();
 
@@ -74,7 +74,9 @@ Fragment4 frag4;
 //        for (int i = 0; i < 10; i++) {
 //            savedList[i] = Integer.parseInt(st.nextToken());
 //        }
+        Log.e(tag,"numbers are"+savedString);
         String[] numbers = savedString.split(",");//if spaces are uneven, use \\s+ instead of " "
+        Log.e(tag,"numbers are"+numbers);
         for (String number : numbers) {
             categoriesHomeNo2.add(Integer.valueOf(number));
         }

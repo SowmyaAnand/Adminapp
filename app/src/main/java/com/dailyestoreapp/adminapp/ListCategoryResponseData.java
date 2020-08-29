@@ -54,6 +54,74 @@ public class ListCategoryResponseData {
     @SerializedName("image")
     @Expose
     private String image;
+    @SerializedName("cId")
+    @Expose
+    private String cId;
+    @SerializedName("userId")
+    @Expose
+    private String userId;
+    @SerializedName("email")
+    @Expose
+    private String email;
+    @SerializedName("mobile")
+    @Expose
+    private String mobile;
+    @SerializedName("address")
+    @Expose
+    private String address;
+    @SerializedName("message")
+    @Expose
+    private String message;
+
+
+    public String getCId() {
+        return cId;
+    }
+
+    public void setCId(String cId) {
+        this.cId = cId;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getMobile() {
+        return mobile;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
 
     public String getItemId() {
         return itemId;

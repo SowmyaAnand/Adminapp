@@ -17,13 +17,20 @@ import java.util.Locale;
 
 public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.MyViewHolder> {
     ArrayList<String> personNames = new ArrayList<String>();
+    ArrayList<String> person_Names = new ArrayList<String>();
+    ArrayList<String> person_mob = new ArrayList<String>();
+    ArrayList<String> person_email = new ArrayList<String>();
     Context context;
     ArrayList<String> lts=new ArrayList<String>();
-    ArrayList personNames_offers = new ArrayList<>(Arrays.asList("ITEM1", "ITEM2", "ITEM3", "ITEM4", "ITEM5", "ITEM6", "ITEM7"));
+    //ArrayList personNames_offers = new ArrayList<>(Arrays.asList("ITEM1", "ITEM2", "ITEM3", "ITEM4", "ITEM5", "ITEM6", "ITEM7"));
+ ArrayList personNames_offers = new ArrayList<>();
     int quantity=1;
-    public MessagesAdapter(Context context, ArrayList personNames) {
+    public MessagesAdapter(Context context, ArrayList personNames,ArrayList person_email , ArrayList person_mob) {
         this.context = context;
         this.personNames = personNames;
+
+        this.person_email = person_email;
+        this.person_mob = person_mob;
         this.lts.addAll(personNames);
 
     }
@@ -40,7 +47,23 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.MyView
     public void onBindViewHolder(final MessagesAdapter.MyViewHolder holder, final int position) {
 
         // set the data in items
-        String name = (String) personNames.get(position);
+        if(personNames.size()>0)
+        {
+            String name = (String) personNames.get(position);
+            holder.name.setText(name);
+        }
+
+            if(person_email.size()>0)
+            {
+                String email = (String) person_email.get(position);
+                holder.email_prs.setText(email);
+            }
+                if(person_mob.size()>0)
+                {
+                    String mob = (String) person_mob.get(position);
+                    holder.mob_prs.setText(mob);
+
+                }
 
     }
 
@@ -50,11 +73,13 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.MyView
         return personNames.size();
     }
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        TextView name,quantityy;// init the item view's
+        TextView name,mob_prs,email_prs;
         Button addition,substraction,addbtn;
         public MyViewHolder(View itemView) {
             super(itemView);
-            name = (TextView) itemView.findViewById(R.id.Title);
+            name = (TextView) itemView.findViewById(R.id.Title_msg);
+            mob_prs = (TextView) itemView.findViewById(R.id.mob_msg);
+            email_prs = (TextView) itemView.findViewById(R.id.email_msg);
 
 
         }

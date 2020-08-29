@@ -45,6 +45,7 @@ Button lg;
     List<String>cat_no = new ArrayList<String>();
     ArrayList<Integer> nums = new ArrayList<>();
     ACProgressFlower dialog;
+    private String tag = "Login";
     public static final String MY_PREFS_NAME = "AdminApp";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,6 +91,7 @@ Button lg;
                 try {
                     JSONObject jo2 = new JSONObject(obj.toString());
                     JSONArray categoriesarray = jo2.getJSONArray("data");
+                    Log.e(tag,"categoriesarray"+categoriesarray);
                     Set<Integer> set3 = new HashSet<Integer>();
 
                     for(int i=0; i<categoriesarray.length(); i++)
@@ -99,7 +101,7 @@ Button lg;
                         int item_no = Integer.parseInt(j1.getString("typeId"));
                         nums.add(item_no);
                         categories.add(item);
-
+                        Log.e(tag,"value added "+item_no);
                     }
 
                     Iterator<Integer> iter = nums.iterator();
@@ -116,6 +118,7 @@ Button lg;
 
                 } catch (JSONException e) {
                     e.printStackTrace();
+                    Log.e(tag,"catch exception"+e.getMessage());
                 }
 
 
@@ -124,7 +127,7 @@ Button lg;
                 set.addAll(categories);
                 editor.putStringSet("categories", set);
                 editor.apply();
-
+                Log.e(tag,"array of numbers "+strbul.toString());
                 SharedPreferences.Editor editor2 = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
                 editor.putString("categories_no", strbul.toString());
                 editor.apply();

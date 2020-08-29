@@ -337,8 +337,7 @@ dialog.dismiss();
             Log.e(tag," sub name is"+name);
             Item_categories.clear();
            ItemsList(name);
-
-            customAdapter_offers.notifyDataSetChanged();
+           customAdapter_offers.notifyDataSetChanged();
 
            //Toast.makeText(getContext(),name,Toast.LENGTH_LONG).show();
         }

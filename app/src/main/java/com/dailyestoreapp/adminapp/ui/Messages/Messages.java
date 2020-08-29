@@ -23,8 +23,11 @@ public class Messages  extends Fragment {
     RecyclerView recyclerView_messagelist;
     private MessagesViewModel messageViewModel;
     MessagesAdapter customAdapter_offers;
-    ArrayList personNames_offers = new ArrayList<>(Arrays.asList("ITEM1", "ITEM2", "ITEM3", "ITEM4", "ITEM5", "ITEM6", "ITEM7"));
-
+    ArrayList person__Name = new ArrayList();
+    ArrayList person__mob = new ArrayList();
+    ArrayList person__email= new ArrayList();
+   // ArrayList personNames_offers = new ArrayList<>(Arrays.asList("ITEM1", "ITEM2", "ITEM3", "ITEM4", "ITEM5", "ITEM6", "ITEM7"));
+   ArrayList personNames_offers = new ArrayList<>();
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         messageViewModel =
@@ -36,7 +39,7 @@ public class Messages  extends Fragment {
         recyclerView_messagelist.setLayoutManager(linearLayoutManager);
         //  call the constructor of CustomAdapter to send the reference and data to Adapter
 
-        customAdapter_offers = new MessagesAdapter(root.getContext(), personNames_offers);
+        customAdapter_offers = new MessagesAdapter(root.getContext(), personNames_offers,person__email,person__mob);
         recyclerView_messagelist.setAdapter(customAdapter_offers);
 
         return root;
