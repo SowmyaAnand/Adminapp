@@ -1,5 +1,6 @@
 package com.dailyestoreapp.adminapp;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,11 +12,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Set;
+
+import static android.content.Context.MODE_PRIVATE;
 
 public class EditCategories extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
+    ArrayList<Integer> categoriescatno_edit = new ArrayList<>();
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
@@ -25,7 +29,7 @@ public class EditCategories extends Fragment {
     RecyclerView categories;
     LinearLayoutManager linearLayoutManager_offers,linearLayoutManager2_offers;
     EditCategoriesAdapter customAdapter_offers;
-
+    public static final String MY_PREFS_NAME = "AdminApp";
     public EditCategories() {
         // Required empty public constructor
     }
@@ -55,8 +59,24 @@ public class EditCategories extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.editcategories, container, false);
+        ArrayList<String> categoriesEditCategies = new ArrayList<>();
+        ArrayList<String> categoriesEditCategies_image = new ArrayList<>();
+        SharedPreferences shared = getActivity().getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
+        Set<String> set = shared.getStringSet("categories", null);
+        categoriesEditCategies.addAll(set);
+        SharedPreferences shared2 = getActivity().getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
+        String savedString = shared2.getString("categories_no", "");
 
 
+        String[] numbers = savedString.split(",");//if spaces are uneven, use \\s+ instead of " "
+
+        for (String number : numbers) {
+            categoriescatno_edit.add(Integer.valueOf(number));
+        }
+       //uncomment in future for editcategory rimage
+//        SharedPreferences shared2 = getActivity().getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
+//        Set<String> set4 = shared.getStringSet("categories_image", null);
+//        categoriesEditCategies.addAll(set4);
         //second recyclerview
         categories = (RecyclerView) rootView.findViewById(R.id.categorieslist);
         // set a LinearLayoutManager with default vertical orientation
@@ -64,7 +84,7 @@ public class EditCategories extends Fragment {
         categories.setLayoutManager(linearLayoutManager);
         //  call the constructor of CustomAdapter to send the reference and data to Adapter
 
-        customAdapter_offers = new EditCategoriesAdapter(rootView.getContext(), personNames_offers,Images_images);
+        customAdapter_offers = new EditCategoriesAdapter(rootView.getContext(), categoriesEditCategies,categoriesEditCategies_image,categoriescatno_edit);
         categories.setAdapter(customAdapter_offers);
         // GridView gridview = (GridView) rootView.findViewById(R.id.gridview);
         // gridview.setAdapter(new ImageAdapter(rootView.getContext()));

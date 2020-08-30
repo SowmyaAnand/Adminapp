@@ -14,36 +14,36 @@
         xmlns:android="http://schemas.android.com/apk/res/android">
 
         <ImageView
-            android:id="@+id/im"
+            android:id="@+id/im_editcategory"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:src="@drawable/ic_menu_camera"
+
             />
 
 
 
         <EditText
             android:layout_marginRight="30dp"
-            android:id="@+id/Title"
+            android:id="@+id/Title_editcategory"
             android:layout_marginTop="10dp"
             android:layout_marginLeft="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/black"
             android:enabled="false"
-            android:layout_toRightOf="@+id/im"
+            android:layout_toRightOf="@+id/im_editcategory"
             android:fontFamily="@font/roboto_medium"
             android:textSize="16sp"
             android:text="TITLE"/>
 
 <ImageView
-    android:id="@+id/nextsub"
+    android:id="@+id/nextsub_editcategory"
     android:layout_width="30dp"
     android:layout_height="30dp"
     android:src="@drawable/ic_keyboard_arrow_right_black_24dp"
 android:layout_alignParentEnd="true"
     android:layout_alignParentRight="true"
-    android:layout_toRightOf="@+id/title"/>
+    android:layout_toRightOf="@+id/Title_editcategory"/>
 
 
 
@@ -52,7 +52,7 @@ android:layout_alignParentEnd="true"
             <Button
 
                 android:layout_marginTop="10dp"
-                android:id="@+id/edit"
+                android:id="@+id/edit_editcategory"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
                 android:padding="10dp"
@@ -63,11 +63,11 @@ android:layout_alignParentEnd="true"
                 android:layout_marginRight="10dp"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
-                android:layout_below="@+id/im"/>
+                android:layout_below="@+id/im_editcategory"/>
         <Button
 
             android:layout_marginTop="10dp"
-            android:id="@+id/editpic"
+            android:id="@+id/editpic_editcategory"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:padding="10dp"
@@ -79,7 +79,7 @@ android:layout_alignParentEnd="true"
             android:layout_marginLeft="10dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentLeft="true"
-            android:layout_below="@+id/im"/>
+            android:layout_below="@+id/im_editcategory"/>
 
 
 

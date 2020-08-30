@@ -42,6 +42,7 @@ public class Login extends AppCompatActivity {
 Button lg;
     StringBuilder strbul  = new StringBuilder();
     ArrayList<String> categories = new ArrayList<>();
+    ArrayList<String> categories_image = new ArrayList<>();
     List<String>cat_no = new ArrayList<String>();
     ArrayList<Integer> nums = new ArrayList<>();
     ACProgressFlower dialog;
@@ -98,9 +99,11 @@ Button lg;
                     {
                         JSONObject j1= categoriesarray.getJSONObject(i);
                         String item = j1.getString("itemName");
+                        String item_image = j1.getString("itemImage");
                         int item_no = Integer.parseInt(j1.getString("typeId"));
                         nums.add(item_no);
                         categories.add(item);
+                        categories_image.add(item_image);
                         Log.e(tag,"value added "+item_no);
                     }
 
@@ -127,6 +130,15 @@ Button lg;
                 set.addAll(categories);
                 editor.putStringSet("categories", set);
                 editor.apply();
+                if(categories_image.size()>0){
+                    SharedPreferences.Editor editor3 = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
+                    Set<String> set3 = new HashSet<String>();
+                    set3.addAll(categories_image);
+                    editor3.putStringSet("categories_image", set3);
+                    editor.apply();
+                }
+
+
                 Log.e(tag,"array of numbers "+strbul.toString());
                 SharedPreferences.Editor editor2 = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
                 editor.putString("categories_no", strbul.toString());

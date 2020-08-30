@@ -8,25 +8,29 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
 public class EditSubCategoriesAdapter extends RecyclerView.Adapter<EditSubCategoriesAdapter.MyViewHolder> {
-    ArrayList<String> personNames = new ArrayList<String>();
+    ArrayList<String> subcat_names = new ArrayList<String>();
     Context context;
     ArrayList Images;
     ArrayList<String> lts = new ArrayList<String>();
-    ArrayList personNames_offers = new ArrayList<>(Arrays.asList("ITEM1", "ITEM2", "ITEM3", "ITEM4", "ITEM5", "ITEM6", "ITEM7"));
+   // ArrayList personNames_offers = new ArrayList<>(Arrays.asList("ITEM1", "ITEM2", "ITEM3", "ITEM4", "ITEM5", "ITEM6", "ITEM7"));
     int quantity = 1;
 
-    public EditSubCategoriesAdapter(Context context, ArrayList personNames, ArrayList Images) {
+    public EditSubCategoriesAdapter(Context context, ArrayList adaptersubcat_names, ArrayList Images) {
         this.context = context;
-        this.personNames = personNames;
+        this.subcat_names = adaptersubcat_names;
         this.Images=Images;
-        this.lts.addAll(personNames);
+        this.lts.addAll(adaptersubcat_names);
 
     }
 
@@ -43,8 +47,17 @@ public class EditSubCategoriesAdapter extends RecyclerView.Adapter<EditSubCatego
     public void onBindViewHolder(final EditSubCategoriesAdapter.MyViewHolder holder, final int position) {
 
         // set the data in items
-        String name = (String) personNames.get(position);
+        if(subcat_names.size()==0)
+        {
+            Toast.makeText(context,"No sub category", Toast.LENGTH_LONG).show();
+        }
+        String name = (String) subcat_names.get(position);
 
+holder.name_subbedit.setText(name);
+//        String sub_image = (String) Images.get(position);
+//        Glide.with(context).load(sub_image)
+//                .diskCacheStrategy(DiskCacheStrategy.ALL)
+//                .into(holder.image_image_subbedit);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -52,19 +65,19 @@ public class EditSubCategoriesAdapter extends RecyclerView.Adapter<EditSubCatego
 
             }
         });
-        holder.ed.setOnClickListener(new View.OnClickListener() {
+        holder.ed_subbedit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String text = holder.ed.getText().toString();
+                String text = holder.ed_subbedit.getText().toString();
                 if(text.equals("SAVE"))
                 {
-                    holder.ed.setText("EDIT");
+                    holder.ed_subbedit.setText("EDIT");
                 }
                 else
                 {
-                    holder.name.setEnabled(true);
-                    holder.ed.setText("SAVE");
-                    holder.ed_pic.setVisibility(View.VISIBLE);
+                    holder.name_subbedit.setEnabled(true);
+                    holder.ed_subbedit.setText("SAVE");
+                    holder.ed_pic_subbedit.setVisibility(View.VISIBLE);
                 }
 
             }
@@ -76,19 +89,19 @@ public class EditSubCategoriesAdapter extends RecyclerView.Adapter<EditSubCatego
 
     @Override
     public int getItemCount() {
-        return personNames_offers.size();
+        return subcat_names.size();
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        EditText name, quantityy;// init the item view's
-        Button ed,ed_pic;
-        ImageView image_image;
+        EditText name_subbedit, quantityy;// init the item view's
+        Button ed_subbedit,ed_pic_subbedit;
+        ImageView image_image_subbedit;
         public MyViewHolder(View itemView) {
             super(itemView);
-            name = (EditText) itemView.findViewById(R.id.Title);
-            ed = (Button) itemView.findViewById(R.id.edit);
-            ed_pic =(Button)itemView.findViewById(R.id.editpic);
-            image_image=(ImageView) itemView.findViewById(R.id.im);
+            name_subbedit = (EditText) itemView.findViewById(R.id.Title_subbedit);
+            ed_subbedit = (Button) itemView.findViewById(R.id.edit_subbedit);
+            ed_pic_subbedit =(Button)itemView.findViewById(R.id.editpic_subbedit);
+            image_image_subbedit=(ImageView) itemView.findViewById(R.id.im_subbedit);
         }
     }
 

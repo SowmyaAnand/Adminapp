@@ -24,6 +24,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class MyAccount extends AppCompatActivity {
 Button logout;
     TextView edit_account ;
+    private String tag = "myaccount";
     EditText name_account,mob_account,email_account,place_account,address_account;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,24 +104,24 @@ logout.setOnClickListener(new View.OnClickListener() {
             public void onResponse(Call<ListCategoryResponse> call, retrofit2.Response<ListCategoryResponse> response) {
                 ListCategoryResponse listCategoryResponseobject = response.body();
                 int success = Integer.parseInt(response.body().getResponsedata().getSuccess());
-
+                Log.e(tag,"error"+success);
 
                 try {
 //
 
                     if(success==1)
                     {
-                        int data_length = response.body().getResponsedata().getData().size();
-                       String name_accountVal =  response.body().getResponsedata().getData().get(0).getFirstName();
-                        String mob_accountVal =  response.body().getResponsedata().getData().get(0).getMobile();
-                        String email_accountVal =  response.body().getResponsedata().getData().get(0).getEmail();
-                        String address_accountVal =  response.body().getResponsedata().getData().get(0).getAddress();
-                        name_account.setText(name_accountVal);
-                        mob_account.setText(mob_accountVal);
-                        email_account.setText(email_accountVal);
-                        address_account.setText(address_accountVal);
-                        logout =(Button)findViewById(R.id.logout_admin);
-                        place_account = (EditText)findViewById(R.id.Place_account);
+//                        int data_length = response.body().getResponsedata().getData().size();
+//                       String name_accountVal =  response.body().getResponsedata().getData().get(0).getFirstName();
+//                        String mob_accountVal =  response.body().getResponsedata().getData().get(0).getMobile();
+//                        String email_accountVal =  response.body().getResponsedata().getData().get(0).getEmail();
+//                        String address_accountVal =  response.body().getResponsedata().getData().get(0).getAddress();
+//                        name_account.setText(name_accountVal);
+//                        mob_account.setText(mob_accountVal);
+//                        email_account.setText(email_accountVal);
+//                        address_account.setText(address_accountVal);
+//                        logout =(Button)findViewById(R.id.logout_admin);
+//                        place_account = (EditText)findViewById(R.id.Place_account);
 
                     }
                     else {
@@ -128,6 +129,7 @@ logout.setOnClickListener(new View.OnClickListener() {
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
+                    
                     Toast.makeText(MyAccount.this,"something went wrong",Toast.LENGTH_SHORT).show();
                 }
 
@@ -135,7 +137,7 @@ logout.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onFailure(Call<ListCategoryResponse> call, Throwable t) {
-
+                    Log.e(tag,"error"+t.getMessage());
                 Toast.makeText(MyAccount.this,t.getMessage(),Toast.LENGTH_SHORT).show();
             }
         });
