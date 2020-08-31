@@ -27,67 +27,78 @@
                 android:background="@color/colorPrimary"
                 app:popupTheme="@style/AppTheme.PopupOverlay" />
             <TextView
+                android:id="@+id/addnewitemtext"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="ADD NEW ITEMS"
                 android:textColor="@color/black"
                 android:textAlignment="center"
                 android:padding="10dp"
+                android:layout_margin="16dp"
                 android:fontFamily="@font/roboto_medium"
                 android:layout_marginTop="20dp"
 />
-        <androidx.cardview.widget.CardView
-            android:id="@+id/userNameCard"
-            android:layout_margin="16dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:cardCornerRadius="15dp"
-            app:cardElevation="15dp"
-            app:cardBackgroundColor="@color/white"
-            android:layout_marginRight="16dp">
-            <LinearLayout
+<!--        <androidx.cardview.widget.CardView-->
+<!--            android:id="@+id/userNameCard"-->
+<!--            android:layout_margin="16dp"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            app:cardCornerRadius="15dp"-->
+<!--            app:cardElevation="15dp"-->
+<!--            app:cardBackgroundColor="@color/white"-->
+<!--            android:layout_marginRight="16dp">-->
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:orientation="horizontal">-->
+<!--                <ImageView-->
+<!--                    xmlns:app="http://schemas.android.com/apk/res-auto"-->
+<!--                    android:layout_margin="15dp"-->
+<!--                    android:id="@+id/usrImg"-->
+<!--                    android:layout_width="50dp"-->
+<!--                    android:layout_height="50dp"-->
+<!--                    android:src="@drawable/ic_image_black_24dp"-->
+<!--                    />-->
+<!--                <LinearLayout-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:orientation="vertical">-->
+
+<!--                    <TextView-->
+<!--                        android:id="@+id/userNmeTxt"-->
+<!--                        android:layout_width="277dp"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_gravity="center"-->
+<!--                        android:layout_marginLeft="20dp"-->
+<!--                        android:fontFamily="@font/roboto_light"-->
+<!--                        android:text="Category"-->
+<!--                        android:textColor="@color/colorPrimary" />-->
+<!--                    <EditText-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:textColor="@color/black"-->
+<!--                        android:textColorHint="@color/Gray"-->
+<!--                        android:fontFamily="@font/roboto_light"-->
+<!--                        android:hint="ADD YOUR CATEGORY"/>-->
+<!--                </LinearLayout>-->
+<!--            </LinearLayout>-->
+
+<!--        </androidx.cardview.widget.CardView>-->
+
+
+<Spinner
+    android:id="@+id/categoryspinner"
+    android:layout_width="match_parent"
+    android:layout_margin="16dp"
+    android:layout_height="50dp"/>
+            <Spinner
+                android:id="@+id/subcategoryspinner"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-                <ImageView
-                    xmlns:app="http://schemas.android.com/apk/res-auto"
-                    android:layout_margin="15dp"
-                    android:id="@+id/usrImg"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:src="@drawable/ic_image_black_24dp"
-                    />
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/userNmeTxt"
-                        android:layout_width="277dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="20dp"
-                        android:fontFamily="@font/roboto_light"
-                        android:text="Category"
-                        android:textColor="@color/colorPrimary" />
-                    <EditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/black"
-                        android:textColorHint="@color/Gray"
-                        android:fontFamily="@font/roboto_light"
-                        android:hint="ADD YOUR CATEGORY"/>
-                </LinearLayout>
-            </LinearLayout>
-
-        </androidx.cardview.widget.CardView>
-
-
-
+                android:layout_margin="16dp"
+                android:layout_height="50dp"/>
         <LinearLayout
             android:layout_marginBottom="60dp"
-            android:layout_below="@+id/userNameCard"
+            android:layout_below="@+id/addnewitemtext"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">

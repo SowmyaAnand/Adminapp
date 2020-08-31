@@ -11,14 +11,24 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.theartofdev.edmodo.cropper.CropImage;
 
-public class Addpost extends AppCompatActivity {
+import java.util.ArrayList;
+
+public class Addpost extends AppCompatActivity implements  AdapterView.OnItemSelectedListener {
 TextView addattach;
 ImageView imgaeitem;
+Spinner Category_spinner;
+    Spinner Sub_Category_spinner;
+    private static final String[] paths = {"item 1", "item 2", "item 3"};
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,8 +37,16 @@ ImageView imgaeitem;
         toolbar.setTitle("ADD ITEM");
         toolbar.setTitleTextColor(Color.WHITE);
         setSupportActionBar(toolbar);
+
+        Category_spinner = (Spinner)findViewById(R.id.categoryspinner);
         addattach=(TextView)findViewById(R.id.txtAttachment);
         imgaeitem=(ImageView)findViewById(R.id.imageitem);
+        ArrayAdapter<String>adapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_item,paths);
+
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        Category_spinner.setAdapter(adapter);
+        Category_spinner.setOnItemClickListener((AdapterView.OnItemClickListener) this);
         addattach.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -77,5 +95,26 @@ ImageView imgaeitem;
                 Exception error = result.getError();
             }
         }
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        switch (position) {
+            case 0:
+                Toast.makeText(Addpost.this,"value="+position,Toast.LENGTH_LONG).show();
+                break;
+            case 1:
+                // Whatever you want to happen when the second item gets selected
+                break;
+            case 2:
+                // Whatever you want to happen when the thrid item gets selected
+                break;
+
+        }
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
     }
 }

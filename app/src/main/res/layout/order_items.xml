@@ -14,14 +14,14 @@
         xmlns:android="http://schemas.android.com/apk/res/android">
 
         <ImageView
-            android:id="@+id/img"
+            android:id="@+id/img_orders"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:src="@drawable/h2"
             />
 
         <RelativeLayout
-            android:id="@+id/relativeLytVideo"
+            android:id="@+id/relativeLytVideo_orders"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:visibility="gone"
@@ -34,7 +34,7 @@
                 />
         </RelativeLayout>
         <RelativeLayout
-            android:id="@+id/relativeLytFilePath"
+            android:id="@+id/relativeLytFilePath_orders"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:visibility="visible"
@@ -42,14 +42,14 @@
             >
 
             <ImageView
-                android:id="@+id/pdf_img"
+                android:id="@+id/pdf_img_orders"
                 android:visibility="gone"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_centerInParent="true"
                 />
             <ImageView
-                android:id="@+id/doc_img"
+                android:id="@+id/doc_img_orders"
                 android:visibility="gone"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
@@ -57,7 +57,7 @@
                 />
             <ImageView
                 android:visibility="gone"
-                android:id="@+id/excel_img"
+                android:id="@+id/excel_img_orders"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_centerInParent="true"
@@ -67,7 +67,7 @@
 
         <TextView
             android:visibility="gone"
-            android:id="@+id/txtNoAttach"
+            android:id="@+id/txtNoAttach_orders"
             android:layout_width="100dp"
             android:layout_height="100dp"
 
@@ -75,59 +75,59 @@
 
         <TextView
             android:layout_marginRight="30dp"
-            android:id="@+id/Title"
+            android:id="@+id/Title_orders"
             android:layout_marginTop="10dp"
             android:layout_marginLeft="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/black"
-            android:layout_toRightOf="@+id/img"
+            android:layout_toRightOf="@+id/img_orders"
             android:textSize="16sp"
             android:fontFamily="@font/roboto_medium"
             android:text="TITLE"/>
         <TextView
-            android:id="@+id/publishNme"
-            android:layout_below="@+id/Title"
+            android:id="@+id/publishNme_orders"
+            android:layout_below="@+id/Title_orders"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
             android:textColor="@color/black"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/img"
+            android:layout_toRightOf="@+id/img_orders"
             android:textSize="13sp"
             android:fontFamily="@font/roboto_light"
             android:text="QUANTITY:1"
             />
 
         <TextView
-            android:id="@+id/prce"
-            android:layout_below="@+id/publishNme"
+            android:id="@+id/prce_orders"
+            android:layout_below="@+id/publishNme_orders"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
             android:textColor="@color/black"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/img"
+            android:layout_toRightOf="@+id/img_orders"
             android:textSize="13sp"
             android:fontFamily="@font/roboto_light"
             android:text="RS:25000"
             />
         <TextView
-            android:id="@+id/dte"
-            android:layout_below="@+id/prce"
+            android:id="@+id/dte_orders"
+            android:layout_below="@+id/prce_orders"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
             android:textColor="@color/black"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/img"
+            android:layout_toRightOf="@+id/img_orders"
             android:textSize="13sp"
             android:fontFamily="@font/roboto_light"
             android:text="05-08-2020"
             />
 
         <TextView
-            android:id="@+id/unread_check"
+            android:id="@+id/unread_check_orders"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="8% Off"

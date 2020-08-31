@@ -73,6 +73,21 @@ public class ListCategoryResponseData {
     @Expose
     private String message;
 
+    @SerializedName("orderId")
+    @Expose
+    private String orderId;
+    @SerializedName("cartId")
+    @Expose
+    private String cartId;
+
+    @SerializedName("count")
+    @Expose
+    private String count;
+
+
+    @SerializedName("type")
+    @Expose
+    private String type;
 
 
     @SerializedName("firstName")
@@ -306,5 +321,41 @@ public class ListCategoryResponseData {
     public void setCreatedAt(String createdAt) {
         this.createdAt = createdAt;
     }
+    public String getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(String orderId) {
+        this.orderId = orderId;
+    }
+
+    public String getCartId() {
+        return cartId;
+    }
+
+    public void setCartId(String cartId) {
+        this.cartId = cartId;
+    }
+
+
+
+    public String getCount() {
+        return count;
+    }
+
+    public void setCount(String count) {
+        this.count = count;
+    }
+
+
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
 
 }

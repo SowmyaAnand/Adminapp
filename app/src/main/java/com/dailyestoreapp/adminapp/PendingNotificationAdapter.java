@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
@@ -27,19 +28,34 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Locale;
 
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
 import static com.dailyestoreapp.adminapp.R.color.green;
 import static com.dailyestoreapp.adminapp.R.color.white;
 
 public class PendingNotificationAdapter extends RecyclerView.Adapter<PendingNotificationAdapter.MyViewHolder> {
-    ArrayList<String> personNames = new ArrayList<String>();
+    //ArrayList<String> pending_orders_list_array_item = new ArrayList<String>();
     Context context;
+  Integer orderid_adapter;
     ArrayList<String> lts=new ArrayList<String>();
-    ArrayList personNames_offers = new ArrayList<>(Arrays.asList("ITEM1", "ITEM2", "ITEM3", "ITEM4", "ITEM5", "ITEM6", "ITEM7"));
+    ArrayList<String> pending_orders_list_array_item = new ArrayList<>();
+    ArrayList<String> pending_orders_list_array_address = new ArrayList<>();
+    ArrayList<String> pending_orders_list_array_satus = new ArrayList<>();
+    ArrayList<Integer> pending_orders_list_array_orderid = new ArrayList<>();
+    //ArrayList pending_orders_list_array_item_offers = new ArrayList<>(Arrays.asList("ITEM1", "ITEM2", "ITEM3", "ITEM4", "ITEM5", "ITEM6", "ITEM7"));
     int quantity=1;
-    public PendingNotificationAdapter(Context context, ArrayList personNames) {
+    public PendingNotificationAdapter(Context context, ArrayList<String> pending_orders_list_array_address,ArrayList<String> pending_orders_list_array_item, ArrayList<String> pending_orders_list_array_satus, ArrayList<Integer> pending_orders_list_array_orderid) {
         this.context = context;
-        this.personNames = personNames;
-        this.lts.addAll(personNames);
+        this.pending_orders_list_array_address=pending_orders_list_array_address;
+                this.pending_orders_list_array_item=pending_orders_list_array_item;
+                        this.pending_orders_list_array_satus=pending_orders_list_array_satus;
+                        this.pending_orders_list_array_orderid = pending_orders_list_array_orderid;
+        this.lts.addAll(pending_orders_list_array_item);
 
     }
     @Override
@@ -55,94 +71,66 @@ public class PendingNotificationAdapter extends RecyclerView.Adapter<PendingNoti
     public void onBindViewHolder(final PendingNotificationAdapter.MyViewHolder holder, final int position) {
 
         // set the data in items
-        String name = (String) personNames.get(position);
-        holder.name.setText(name);
-        holder.pd.setOnClickListener(new View.OnClickListener() {
+        String name = pending_orders_list_array_item.get(position);
+        holder.name_pending.setText(name);
+        String address = pending_orders_list_array_address.get(position);
+        orderid_adapter = pending_orders_list_array_orderid.get(position);
+       holder.address_pending.setText(address);
+        holder.pd_pending.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                String url = "http://dailyestoreapp.com/dailyestore/api/orderStatus";
-                JSONObject obj = new JSONObject();
-                try {
-                    obj.put("orderId", 1);
-                    obj.put("status", "delivered");
-                    //  obj.put(Constant.SESSION_USERID_KEY,adid );
-                    // obj.put(Constant.SESSION_USERID_KEY,adid );
+                String url = "http://dailyestoreapp.com/dailyestore/api/";
 
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-
-
-
-                RequestQueue queue = Volley.newRequestQueue(context);
-
-                JsonObjectRequest jsObjRequest = new JsonObjectRequest(Request.Method.POST,url,obj,
-                        new Response.Listener<JSONObject>() {
-                            @Override
-                            public void onResponse(JSONObject response) {
-                                System.out.println(response);
-
-                                Log.e("RESPONSE",""+response.toString());
-//                        try{
-//                            JSONObject jsonObject=new JSONObject(response.toString());
-//                            if(jsonObject.has("output")){
-//                                String result=jsonObject.getString("output");
-//                                // String token = jsonObject.getString("token");
-//                                if (result.contains("Success")&& jsonObject.has("token")) {
-//                                    String token = jsonObject.getString("token");
-//                                    String text[] = result.split(",");
-//                                    //String status=text[0];
-//                                    //String resp=str.trim();
-//                                    String groupId = text[1];
-//                                    String empNme = text[2];
-////                                    sharedPreferences = getSharedPreferences(Constant.LOGIN_CREDENTIAL, Context.MODE_PRIVATE);
-////                                    SharedPreferences.Editor editor = sharedPreferences.edit();
-////                                    editor.putString(Constant.LOGIN_ADID, adid);
-////                                    editor.putString(Constant.LOGIN_SECTION, groupId);
-////                                    editor.putString(Constant.LOGIN_NAME, empNme);
-////
-////                                    editor.putString(Constant.SHARED_PREF_REFRESH_TOKEN,token);
-////
-////
-////                                    editor.apply();
-//
-////                                    ApplicationLoader.getPreferences().userID(adid);
-////
-////                                    Intent i = new Intent(LoginActivity.this, HomeActivity.class);
-////                                    startActivity(i);
-////                                    finish();
-//                                } else {
-//                                  //  showToast(result);
-//                                }
-//                            }
-//                        }
-//                        catch(Exception e){
-//                            e.printStackTrace();
-//                        }
+                HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
+                loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+                OkHttpClient okHttpClient = new OkHttpClient.Builder()
+                        .addInterceptor(loggingInterceptor)
+                        .build();
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(url)
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(okHttpClient)
+                        .build();
+                ResponseInterface1 mainInterface = retrofit.create(ResponseInterface1.class);
+                Call<ListCategoryResponse> call = mainInterface.changeOrderStatus(orderid_adapter,1);
+                call.enqueue(new Callback<ListCategoryResponse>() {
+                    @Override
+                    public void onResponse(Call<ListCategoryResponse> call, retrofit2.Response<ListCategoryResponse> response) {
+                        ListCategoryResponse listCategoryResponseobject = response.body();
+                        int success = Integer.parseInt(response.body().getResponsedata().getSuccess());
+                        try {
 
 
+                            if(success==1)
+                            {
+                                holder.pd_pending.setText("Approved");
+                                holder.pd_pending.setTextColor(ContextCompat.getColor(context, white));
+                                holder.pd_pending.setBackgroundColor(ContextCompat.getColor(context, green));
+                                Toast.makeText(context,"Aproved",Toast.LENGTH_LONG).show();
                             }
-                        },
-                        new Response.ErrorListener() {
-                            @Override
-                            public void onErrorResponse(VolleyError error) {
-                                // progressDialog.dismiss();
-                                // showToast("Unable to connect Server,please try after sometime!");
-                                Log.e("ERROR",""+error);
+                            else {
+                                Toast.makeText(context,"No Data found",Toast.LENGTH_LONG).show();
                             }
-                        });
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            Toast.makeText(context,"something went wrong",Toast.LENGTH_SHORT).show();
+                        }
 
-                jsObjRequest.setRetryPolicy(new DefaultRetryPolicy(
-                        20000,
-                        DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-                        DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-                queue.add(jsObjRequest);
-                Log.d("request>>>>>>", queue.toString());
-                holder.pd.setText("Approved");
-                holder.pd.setTextColor(ContextCompat.getColor(context, white));
-                holder.pd.setBackgroundColor(ContextCompat.getColor(context, green));
+
+
+
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<ListCategoryResponse> call, Throwable t) {
+
+                    }
+                });
+
+
+
             }
         });
 
@@ -151,15 +139,16 @@ public class PendingNotificationAdapter extends RecyclerView.Adapter<PendingNoti
 
     @Override
     public int getItemCount() {
-        return personNames.size();
+        return pending_orders_list_array_item.size();
     }
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        TextView name,quantityy;// init the item view's
-        Button pd,addition,substraction,addbtn;
+        TextView name_pending,address_pending;// init the item view's
+        Button pd_pending;
         public MyViewHolder(View itemView) {
             super(itemView);
-            name = (TextView) itemView.findViewById(R.id.Title);
-            pd=(Button)itemView.findViewById(R.id.pending);
+            name_pending = (TextView) itemView.findViewById(R.id.Title_pending);
+            pd_pending=(Button)itemView.findViewById(R.id.pending_pending);
+            address_pending=(TextView)itemView.findViewById(R.id.address_pending);
             // get the reference of item view's
 
         }
@@ -168,21 +157,21 @@ public class PendingNotificationAdapter extends RecyclerView.Adapter<PendingNoti
         Log.e("texting if","persons="+charText);
         charText = charText.toLowerCase(Locale.getDefault());
         Log.e("texting if2","persons="+charText);
-        personNames.clear();
-        Iterator itr=personNames.iterator();
+        pending_orders_list_array_item.clear();
+        Iterator itr=pending_orders_list_array_item.iterator();
         if (charText.length() == 0) {
             Log.e("texting if3","persons="+charText);
-            personNames.addAll(lts);
+            pending_orders_list_array_item.addAll(lts);
         } else {
             for(int i =0;i<lts.size();i++) {
                 Log.e("texting else","persons="+lts.get(i));
                 String s = (String) lts.get(i);
                 if (s.toLowerCase(Locale.getDefault()).contains(charText)) {
-                    personNames.add(s);
+                    pending_orders_list_array_item.add(s);
                 }
             }
         }
-        Log.e("text","persons="+personNames);
+        Log.e("text","persons="+pending_orders_list_array_item);
         notifyDataSetChanged();
     }
 }

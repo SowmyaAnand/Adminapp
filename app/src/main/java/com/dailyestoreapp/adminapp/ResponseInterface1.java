@@ -25,4 +25,10 @@ public interface ResponseInterface1 {
     @FormUrlEncoded
     @POST("userDetails")
     Call<ListCategoryResponse> Myaccount(@Field("userId") int id);
+    @GET("allOrders")
+    Call<ListCategoryResponse> orderslist();
+    @FormUrlEncoded
+    @POST("orderStatus")
+    Call<ListCategoryResponse> changeOrderStatus(@Field("orderId") int id,
+                                            @Field("status") int status);
 }

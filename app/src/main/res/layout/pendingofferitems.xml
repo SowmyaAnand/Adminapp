@@ -14,139 +14,55 @@
         xmlns:android="http://schemas.android.com/apk/res/android">
 
         <ImageView
-            android:id="@+id/img"
+            android:id="@+id/img_pending"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:src="@drawable/mob41"
             />
 
-        <RelativeLayout
-            android:id="@+id/relativeLytVideo"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:visibility="gone"
-            android:background="@color/colorAccent">
 
-            <ImageView
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_centerInParent="true"
-                />
-        </RelativeLayout>
-        <RelativeLayout
-            android:id="@+id/relativeLytFilePath"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:visibility="visible"
-
-            >
-
-            <ImageView
-                android:id="@+id/pdf_img"
-                android:visibility="gone"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_centerInParent="true"
-                />
-            <ImageView
-                android:id="@+id/doc_img"
-                android:visibility="gone"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_centerInParent="true"
-                />
-            <ImageView
-                android:visibility="gone"
-                android:id="@+id/excel_img"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_centerInParent="true"
-                />
-        </RelativeLayout>
-
-
-        <TextView
-            android:visibility="gone"
-            android:id="@+id/txtNoAttach"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-
-            android:gravity="center"/>
 
         <TextView
             android:layout_marginRight="30dp"
-            android:id="@+id/Title"
+            android:id="@+id/Title_pending"
             android:layout_marginTop="10dp"
             android:layout_marginLeft="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/black"
-            android:layout_toRightOf="@+id/img"
+            android:layout_toRightOf="@+id/img_pending"
             android:textSize="16sp"
             android:fontFamily="@font/roboto_medium"
             android:text="TITLE"/>
         <TextView
-            android:id="@+id/publishNme"
-            android:layout_below="@+id/Title"
+            android:id="@+id/address_pending"
+            android:layout_below="@+id/Title_pending"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
             android:textColor="@color/black"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/img"
+            android:layout_toRightOf="@+id/img_pending"
             android:textSize="13sp"
             android:fontFamily="@font/roboto_light"
             android:text="Address"
             />
 
-        <TextView
-            android:id="@+id/prce"
-            android:layout_below="@+id/publishNme"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:textColor="@color/colorPrimary"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/img"
-            android:textSize="18sp"
-            android:text=""
-            />
 
 
 
 
-        <RelativeLayout
-            android:id="@+id/priceadd"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/prce"
-            android:layout_toRightOf="@+id/img"
+    <RelativeLayout
+        android:id="@+id/priceadd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/address_pending"
 
-            >
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:gravity="end">
 
-                <TextView
-                    android:id="@+id/quantity"
-                    android:layout_width="30dp"
-                    android:layout_height="40dp"
-                    android:text="1"
-                    android:gravity="center"
-                    android:textColor="@color/black"
-
-                    android:layout_toRightOf="@+id/plus"
-
-                    />
-
-            </RelativeLayout>
+        >
             <Button
                 android:layout_marginTop="10dp"
-                android:id="@+id/pending"
+                android:id="@+id/pending_pending"
                 android:layout_width="90dp"
                 android:layout_height="40dp"
                 android:text="Pending"
@@ -155,11 +71,12 @@
                 android:textColor="@color/white"
                 android:layout_marginRight="10dp"
                 android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true" />
 
+                android:layout_alignParentRight="true" />
+    </RelativeLayout>
         </RelativeLayout>
 
 
-    </RelativeLayout>
+
 
 </androidx.cardview.widget.CardView>
