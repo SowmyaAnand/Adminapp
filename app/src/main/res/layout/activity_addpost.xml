@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@color/white"
+android:background="@color/white"
     android:layout_height="match_parent"
     tools:context=".Addpost">
 
@@ -90,11 +90,19 @@
     android:id="@+id/categoryspinner"
     android:layout_width="match_parent"
     android:layout_margin="16dp"
+android:background="@color/colorPrimary"
+    android:textColor="@color/white"
+    android:textAlignment="center"
+    android:textSize ="16sp"
     android:layout_height="50dp"/>
             <Spinner
                 android:id="@+id/subcategoryspinner"
                 android:layout_width="match_parent"
                 android:layout_margin="16dp"
+                android:background="@color/colorPrimary"
+                android:textColor="@color/white"
+                android:textSize ="16sp"
+                android:textAlignment="center"
                 android:layout_height="50dp"/>
         <LinearLayout
             android:layout_marginBottom="60dp"
@@ -267,6 +275,25 @@
                         android:gravity="left"
                         android:layout_marginTop="20dp"
                         android:maxLength="600"/>
+                    <RadioGroup
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+    <RadioButton
+        android:id="@+id/cod_eligible"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_weight="1"
+    android:checked="true"
+    android:text="COD ELIGIBLE"/>
+                        <RadioButton
+                            android:id="@+id/cod_not_eligible"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+
+                            android:text="COD NOT ELIGIBLE"/>
+                    </RadioGroup>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 

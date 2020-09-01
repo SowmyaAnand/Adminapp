@@ -20,6 +20,9 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
 
 import cc.cloudist.acplibrary.ACProgressConstant;
 import cc.cloudist.acplibrary.ACProgressFlower;
@@ -33,9 +36,11 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class editsubcategory extends AppCompatActivity {
     RecyclerView subcategories;
     Integer edit_sub_maincategory_no;
+    StringBuilder strbul  = new StringBuilder();
     LinearLayoutManager linearLayoutManager_offers,linearLayoutManager2_offers;
     EditSubCategoriesAdapter sub_customAdapter_offers;
     public static final String MY_PREFS_NAME = "AdminApp";
+    ArrayList<Integer> SubcategoriesEditCategies_no = new ArrayList<>();
     ArrayList<String> SubcategoriesEditCategies = new ArrayList<>();
     ArrayList<String> SubcategoriesEditCategies_image = new ArrayList<>();
     ArrayList Images_images = new ArrayList<>(Arrays.asList(R.drawable.wp2375838_1,R.drawable.wp2375838_1, R.drawable.wp2375838_1, R.drawable.wp2375838_1, R.drawable.wp2375838_1));
@@ -94,9 +99,13 @@ public class editsubcategory extends AppCompatActivity {
                         {
                             JSONObject j1= categoriesarray.getJSONObject(i);
                             String sub_name = j1.getString("subName");
+                            int item_no = Integer.parseInt(j1.getString("subId"));
+
                             if(!SubcategoriesEditCategies.contains(sub_name))
                             {
                                 SubcategoriesEditCategies.add(sub_name);
+                                SubcategoriesEditCategies_no.add(item_no);
+
 
 //                            String sub_img = j1.getString("subItemImage");
 //                           SubcategoriesEditCategies_image.add(sub_img);
@@ -107,7 +116,25 @@ public class editsubcategory extends AppCompatActivity {
 
                         sub_customAdapter_offers.notifyDataSetChanged();
 
+                        SharedPreferences.Editor editor1 = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
+                        Set<String> set = new HashSet<String>();
+                        set.addAll(SubcategoriesEditCategies);
+                        editor1.putStringSet("sub_categories", set);
+                        editor1.apply();
 
+                        Iterator<Integer> iter = SubcategoriesEditCategies_no.iterator();
+                        while(iter.hasNext())
+                        {
+                            strbul.append(iter.next());
+                            if(iter.hasNext()){
+                                strbul.append(",");
+                            }
+                        }
+                        strbul.toString();
+                        Log.e("res","res="+strbul);
+                        SharedPreferences.Editor editor2 = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
+                        editor2.putString("sub_categories_no", strbul.toString());
+                        editor2.apply();
 
 
 
