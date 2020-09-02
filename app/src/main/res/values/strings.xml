@@ -27,6 +27,10 @@
     <string name="category7">Meat</string>
     <string name="category8">Electronics</string>
     <string name="category9">Mobile and Accessories</string>
+    <string name="cod_not_eligible">COD NOT ELIGIBLE</string>
+    <string name="cod_eligible">COD ELIGIBLE</string>
+    <string name="refund_eligible">REFUND ELIGIBLE</string>
+    <string name="refund_not_eligible">REFUND NOT ELIGIBLE</string>
 
 
 </resources>

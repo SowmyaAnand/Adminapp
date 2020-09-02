@@ -8,18 +8,26 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.androidnetworking.AndroidNetworking;
+import com.androidnetworking.common.Priority;
+import com.androidnetworking.error.ANError;
+import com.androidnetworking.interfaces.JSONObjectRequestListener;
+import com.androidnetworking.interfaces.UploadProgressListener;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -30,6 +38,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -45,20 +54,26 @@ import retrofit2.Callback;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class Addpost extends AppCompatActivity  {
+public class Addpost extends AppCompatActivity {
     TextView addattach;
     ImageView imgaeitem;
-    RadioGroup radiogroup;
+
+    Button post;
+    File file;
     Spinner Category_spinner;
+    String selectedPath="";
     Spinner Sub_Category_spinner;
     public static final String MY_PREFS_NAME = "AdminApp";
     private static final String[] paths = {"item 1", "item 2", "item 3"};
     ArrayList<Integer> categoriescatno_edit = new ArrayList<>();
     ArrayList<Integer> subcategoriescatno_edit = new ArrayList<>();
-    ArrayAdapter<String>subadapter1;
+    ArrayAdapter<String> subadapter1;
     ACProgressFlower dialog;
     Integer selected_cat_no;
     List<String> subcategorylist1;
+    String cod_eligibility;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,13 +83,30 @@ public class Addpost extends AppCompatActivity  {
         toolbar.setTitleTextColor(Color.WHITE);
         setSupportActionBar(toolbar);
         ArrayList<String> categoriesEditCategies = new ArrayList<>();
-        radiogroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+        RadioGroup radioGroup = (RadioGroup) findViewById(R.id.cod) ;
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-
+                RadioButton rb1 = (RadioButton) findViewById(checkedId);
+                cod_eligibility = String.valueOf(rb1.getText());
+            }
+        });
+        RadioGroup radiogroup1 = (RadioGroup) findViewById(R.id.cod) ;
+        radiogroup1.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                RadioButton rb1 = (RadioButton) findViewById(checkedId);
+                cod_eligibility = String.valueOf(rb1.getText());
             }
         });
 
+        post = (Button) findViewById(R.id.btnPost);
+        post.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                uploadFile(file, "1", "meat", "noufal");
+            }
+        });
         // Cat_name
         SharedPreferences shared = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
         Set<String> set = shared.getStringSet("categories", null);
@@ -101,26 +133,26 @@ public class Addpost extends AppCompatActivity  {
 //            subcategoriescatno_edit.add(Integer.valueOf(number));
 //        }
 ////// sub_Cat_ name
-       subcategorylist1 = new ArrayList<String>();
+        subcategorylist1 = new ArrayList<String>();
 //        SharedPreferences shared4 = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
 //        Set<String> set4 = shared4.getStringSet("categories", null);
 //
-       subcategorylist1.add("Select Sub Category");
+        subcategorylist1.add("Select Sub Category");
 //        subcategorylist1.addAll(set4);
 
 
         Category_spinner = findViewById(R.id.categoryspinner);
         Sub_Category_spinner = findViewById(R.id.subcategoryspinner);
-        addattach=(TextView)findViewById(R.id.txtAttachment);
-        imgaeitem=(ImageView)findViewById(R.id.imageitem);
+        addattach = (TextView) findViewById(R.id.txtAttachment);
+        imgaeitem = (ImageView) findViewById(R.id.imageitem);
         subadapter1 = new ArrayAdapter<String>(this,
-                android.R.layout.simple_spinner_item,subcategorylist1);
+                android.R.layout.simple_spinner_item, subcategorylist1);
 
         subadapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         Sub_Category_spinner.setAdapter(subadapter1);
         Sub_Category_spinner.setOnItemSelectedListener(new SubCategoriesSpinnerClass());
-        ArrayAdapter<String>adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_spinner_item,categorylist);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_item, categorylist);
 
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         Category_spinner.setAdapter(adapter);
@@ -129,29 +161,30 @@ public class Addpost extends AppCompatActivity  {
             @Override
             public void onClick(View v) {
                 CropImage.activity()
-                        .setMinCropResultSize(300,300)
-                        .setMaxCropResultSize(300,300)
+                        .setMinCropResultSize(300, 300)
+                        .setMaxCropResultSize(300, 300)
                         .start(Addpost.this);
             }
         });
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
+
     @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-        Log.e("MAin","Item selected ="+item.getItemId());
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Log.e("MAin", "Item selected =" + item.getItemId());
         switch (item.getItemId()) {
             case R.id.logout:
-                Intent cart = new Intent(Addpost.this,Login.class);
+                Intent cart = new Intent(Addpost.this, Login.class);
                 startActivity(cart);
                 return true;
             case R.id.account:
-                Intent account1 = new Intent(Addpost.this,MyAccount.class);
+                Intent account1 = new Intent(Addpost.this, MyAccount.class);
                 startActivity(account1);
                 return true;
 
@@ -159,6 +192,7 @@ public class Addpost extends AppCompatActivity  {
                 return super.onOptionsItemSelected(item);
         }
     }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -167,6 +201,12 @@ public class Addpost extends AppCompatActivity  {
             if (resultCode == RESULT_OK) {
                 Uri resultUri = result.getUri();
                 imgaeitem.setImageURI(resultUri);
+                Uri selectedFileUri = data.getData();
+                Log.e("the"," file is "+selectedFileUri);
+                selectedPath = FileUtils.getPath(getApplicationContext(),resultUri);
+
+                file=new File(selectedPath);
+                Log.e("the"," file is "+file);
 
 
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
@@ -174,29 +214,28 @@ public class Addpost extends AppCompatActivity  {
             }
         }
     }
-class CategoriesSpinnerClass implements AdapterView.OnItemSelectedListener
-{
 
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        Toast.makeText(Addpost.this,"categoryselected"+position,Toast.LENGTH_LONG).show();
+    class CategoriesSpinnerClass implements AdapterView.OnItemSelectedListener {
+
+        @Override
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            Toast.makeText(Addpost.this, "categoryselected" + position, Toast.LENGTH_LONG).show();
 
 
-        Toast.makeText(Addpost.this,"subcategoryselected"+selected_cat_no,Toast.LENGTH_LONG).show();
-        if(position!=1)
-        { selected_cat_no=categoriescatno_edit.get(position);
-            subcategoryactivatepost();
+            Toast.makeText(Addpost.this, "subcategoryselected" + selected_cat_no, Toast.LENGTH_LONG).show();
+            if (position != 1) {
+                selected_cat_no = categoriescatno_edit.get(position);
+                subcategoryactivatepost();
+            }
+        }
+
+
+        @Override
+        public void onNothingSelected(AdapterView<?> parent) {
         }
     }
 
-
-    @Override
-    public void onNothingSelected(AdapterView<?> parent) {
-    }
-}
-
-    class SubCategoriesSpinnerClass implements AdapterView.OnItemSelectedListener
-    {
+    class SubCategoriesSpinnerClass implements AdapterView.OnItemSelectedListener {
 
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -209,16 +248,16 @@ class CategoriesSpinnerClass implements AdapterView.OnItemSelectedListener
 
         }
     }
-    private void subcategoryactivatepost()
-    {
 
-        dialog = new ACProgressFlower.Builder(Addpost.this)
-                .direction(ACProgressConstant.DIRECT_CLOCKWISE)
-                .themeColor(Color.WHITE)
-                .borderPadding(1)
+    private void subcategoryactivatepost() {
 
-                .fadeColor(Color.DKGRAY).build();
-        dialog.show();
+//        dialog = new ACProgressFlower.Builder(Addpost.this)
+//                .direction(ACProgressConstant.DIRECT_CLOCKWISE)
+//                .themeColor(Color.WHITE)
+//                .borderPadding(1)
+//
+//                .fadeColor(Color.DKGRAY).build();
+//        dialog.show();
         int type = selected_cat_no;
         String url = "http://dailyestoreapp.com/dailyestore/api/";
 
@@ -237,28 +276,24 @@ class CategoriesSpinnerClass implements AdapterView.OnItemSelectedListener
         call.enqueue(new Callback<ListCategoryResponse>() {
             @Override
             public void onResponse(Call<ListCategoryResponse> call, retrofit2.Response<ListCategoryResponse> response) {
-                String res= new GsonBuilder().setPrettyPrinting().create().toJson(response.body().getResponsedata());
+                String res = new GsonBuilder().setPrettyPrinting().create().toJson(response.body().getResponsedata());
                 JsonObject obj = new JsonParser().parse(res).getAsJsonObject();
                 int success = Integer.parseInt(response.body().getResponsedata().getSuccess());
-                dialog.dismiss();
-                if(success==1)
-                {
+//                dialog.dismiss();
+                if (success == 1) {
                     try {
                         JSONObject jo2 = new JSONObject(obj.toString());
                         JSONArray categoriesarray = jo2.getJSONArray("data");
 
-                        
-                        for(int i=0; i<categoriesarray.length(); i++)
-                        {
-                            JSONObject j1= categoriesarray.getJSONObject(i);
+
+                        for (int i = 0; i < categoriesarray.length(); i++) {
+                            JSONObject j1 = categoriesarray.getJSONObject(i);
                             String sub_name = j1.getString("subName");
                             int item_no = Integer.parseInt(j1.getString("subId"));
 
-                            if(!subcategorylist1.contains(sub_name))
-                            {
+                            if (!subcategorylist1.contains(sub_name)) {
                                 subcategorylist1.add(sub_name);
-                               subcategoriescatno_edit.add(item_no);
-
+                                subcategoriescatno_edit.add(item_no);
 
 
                             }
@@ -268,20 +303,13 @@ class CategoriesSpinnerClass implements AdapterView.OnItemSelectedListener
                         subadapter1.notifyDataSetChanged();
 
 
-
-
-
-
-
                         //personNames_offers = new ArrayList<>(Arrays.asList("farg4ITEM1", "frag4ITEM2", "ITEM3", "ITEM4", "ITEM5", "ITEM6"));
 
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                }
-                else
-                {
-                    Toast.makeText(Addpost.this,"No Data found",Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(Addpost.this, "No Data found", Toast.LENGTH_LONG).show();
                 }
 
 
@@ -292,6 +320,83 @@ class CategoriesSpinnerClass implements AdapterView.OnItemSelectedListener
 
             }
         });
+
+
+    }
+
+    public void uploadFile(final File file, final String typeid, final String subname, final String createdby) {
+        Log.e("test", "path=" + file);
+        ArrayList<String> dt = new ArrayList<String>(20);
+        dt.add(0, "1");
+        dt.add(1, "test");
+        dt.add(2, "sowmya");
+        //        String refreshToken = HelperClass.getRefreshToken(PostActivity.this);
+//        String userADID = HelperClass.getUserADID(PostActivity.this);
+//
+//        final ProgressDialog progressDialog=new ProgressDialog(PostActivity.this);
+//        progressDialog.setCancelable(false);
+//        progressDialog.setTitle("Please Wait");
+//        progressDialog.setMessage("Loading...");
+//        progressDialog.show();
+        AndroidNetworking.enableLogging();
+        AndroidNetworking.upload("http://dailyestoreapp.com/dailyestore/api/addItems")
+                .addMultipartFile("image", file)
+                .addMultipartParameter("typeId", String.valueOf(dt))
+                .addMultipartParameter("subId", subname)
+                .addMultipartParameter("itemName", createdby)
+                .addMultipartParameter("description", createdby)
+                .addMultipartParameter("quantity", createdby)
+                .addMultipartParameter("price", createdby)
+                .addMultipartParameter("status", createdby)
+                .addMultipartParameter("createdBy", createdby)
+                .setTag("uploadTest")
+                .setPriority(Priority.HIGH).doNotCacheResponse()
+                .build()
+                .setUploadProgressListener(new UploadProgressListener() {
+                    @Override
+                    public void onProgress(long bytesUploaded, long totalBytes) {
+
+                        // do anything with progress
+
+                    }
+                })
+                .getAsJSONObject(new JSONObjectRequestListener() {
+                    @Override
+                    public void onResponse(JSONObject jsonObject) {
+                        //  progressDialog.dismiss();
+                        // FileUtils.deleteCache(PostActivity.this.getApplicationContext());
+                        Log.e("CATEGORYList---->", "" + jsonObject);
+
+
+                        String result = null;
+                        JSONObject fullResponseObject = null;
+
+
+                    }
+
+                    @Override
+                    public void onError(ANError anError) {
+
+
+                        Log.e("RESPONSE", "" + anError);
+                        Log.d("", "onError errorCode : " + anError.getErrorCode());
+                        Log.d("", "onError errorBody : " + anError.getErrorBody());
+                        Log.d("", "onError errorDetail : " + anError.getErrorDetail());
+//                        if(anError.toString().contains("javax.net.ssl.SSLPeerUnverifiedException") && count==1){
+//                            uploadFile(file,categoryId,ADID, header, description,  date,  publisher);
+//                            Log.e("Request->",""+file+categoryId+ADID+header+description+date+publisher);
+//                           // ++count;
+//
+//
+//                        }
+//                        else{
+//                          //  showToast("Unable to connect with server,please try after sometime!!");
+//
+//                        }
+                    }
+
+
+                });
 
 
     }

@@ -275,24 +275,55 @@ android:background="@color/colorPrimary"
                         android:gravity="left"
                         android:layout_marginTop="20dp"
                         android:maxLength="600"/>
+
                     <RadioGroup
+                        android:id="@+id/cod"
+                        android:layout_margin="20dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
-    <RadioButton
-        android:id="@+id/cod_eligible"
-    android:layout_width="0dp"
-    android:layout_height="wrap_content"
-    android:layout_weight="1"
-    android:checked="true"
-    android:text="COD ELIGIBLE"/>
+                        <RadioButton
+                            android:id="@+id/cod_eligible"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:checked="true"
+                            android:buttonTint="@color/colorPrimary"
+                            android:textColor="@color/colorPrimary"
+                            android:text="@string/cod_eligible"/>
                         <RadioButton
                             android:id="@+id/cod_not_eligible"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:buttonTint="@color/colorPrimary"
+                            android:textColor="@color/colorPrimary"
+                            android:text="@string/cod_not_eligible"/>
+                    </RadioGroup>
 
-                            android:text="COD NOT ELIGIBLE"/>
+                    <RadioGroup
+                        android:id="@+id/refund"
+                        android:layout_width="match_parent"
+                        android:layout_margin="20dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <RadioButton
+                            android:id="@+id/refund_eligible"
+                            android:layout_width="0dp"
+                            android:textColor="@color/colorPrimary"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:buttonTint="@color/colorPrimary"
+                            android:checked="true"
+                            android:text="@string/refund_eligible"/>
+                        <RadioButton
+                            android:id="@+id/refund_not_eligible"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:buttonTint="@color/colorPrimary"
+                            android:textColor="@color/colorPrimary"
+                            android:text="@string/refund_not_eligible"/>
                     </RadioGroup>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
