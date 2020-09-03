@@ -31,4 +31,8 @@ public interface ResponseInterface1 {
     @POST("orderStatus")
     Call<ListCategoryResponse> changeOrderStatus(@Field("orderId") int id,
                                             @Field("status") int status);
+    @FormUrlEncoded
+    @POST("loginData")
+    Call<ListCategoryResponse> Loginapi(@Field("username") String usernameres,
+                                            @Field("password") String passwordres);
 }

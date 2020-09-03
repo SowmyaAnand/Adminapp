@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -38,125 +39,89 @@ import retrofit2.Callback;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class Login extends AppCompatActivity {
+public class Login extends AppCompatActivity
+
+{
 Button lg;
-    StringBuilder strbul  = new StringBuilder();
-    ArrayList<String> categories = new ArrayList<>();
-    ArrayList<String> categories_image = new ArrayList<>();
-    List<String>cat_no = new ArrayList<String>();
-    ArrayList<Integer> nums = new ArrayList<>();
-    ACProgressFlower dialog;
+
     private String tag = "Login";
-    public static final String MY_PREFS_NAME = "AdminApp";
+   EditText username;
+   EditText pswd;
+   String uname;
+   String password;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         lg = (Button)findViewById(R.id.login);
+        username = (EditText) findViewById(R.id.edit_text_user);
+        pswd = (EditText)findViewById(R.id.edit_text2_pswd);
+
         lg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Activate();
+                uname =username.getText().toString();
+                password = pswd.getText().toString();
+                if( (uname==null)||(uname.length()==0)||(password==null)|(password.length()==0))
+                {
+                    Toast.makeText(Login.this,"Please enter valid username and Password",Toast.LENGTH_LONG).show();
+                }
+                else
+                {
+                    Intent next = new Intent(Login.this,Main2Activity.class);
+                    startActivity(next);
+                   // login_call(uname,password);
+                }
 
             }
         });
     }
-    private void Activate()
+
+    void login_call(String usname,String pass)
     {
-        dialog = new ACProgressFlower.Builder(Login.this)
-                .direction(ACProgressConstant.DIRECT_CLOCKWISE)
-                .themeColor(Color.WHITE)
-                .borderPadding(1)
-
-                .fadeColor(Color.DKGRAY).build();
-        dialog.show();
-
         String url = "http://dailyestoreapp.com/dailyestore/api/";
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
                 .addInterceptor(loggingInterceptor)
                 .build();
-        Retrofit retrofit = new Retrofit.Builder()
+
+           Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(url)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(okHttpClient)
                 .build();
         ResponseInterface1 mainInterface = retrofit.create(ResponseInterface1.class);
-        Call<ListCategoryResponse> call = mainInterface.CategoryList();
+        Call<ListCategoryResponse> call = mainInterface.Loginapi(uname,password);
         call.enqueue(new Callback<ListCategoryResponse>() {
             @Override
             public void onResponse(Call<ListCategoryResponse> call, retrofit2.Response<ListCategoryResponse> response) {
-                String res= new GsonBuilder().setPrettyPrinting().create().toJson(response.body().getResponsedata());
-                JsonObject obj = new JsonParser().parse(res).getAsJsonObject();
-                try {
-                    JSONObject jo2 = new JSONObject(obj.toString());
-                    JSONArray categoriesarray = jo2.getJSONArray("data");
-                    Log.e(tag,"categoriesarray"+categoriesarray);
-                    Set<Integer> set3 = new HashSet<Integer>();
-
-                    for(int i=0; i<categoriesarray.length(); i++)
-                    {
-                        JSONObject j1= categoriesarray.getJSONObject(i);
-                        String item = j1.getString("itemName");
-                        String item_image = j1.getString("itemImage");
-                        int item_no = Integer.parseInt(j1.getString("typeId"));
-                        nums.add(item_no);
-                        categories.add(item);
-                        categories_image.add(item_image);
-                        Log.e(tag,"value added "+item_no);
-                    }
-
-                    Iterator<Integer> iter = nums.iterator();
-                    while(iter.hasNext())
-                    {
-                        strbul.append(iter.next());
-                        if(iter.hasNext()){
-                            strbul.append(",");
-                        }
-                    }
-                    strbul.toString();
-                    Log.e("res","res="+strbul);
-
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                    Log.e(tag,"catch exception"+e.getMessage());
+                ListCategoryResponse obj =response.body();
+                int success = Integer.parseInt(obj.getResponsedata().getSuccess());
+                Log.e(tag,"success="+obj.getResponsedata().getSuccess());
+                if(success==1)
+                {
+                    Toast.makeText(Login.this,"Login Successful",Toast.LENGTH_LONG).show();
+Intent next = new Intent(Login.this,Main2Activity.class);
+startActivity(next);
                 }
+              else
+                {
+                    Toast.makeText(Login.this,"Invalid Username and Password",Toast.LENGTH_LONG).show();
 
-
-                SharedPreferences.Editor editor = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
-                Set<String> set = new HashSet<String>();
-                set.addAll(categories);
-                editor.putStringSet("categories", set);
-                editor.apply();
-                if(categories_image.size()>0){
-                    SharedPreferences.Editor editor3 = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
-                    Set<String> set3 = new HashSet<String>();
-                    set3.addAll(categories_image);
-                    editor3.putStringSet("categories_image", set3);
-                    editor.apply();
                 }
-
-
-                Log.e(tag,"array of numbers "+strbul.toString());
-                SharedPreferences.Editor editor2 = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
-                editor.putString("categories_no", strbul.toString());
-                editor.apply();
-
-dialog.dismiss();
-                Intent next = new Intent(Login.this,Main2Activity.class);
-                startActivity(next);
-
             }
 
             @Override
             public void onFailure(Call<ListCategoryResponse> call, Throwable t) {
+                Toast.makeText(Login.this,"Invalid Username and Password",Toast.LENGTH_LONG).show();
 
             }
         });
 
 
     }
+
+
 
 }

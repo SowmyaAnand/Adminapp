@@ -26,6 +26,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.theartofdev.edmodo.cropper.CropImage;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -39,6 +40,7 @@ public class EditCategoriesAdapter extends RecyclerView.Adapter<EditCategoriesAd
     ArrayList<String> categories_editcategory = new ArrayList<String>();
     ArrayList<Integer> categories_no_editcategory= new ArrayList<Integer>();
     Context context;
+
     ArrayList<String> Images = new ArrayList<String>();
     ArrayList<String> lts = new ArrayList<String>();
   //  ArrayList personNames_offers = new ArrayList<>(Arrays.asList("ITEM1", "ITEM2", "ITEM3", "ITEM4", "ITEM5", "ITEM6", "ITEM7"));
@@ -66,6 +68,12 @@ public class EditCategoriesAdapter extends RecyclerView.Adapter<EditCategoriesAd
     public void onBindViewHolder(final EditCategoriesAdapter.MyViewHolder holder, final int position) {
 
         // set the data in items
+        holder.ed_pic_edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
         String name_editcategory = (String) categories_editcategory.get(position);
 //        String img_editcategory = (String) Images.get(position);
 //        if(Images.size()>0)
