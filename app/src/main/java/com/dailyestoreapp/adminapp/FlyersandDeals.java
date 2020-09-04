@@ -14,17 +14,26 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
+
+import java.io.File;
 
 public class FlyersandDeals extends AppCompatActivity {
 String categoryselected;
 Integer id;
 TextView txt;
 Button ed1,ed2,ed3,ed4;
+Button flyers_save;
 int flagpic1,flagpic2,flagpic3,flagpic4;
 ImageView img1,img2,img3,img4;
+    File firstFlyerImage,secondFlyerImage,thirdFlyerImage,fourthFlyerImage;
+    String selectedPathfirstFlyerImage="";
+    String selectedPathsecondFlyerImage="";
+    String selectedPaththirdFlyerImage="";
+    String selectedPathFourthFlyerImage="";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +51,17 @@ ImageView img1,img2,img3,img4;
         img2=(ImageView)findViewById(R.id.image2);
         img3=(ImageView)findViewById(R.id.image3);
         img4=(ImageView)findViewById(R.id.image4);
+        flyers_save=(Button)findViewById(R.id.flyers_save);
+        flyers_save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if((selectedPathfirstFlyerImage==null)||(selectedPathfirstFlyerImage.length()==0)||(selectedPathsecondFlyerImage==null)||(selectedPathsecondFlyerImage.length()==0)||(selectedPaththirdFlyerImage==null)||(selectedPaththirdFlyerImage.length()==0)||(selectedPathFourthFlyerImage==null)||(selectedPathfirstFlyerImage.length()==0))
+                {
+                 //   Toast.makeText(FlyersandDeals.this,"Please select all image",Toast.LENGTH_SHORT).show();
+
+                }
+            }
+        });
         ed1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -141,22 +161,30 @@ ImageView img1,img2,img3,img4;
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
             if (resultCode == RESULT_OK) {
-                Uri resultUri = result.getUri();
+                Uri resultUri_flyers = result.getUri();
                 if(flagpic1==1)
                 {
-                    img1.setImageURI(resultUri);
+                    selectedPathfirstFlyerImage = FileUtils.getPath(getApplicationContext(),resultUri_flyers);
+                    firstFlyerImage=new File(selectedPathfirstFlyerImage);
+                    img1.setImageURI(resultUri_flyers);
                 }
                 else if(flagpic2==1)
                 {
-                    img2.setImageURI(resultUri);
+                    selectedPathsecondFlyerImage = FileUtils.getPath(getApplicationContext(),resultUri_flyers);
+                    secondFlyerImage=new File(selectedPathsecondFlyerImage);
+                    img2.setImageURI(resultUri_flyers);
                 }
                 else if(flagpic3==1)
                 {
-                    img3.setImageURI(resultUri);
+                    selectedPaththirdFlyerImage = FileUtils.getPath(getApplicationContext(),resultUri_flyers);
+                    thirdFlyerImage=new File(selectedPaththirdFlyerImage);
+                    img3.setImageURI(resultUri_flyers);
                 }
                 else if(flagpic4==1)
                 {
-                    img4.setImageURI(resultUri);
+                    selectedPathFourthFlyerImage = FileUtils.getPath(getApplicationContext(),resultUri_flyers);
+                    fourthFlyerImage=new File(selectedPathFourthFlyerImage);
+                    img4.setImageURI(resultUri_flyers);
                 }
 
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {

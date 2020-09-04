@@ -57,11 +57,12 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class Addpost extends AppCompatActivity {
     TextView addattach;
     ImageView imgaeitem;
-
+    File additemImageFile;
+    String selectedPathadditem="";
     Button post;
-    File file;
+
     Spinner Category_spinner;
-    String selectedPath="";
+
     Spinner Sub_Category_spinner;
     public static final String MY_PREFS_NAME = "AdminApp";
     private static final String[] paths = {"item 1", "item 2", "item 3"};
@@ -104,7 +105,15 @@ public class Addpost extends AppCompatActivity {
         post.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                uploadFile(file, "1", "meat", "noufal");
+                if((selectedPathadditem==null)||(selectedPathadditem.length()==0))
+                {
+                    Toast.makeText(Addpost.this,"Please select an image",Toast.LENGTH_SHORT).show();
+                }
+                else
+                {
+                    uploadFile(additemImageFile, "1", "meat", "noufal");
+                }
+
             }
         });
         // Cat_name
@@ -203,10 +212,10 @@ public class Addpost extends AppCompatActivity {
                 imgaeitem.setImageURI(resultUri);
                 Uri selectedFileUri = data.getData();
                 Log.e("the"," file is "+selectedFileUri);
-                selectedPath = FileUtils.getPath(getApplicationContext(),resultUri);
+                selectedPathadditem = FileUtils.getPath(getApplicationContext(),resultUri);
 
-                file=new File(selectedPath);
-                Log.e("the"," file is "+file);
+                additemImageFile=new File(selectedPathadditem);
+                Log.e("the"," file is "+additemImageFile);
 
 
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {

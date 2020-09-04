@@ -104,13 +104,14 @@ public class EditCategoriesAdapter extends RecyclerView.Adapter<EditCategoriesAd
                String text = holder.ed_edit.getText().toString();
                if(text.equals("SAVE"))
                {
+                   holder.name_edit.setEnabled(false);
                    holder.ed_edit.setText("EDIT");
                }
                else
                {
                    holder.name_edit.setEnabled(true);
                    holder.ed_edit.setText("SAVE");
-                   holder.ed_pic_edit.setVisibility(View.VISIBLE);
+
                }
 
            }

@@ -34,5 +34,7 @@ public interface ResponseInterface1 {
     @FormUrlEncoded
     @POST("loginData")
     Call<ListCategoryResponse> Loginapi(@Field("username") String usernameres,
-                                            @Field("password") String passwordres);
+                                            @Field("password") String passwordres,
+                                        @Field("password") String typeres
+                                        );
 }

@@ -49,6 +49,7 @@ Button lg;
    EditText pswd;
    String uname;
    String password;
+   String login_type="1";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,7 +93,7 @@ Button lg;
                 .client(okHttpClient)
                 .build();
         ResponseInterface1 mainInterface = retrofit.create(ResponseInterface1.class);
-        Call<ListCategoryResponse> call = mainInterface.Loginapi(uname,password);
+        Call<ListCategoryResponse> call = mainInterface.Loginapi(uname,password,login_type);
         call.enqueue(new Callback<ListCategoryResponse>() {
             @Override
             public void onResponse(Call<ListCategoryResponse> call, retrofit2.Response<ListCategoryResponse> response) {

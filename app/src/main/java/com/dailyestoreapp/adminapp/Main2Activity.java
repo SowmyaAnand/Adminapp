@@ -48,6 +48,8 @@ private DrawerLayout drawerLayout;
         categoryID.add(4);
         categoryNameList.add("ADD YOUR SECOND FLYERS");
         categoryID.add(5);
+        categoryNameList.add("ADD FIRST POP UP");
+        categoryID.add(6);
 
 if(savedInstanceState == null)
 {
@@ -154,7 +156,12 @@ if(savedInstanceState == null)
                     startActivity(i);
                 }
 
-
+                else if(categoryId[which].equals(6))
+                {
+                    Intent i = new Intent(Main2Activity.this, FirstpopUp.class);
+                    i.putExtra("CATEGORYID", selectedCategoryId);
+                    startActivity(i);
+                }
             }
         });
 

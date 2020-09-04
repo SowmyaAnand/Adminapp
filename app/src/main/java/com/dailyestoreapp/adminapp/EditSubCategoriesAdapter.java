@@ -72,12 +72,13 @@ holder.name_subbedit.setText(name);
                 if(text.equals("SAVE"))
                 {
                     holder.ed_subbedit.setText("EDIT");
+                    holder.name_subbedit.setEnabled(false);
                 }
                 else
                 {
                     holder.name_subbedit.setEnabled(true);
                     holder.ed_subbedit.setText("SAVE");
-                    holder.ed_pic_subbedit.setVisibility(View.VISIBLE);
+                    //holder.ed_pic_subbedit.setVisibility(View.VISIBLE);
                 }
 
             }
