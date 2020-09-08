@@ -69,9 +69,15 @@ Button lg;
                 }
                 else
                 {
-                    Intent next = new Intent(Login.this,Main2Activity.class);
-                    startActivity(next);
-                   // login_call(uname,password);
+                   try
+                   {
+                       login_call(uname,password);
+                   }
+                   catch (Exception e)
+                   {
+                       Toast.makeText(Login.this,"Something went wrong",Toast.LENGTH_SHORT).show();
+                   }
+
                 }
 
             }
@@ -93,18 +99,19 @@ Button lg;
                 .client(okHttpClient)
                 .build();
         ResponseInterface1 mainInterface = retrofit.create(ResponseInterface1.class);
-        Call<ListCategoryResponse> call = mainInterface.Loginapi(uname,password,login_type);
-        call.enqueue(new Callback<ListCategoryResponse>() {
+        Call<LoginResponse> call = mainInterface.Loginapi(uname,password,login_type);
+        call.enqueue(new Callback<LoginResponse>() {
             @Override
-            public void onResponse(Call<ListCategoryResponse> call, retrofit2.Response<ListCategoryResponse> response) {
-                ListCategoryResponse obj =response.body();
-                int success = Integer.parseInt(obj.getResponsedata().getSuccess());
-                Log.e(tag,"success="+obj.getResponsedata().getSuccess());
+            public void onResponse(Call<LoginResponse> call, retrofit2.Response<LoginResponse> response) {
+                LoginResponse obj =response.body();
+                Log.e(tag,"success="+response.body().getResponsedata());
+               int success = Integer.parseInt(obj.getResponsedata().getSuccess());
+                Log.e(tag,"success="+success);
                 if(success==1)
                 {
                     Toast.makeText(Login.this,"Login Successful",Toast.LENGTH_LONG).show();
-Intent next = new Intent(Login.this,Main2Activity.class);
-startActivity(next);
+                    Intent next = new Intent(Login.this,Main2Activity.class);
+                    startActivity(next);
                 }
               else
                 {
@@ -114,8 +121,8 @@ startActivity(next);
             }
 
             @Override
-            public void onFailure(Call<ListCategoryResponse> call, Throwable t) {
-                Toast.makeText(Login.this,"Invalid Username and Password",Toast.LENGTH_LONG).show();
+            public void onFailure(Call<LoginResponse> call, Throwable t) {
+                Toast.makeText(Login.this,t.getMessage(),Toast.LENGTH_LONG).show();
 
             }
         });

@@ -33,6 +33,7 @@ import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
+import com.androidnetworking.interfaces.StringRequestListener;
 import com.androidnetworking.interfaces.UploadProgressListener;
 import com.theartofdev.edmodo.cropper.CropImage;
 
@@ -54,6 +55,8 @@ public class AddCategory extends AppCompatActivity {
     int flag=0;
     File subImage;
     File catImage;
+    int categoryuploadflag=0;
+    int subcategoryuploadflag=0;
     String selectedPathsub="";
     String selectedPathMain="";
     ArrayList<String> subcategoryarray = new ArrayList<String>();
@@ -125,18 +128,28 @@ public class AddCategory extends AppCompatActivity {
                 }
                 else
                 {
-                    card1.setVisibility(View.VISIBLE);
-                    card2.setVisibility(View.GONE);
-                    card3.setVisibility(View.GONE);
-                    card4.setVisibility(View.GONE);
-                    card5.setVisibility(View.GONE);
-                    card6.setVisibility(View.GONE);
-                    card7.setVisibility(View.GONE);
-                    card8.setVisibility(View.GONE);
-                    savesubcategory.setVisibility(View.VISIBLE);
-                    addsubcategoryhd.setVisibility(View.VISIBLE);
-                    newcategoryname.setEnabled(false);
-                    addattachcategory.setVisibility(View.INVISIBLE);
+
+                    String enteredcategoryname =newcategoryname.getText().toString();
+                    int ct_flag = uploadCategory(catImage,enteredcategoryname,"1");
+                    if(ct_flag==1)
+                    {
+                        card1.setVisibility(View.VISIBLE);
+                        card2.setVisibility(View.GONE);
+                        card3.setVisibility(View.GONE);
+                        card4.setVisibility(View.GONE);
+                        card5.setVisibility(View.GONE);
+                        card6.setVisibility(View.GONE);
+                        card7.setVisibility(View.GONE);
+                        card8.setVisibility(View.GONE);
+                        savesubcategory.setVisibility(View.VISIBLE);
+                        addsubcategoryhd.setVisibility(View.VISIBLE);
+                        newcategoryname.setEnabled(false);
+                        addattachcategory.setVisibility(View.INVISIBLE);
+                    }
+                    else
+                    {
+                        Toast.makeText(AddCategory.this,"Something went wrong",Toast.LENGTH_SHORT).show();
+                    }
                 }
 
 
@@ -219,85 +232,70 @@ public class AddCategory extends AppCompatActivity {
     }
 
 
-    public void uploadSubCategory(final File file, final String categoryId, final String ADID, final String header, final String description, final String date, final String publisher){
-
+    public int uploadSubCategory(final File file, final String newsubcategoryname, final String createdby){
+        subcategoryuploadflag=0;
         AndroidNetworking.enableLogging();
         AndroidNetworking.upload("http://dailyestoreapp.com/dailyestore/api/addSubCategory")
-                .addMultipartFile("path",file)
-                .addMultipartParameter("categoryid", categoryId)
-                .addMultipartParameter("empcode", ADID)
-                .addMultipartParameter("topic",header)
-                .addMultipartParameter("body",description)
-                .addMultipartParameter("date",date)
-                .addMultipartParameter("publisher",publisher)
-                .setTag("uploadTest")
+                .addMultipartFile("subItemImage",file)
+                .addMultipartParameter("subName", newsubcategoryname)
+                .addMultipartParameter("createdBy", "1")
+                .addMultipartParameter("typeId", "1")
+                .setTag("uploads/items/")
                 .setPriority(Priority.HIGH).doNotCacheResponse()
                 .build()
                 .setUploadProgressListener(new UploadProgressListener() {
                     @Override
                     public void onProgress(long bytesUploaded, long totalBytes) {
 
-                        // do anything with progress
 
                     }
                 })
-                .getAsJSONObject(new JSONObjectRequestListener() {
+                .getAsString(new StringRequestListener() {
                     @Override
-                    public void onResponse(JSONObject jsonObject) {
-
-
+                    public void onResponse(String response) {
+                        Log.e("response","response = "+response);
+                        categoryuploadflag=1;
                     }
 
                     @Override
                     public void onError(ANError anError) {
-//
-                        Log.e("RESPONSE",""+anError);
-                        Log.d("", "onError errorCode : " + anError.getErrorCode());
-                        Log.d("", "onError errorBody : " + anError.getErrorBody());
-                        Log.d("", "onError errorDetail : " + anError.getErrorDetail());
-//
+                        categoryuploadflag=0;
+                        Toast.makeText(AddCategory.this,"Error"+anError.getMessage(),Toast.LENGTH_SHORT).show();
+
                     }
                 });
-
-
-
+        return categoryuploadflag;
     }
-    public void uploadCategory(final File file, final String new_category){
-
+    public int uploadCategory(final File file, final String newcategoryname, final String createdby){
+        categoryuploadflag=0;
         AndroidNetworking.enableLogging();
-        AndroidNetworking.upload("http://dailyestoreapp.com/dailyestore/api/addCategory")
-                .addMultipartFile("path",file)
-                .addMultipartParameter("itemName", new_category)
-                .setTag("uploadTest")
+        AndroidNetworking.upload("http://dailyestoreapp.com/dailyestore/api/addcategory")
+                .addMultipartFile("categoryImage",file)
+                .addMultipartParameter("categoryName", newcategoryname)
+                .addMultipartParameter("createdBy", "1")
+                .setTag("uploads/items/")
                 .setPriority(Priority.HIGH).doNotCacheResponse()
                 .build()
                 .setUploadProgressListener(new UploadProgressListener() {
                     @Override
                     public void onProgress(long bytesUploaded, long totalBytes) {
 
-                        // do anything with progress
 
                     }
                 })
-                .getAsJSONObject(new JSONObjectRequestListener() {
+                .getAsString(new StringRequestListener() {
                     @Override
-                    public void onResponse(JSONObject jsonObject) {
-
-
+                    public void onResponse(String response) {
+                        Log.e("response","response = "+response);
+                       categoryuploadflag=1;
                     }
 
                     @Override
                     public void onError(ANError anError) {
-//
-                        Log.e("RESPONSE",""+anError);
-                        Log.d("", "onError errorCode : " + anError.getErrorCode());
-                        Log.d("", "onError errorBody : " + anError.getErrorBody());
-                        Log.d("", "onError errorDetail : " + anError.getErrorDetail());
-//
+                categoryuploadflag=0;
+                Toast.makeText(AddCategory.this,"Error"+anError.getMessage(),Toast.LENGTH_SHORT).show();
                     }
                 });
-
-
-
+                return categoryuploadflag;
     }
 }

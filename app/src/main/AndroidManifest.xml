@@ -15,7 +15,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar"
         android:usesCleartextTraffic="true">
-        <activity android:name=".FirstpopUp"></activity>
+        <activity android:name=".CouponsList"></activity>
+        <activity android:name=".FirstpopUp" />
         <activity android:name=".editsubcategory" />
         <activity
             android:name=".Main2Activity"

@@ -14,8 +14,10 @@ public interface ResponseInterface1 {
     @POST("listSubCategory")
     Call<ListCategoryResponse> SubCategory(@Field("typeId") int id);
     @FormUrlEncoded
-    @POST("itemList")
-    Call<ListCategoryResponse> Items(@Field("typeId") int id);
+    @POST("subItemListNew")
+    Call<ListCategoryResponse> Items(@Field("subId") int id,
+                                     @Field("start") int strt,
+                                     @Field("limit") int limt);
     @FormUrlEncoded
     @POST("activateItem")
     Call<ItemActivateResponse> ItemActivate(@Field("itemId") int id,
@@ -33,8 +35,8 @@ public interface ResponseInterface1 {
                                             @Field("status") int status);
     @FormUrlEncoded
     @POST("loginData")
-    Call<ListCategoryResponse> Loginapi(@Field("username") String usernameres,
+    Call<LoginResponse> Loginapi(@Field("username") String usernameres,
                                             @Field("password") String passwordres,
-                                        @Field("password") String typeres
+                                        @Field("type") String typeres
                                         );
 }

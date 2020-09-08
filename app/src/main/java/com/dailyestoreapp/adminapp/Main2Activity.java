@@ -50,6 +50,8 @@ private DrawerLayout drawerLayout;
         categoryID.add(5);
         categoryNameList.add("ADD FIRST POP UP");
         categoryID.add(6);
+        categoryNameList.add("ADD NEW COUPONS");
+        categoryID.add(7);
 
 if(savedInstanceState == null)
 {
@@ -89,6 +91,7 @@ if(savedInstanceState == null)
                 break;
             case R.id.nav_cat:getSupportFragmentManager().beginTransaction().replace(R.id.fragment_cont,new EditCategories()).commit();
                 break;
+
 
         }
         drawerLayout.closeDrawer(GravityCompat.START);
@@ -159,6 +162,12 @@ if(savedInstanceState == null)
                 else if(categoryId[which].equals(6))
                 {
                     Intent i = new Intent(Main2Activity.this, FirstpopUp.class);
+                    i.putExtra("CATEGORYID", selectedCategoryId);
+                    startActivity(i);
+                }
+                else if(categoryId[which].equals(7))
+                {
+                    Intent i = new Intent(Main2Activity.this, CouponsList.class);
                     i.putExtra("CATEGORYID", selectedCategoryId);
                     startActivity(i);
                 }

@@ -86,20 +86,27 @@ public class Splash extends AppCompatActivity {
         call.enqueue(new Callback<ListCategoryResponse>() {
             @Override
             public void onResponse(Call<ListCategoryResponse> call, retrofit2.Response<ListCategoryResponse> response) {
-                String res= new GsonBuilder().setPrettyPrinting().create().toJson(response.body().getResponsedata());
-                JsonObject obj = new JsonParser().parse(res).getAsJsonObject();
-                try {
-                    JSONObject jo2 = new JSONObject(obj.toString());
-                    JSONArray categoriesarray = jo2.getJSONArray("data");
-                    Log.e(tag,"categoriesarray"+categoriesarray);
-                    Set<Integer> set3 = new HashSet<Integer>();
+                ListCategoryResponse catObj = response.body();
+                int cat_length = catObj.getResponsedata().getData().size();
 
-                    for(int i=0; i<categoriesarray.length(); i++)
+//                String res= new GsonBuilder().setPrettyPrinting().create().toJson(response.body().getResponsedata());
+//                JsonObject obj = new JsonParser().parse(res).getAsJsonObject();
+                try {
+//                    JSONObject jo2 = new JSONObject(obj.toString());
+//                    JSONArray categoriesarray = jo2.getJSONArray("data");
+//                    Log.e(tag,"categoriesarray"+categoriesarray);
+//                    Set<Integer> set3 = new HashSet<Integer>();
+
+                    for(int i=0; i<cat_length; i++)
                     {
-                        JSONObject j1= categoriesarray.getJSONObject(i);
-                        String item = j1.getString("itemName");
-                        String item_image = j1.getString("itemImage");
-                        int item_no = Integer.parseInt(j1.getString("typeId"));
+//                        JSONObject j1= categoriesarray.getJSONObject(i);
+//                        String item = j1.getString("itemName");
+//                        String item_image = j1.getString("itemImage");
+//                        int item_no = Integer.parseInt(j1.getString("typeId"));
+                        ListCategoryResponseData catObj1 = catObj.getResponsedata().getData().get(i);
+                        String item = catObj1.getCategoryName();
+                        String item_image = catObj1.getCategoryImage();
+                        int item_no = Integer.parseInt(catObj1.getTypeId());
                         nums.add(item_no);
                         categories.add(item);
                         categories_image.add(item_image);
@@ -118,12 +125,12 @@ public class Splash extends AppCompatActivity {
                     Log.e("res","res="+strbul);
 
 
-                } catch (JSONException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                     Log.e(tag,"catch exception"+e.getMessage());
                 }
 
-
+                Log.e(tag,"categories = "+categories);
                 SharedPreferences.Editor editor = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
                 Set<String> set = new HashSet<String>();
                 set.addAll(categories);

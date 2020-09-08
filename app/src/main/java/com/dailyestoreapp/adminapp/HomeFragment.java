@@ -6,8 +6,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager.widget.ViewPager;
@@ -104,7 +106,7 @@ category_selected=categoriesHome.get(i);
 
 
             }
-           else if (i==0)
+           else if (i==0)  //api integrating in this
             {
                 Bundle bundle = new Bundle();
                 bundle.putString("category", category_selected);
@@ -117,16 +119,31 @@ category_selected=categoriesHome.get(i);
                 sectionsPagerAdapter.addFragment(mapFragment2,categoriesHome.get(i));
 
             }
+            else if(i==1)
+            {
+                Bundle bundle = new Bundle();
+                bundle.putString("category", category_selected);
+                Fragment2 mapFragment4 = new Fragment2(category_selected,categoriesHomeNo2.get(i));
+                mapFragment4.setArguments(bundle);
+
+
+                Log.e("tag","tag cat fragment4"+categoriesHome.get(i));
+
+                sectionsPagerAdapter.addFragment(mapFragment4,categoriesHome.get(i));
+
+            }
             else
             {
                 Bundle bundle = new Bundle();
                 bundle.putString("category", category_selected);
-                fragment3 mapFragment3 = new fragment3(category_selected);
-                mapFragment3.setArguments(bundle);
+                Fragment2 mapFragment4 = new Fragment2(category_selected,categoriesHomeNo2.get(i));
+                mapFragment4.setArguments(bundle);
 
-                Log.e("tag","tag cat"+categoriesHome.get(i));
-               sectionsPagerAdapter.addFragment(mapFragment3,categoriesHome.get(i));
-           }
+
+                Log.e("tag","tag cat fragment4"+categoriesHome.get(i));
+
+                sectionsPagerAdapter.addFragment(mapFragment4,categoriesHome.get(i));
+            }
 
         }
 
