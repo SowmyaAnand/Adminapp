@@ -139,7 +139,7 @@ android:background="@color/colorPrimary"
 
                     <EditText
                         android:padding="10dp"
-                        android:id="@+id/edtxtPublishBy"
+                        android:id="@+id/itemname_post"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="#FFF"
@@ -181,7 +181,7 @@ android:background="@color/colorPrimary"
 
                     <EditText
                         android:padding="15dp"
-                        android:id="@+id/edtxtHeader2"
+                        android:id="@+id/amount_post"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="#FFF"
@@ -196,7 +196,7 @@ android:background="@color/colorPrimary"
             </androidx.cardview.widget.CardView>
             <androidx.cardview.widget.CardView
                 android:layout_margin="16dp"
-                android:id="@+id/headerTextCard"
+
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -211,7 +211,7 @@ android:background="@color/colorPrimary"
                         android:fontFamily="@font/roboto_light"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Offer"
+                        android:text="Quantity"
                         android:textColor="@color/colorPrimary"
                         android:textSize="16dp"></TextView>
                     <View
@@ -221,7 +221,7 @@ android:background="@color/colorPrimary"
 
                     <EditText
                         android:padding="15dp"
-                        android:id="@+id/edtxtHeader"
+                        android:id="@+id/quantity_post"
                         android:fontFamily="@font/roboto_light"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -230,10 +230,50 @@ android:background="@color/colorPrimary"
                         android:singleLine="true"
                         android:textColor="@color/black"
                         android:textColorHint="@color/Gray"
-                        android:hint="ADD OFFER RATE"
+                        android:hint="ADD QUANTITY"
                         android:maxLength="60"/>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
+            android:layout_margin="16dp"
+            android:id="@+id/headerTextCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            app:cardBackgroundColor="@color/white"
+            app:cardElevation="15dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:padding="10dp"
+                    android:fontFamily="@font/roboto_light"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Offer"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="16dp"></TextView>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/Gray"></View>
+
+                <EditText
+                    android:padding="15dp"
+                    android:id="@+id/offer_post"
+                    android:fontFamily="@font/roboto_light"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#FFF"
+                    android:layout_marginTop="10dp"
+                    android:singleLine="true"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/Gray"
+                    android:hint="ADD OFFER RATE"
+                    android:maxLength="60"/>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
             <androidx.cardview.widget.CardView
                 android:layout_margin="16dp"
                 android:id="@+id/descriptionCard"
@@ -263,7 +303,7 @@ android:background="@color/colorPrimary"
                         android:background="@color/Gray"></View>
                     <EditText
                         android:padding="15dp"
-                        android:id="@+id/edtxtDescr"
+                        android:id="@+id/description_post"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="#FFF"
@@ -362,7 +402,6 @@ android:background="@color/colorPrimary"
 
         <Button
             android:id="@+id/btnPost"
-            android:layout_alignParentBottom="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="POST"
@@ -370,6 +409,15 @@ android:background="@color/colorPrimary"
             android:fontFamily="@font/roboto_light"
             android:background="@color/colorPrimary"
             android:textColor="@color/white"/>
+            <Button
+                android:id="@+id/btnoffer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="CLICK TO ADD OFFER"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/roboto_light"
+                android:background="@color/colorPrimary"
+                android:textColor="@color/white"/>
         </LinearLayout>
     </RelativeLayout>
 

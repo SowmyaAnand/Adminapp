@@ -69,9 +69,8 @@ private Integer selectedSubCategoryNo;
     test customadapter2_offers;
  private static String cat_selected ;
     private static Integer cat_number ;
-    public Fragment4(String categoryy,Integer cat_no) {
-cat_selected=categoryy;
-cat_number=cat_no;
+    public Fragment4() {
+
     }
 
     /**
@@ -80,7 +79,7 @@ cat_number=cat_no;
      */
     // TODO: Rename and change types and number of parameters
     public static Fragment4 newInstance(String param1,String param2) {
-        Fragment4 fragment = new Fragment4(param1,1);
+        Fragment4 fragment = new Fragment4();
         Bundle args = new Bundle();
         args.putString("category", param1);
         fragment.setArguments(args);
@@ -137,7 +136,7 @@ public void change()
 //                .fadeColor(Color.DKGRAY).build();
 //        dialog.show();
         Log.e("fragment2","Inside Activate"+cat_number);
-        int type = cat_number;
+        int type =1;
         String url = "http://dailyestoreapp.com/dailyestore/api/";
 
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
@@ -151,7 +150,7 @@ public void change()
                 .client(okHttpClient)
                 .build();
         ResponseInterface1 mainInterface = retrofit.create(ResponseInterface1.class);
-        Call<ListCategoryResponse> call = mainInterface.SubCategory(cat_number);
+        Call<ListCategoryResponse> call = mainInterface.SubCategory(1);
         call.enqueue(new Callback<ListCategoryResponse>() {
             @Override
             public void onResponse(Call<ListCategoryResponse> call, retrofit2.Response<ListCategoryResponse> response) {

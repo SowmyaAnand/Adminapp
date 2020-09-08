@@ -34,6 +34,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.StringTokenizer;
 
@@ -66,16 +67,21 @@ Fragment4 frag4;
         View root = inflater.inflate(R.layout.fragment_home, container, false);
 
         SharedPreferences shared = getActivity().getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
-        Set<String> set = shared.getStringSet("categories", null);
-        categoriesHome.addAll(set);
+        //Set<String> set =  shared.getStringSet("categories", null);
+       // Log.e("home","the cat are "+set);
+        String savedcatString = shared.getString("categories", "");
+        String[] cats = savedcatString.split(",");//if spaces are uneven, use \\s+ instead of " "
+        for (String ct : cats) {
+            categoriesHome.add(ct);
+        }
+        //categoriesHome.addAll(set);
+
+
+
+
 
         SharedPreferences shared2 = getActivity().getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
         String savedString = shared2.getString("categories_no", "");
-//        StringTokenizer st = new StringTokenizer(savedString, ",");
-//        int[] savedList = new int[10];
-//        for (int i = 0; i < 10; i++) {
-//            savedList[i] = Integer.parseInt(st.nextToken());
-//        }
         Log.e(tag,"numbers are"+savedString);
         String[] numbers = savedString.split(",");//if spaces are uneven, use \\s+ instead of " "
         Log.e(tag,"numbers are"+numbers);
@@ -96,21 +102,29 @@ category_selected=categoriesHome.get(i);
 
             if(category_selected.equals("Food"))
             {
+//                Bundle bundle = new Bundle();
+//                bundle.putString("category", category_selected);
+//                Fragment1 mapFragment1 = new Fragment1(category_selected);
+//                mapFragment1.setArguments(bundle);
+//
+//                Log.e("tag","tag cat"+categoriesHome.get(0));
+//                sectionsPagerAdapter.addFragment(mapFragment1,categoriesHome.get(i));
+
                 Bundle bundle = new Bundle();
                 bundle.putString("category", category_selected);
-                Fragment1 mapFragment1 = new Fragment1(category_selected);
-                mapFragment1.setArguments(bundle);
-
-                Log.e("tag","tag cat"+categoriesHome.get(0));
-                sectionsPagerAdapter.addFragment(mapFragment1,categoriesHome.get(i));
+                Fragment4 mapFragment2 = new Fragment4();
+                mapFragment2.setArguments(bundle);
 
 
+                Log.e("tag","tag cat fragment4"+categoriesHome.get(i));
+
+                sectionsPagerAdapter.addFragment(mapFragment2,categoriesHome.get(i));
             }
            else if (i==0)  //api integrating in this
             {
                 Bundle bundle = new Bundle();
                 bundle.putString("category", category_selected);
-                Fragment4 mapFragment2 = new Fragment4(category_selected,categoriesHomeNo2.get(i));
+                Fragment4 mapFragment2 = new Fragment4();
                 mapFragment2.setArguments(bundle);
 
 
@@ -121,15 +135,24 @@ category_selected=categoriesHome.get(i);
             }
             else if(i==1)
             {
+//                Bundle bundle = new Bundle();
+//                bundle.putString("category", category_selected);
+//                Fragment2 mapFragment4 = new Fragment2(category_selected,categoriesHomeNo2.get(i));
+//                mapFragment4.setArguments(bundle);
+//
+//
+//                Log.e("tag","tag cat fragment4"+categoriesHome.get(i));
+//
+//                sectionsPagerAdapter.addFragment(mapFragment4,categoriesHome.get(i));
                 Bundle bundle = new Bundle();
                 bundle.putString("category", category_selected);
-                Fragment2 mapFragment4 = new Fragment2(category_selected,categoriesHomeNo2.get(i));
-                mapFragment4.setArguments(bundle);
+                Fragment4 mapFragment2 = new Fragment4();
+                mapFragment2.setArguments(bundle);
 
 
                 Log.e("tag","tag cat fragment4"+categoriesHome.get(i));
 
-                sectionsPagerAdapter.addFragment(mapFragment4,categoriesHome.get(i));
+                sectionsPagerAdapter.addFragment(mapFragment2,categoriesHome.get(i));
 
             }
             else

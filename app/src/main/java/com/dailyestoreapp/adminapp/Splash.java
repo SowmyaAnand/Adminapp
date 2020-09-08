@@ -10,6 +10,7 @@ import android.os.Handler;
 import android.util.Log;
 
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
@@ -20,6 +21,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -35,11 +37,13 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class Splash extends AppCompatActivity {
   //  private static int SPLASH_TIME_OUT = 1000;
   StringBuilder strbul  = new StringBuilder();
+    StringBuilder ct  = new StringBuilder();
     ArrayList<String> categories = new ArrayList<>();
     ArrayList<String> categories_image = new ArrayList<>();
     List<String> cat_no = new ArrayList<String>();
     ArrayList<Integer> nums = new ArrayList<>();
     ACProgressFlower dialog;
+
     public static final String MY_PREFS_NAME = "AdminApp";
     private static String tag = "splash";
     @Override
@@ -110,9 +114,10 @@ public class Splash extends AppCompatActivity {
                         nums.add(item_no);
                         categories.add(item);
                         categories_image.add(item_image);
+
                         Log.e(tag,"value added "+item_no);
                     }
-
+                    Log.e(tag,"value added "+nums);
                     Iterator<Integer> iter = nums.iterator();
                     while(iter.hasNext())
                     {
@@ -122,8 +127,18 @@ public class Splash extends AppCompatActivity {
                         }
                     }
                     strbul.toString();
-                    Log.e("res","res="+strbul);
 
+                    // to store categories
+                    Log.e("res","res="+strbul);
+                    Iterator<String> itr_string = categories.iterator();
+                    while (itr_string.hasNext())
+                    {
+
+                        ct.append(itr_string.next());
+                        if(itr_string.hasNext()){
+                            ct.append(",");
+                        }
+                    }
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -132,9 +147,10 @@ public class Splash extends AppCompatActivity {
 
                 Log.e(tag,"categories = "+categories);
                 SharedPreferences.Editor editor = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
-                Set<String> set = new HashSet<String>();
+               Set<String> set = new LinkedHashSet<String>();
                 set.addAll(categories);
-                editor.putStringSet("categories", set);
+
+                editor.putString("categories", ct.toString());
                 editor.apply();
                 if(categories_image.size()>0){
                     SharedPreferences.Editor editor3 = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();

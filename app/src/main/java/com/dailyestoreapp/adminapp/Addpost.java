@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -27,6 +28,7 @@ import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
+import com.androidnetworking.interfaces.StringRequestListener;
 import com.androidnetworking.interfaces.UploadProgressListener;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
@@ -60,21 +62,24 @@ public class Addpost extends AppCompatActivity {
     File additemImageFile;
     String selectedPathadditem="";
     Button post;
-
+    Integer SelectedCategoryNumber=0;
+    Integer SelectedSubCategoryNumber=0;
     Spinner Category_spinner;
-
+EditText post_itemname,post_amount,post_offer,post_description,post_quantity;
     Spinner Sub_Category_spinner;
     public static final String MY_PREFS_NAME = "AdminApp";
     private static final String[] paths = {"item 1", "item 2", "item 3"};
     ArrayList<Integer> categoriescatno_edit = new ArrayList<>();
+    ArrayList<Integer> matchingcategoriescatno_edit = new ArrayList<>();
     ArrayList<Integer> subcategoriescatno_edit = new ArrayList<>();
     ArrayAdapter<String> subadapter1;
     ACProgressFlower dialog;
     Integer selected_cat_no;
     List<String> subcategorylist1;
-    String cod_eligibility;
-
-
+    String cod_eligibility="COD ELIGIBLE";
+    String refund_eligibility="REPLACEMENT ELIGIBLE";
+    RadioButton rb1;
+    RadioButton rb12;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,7 +88,16 @@ public class Addpost extends AppCompatActivity {
         toolbar.setTitle("ADD ITEM");
         toolbar.setTitleTextColor(Color.WHITE);
         setSupportActionBar(toolbar);
-        ArrayList<String> categoriesEditCategies = new ArrayList<>();
+        final ArrayList<String> categoriesEditCategies = new ArrayList<>();
+        Category_spinner = findViewById(R.id.categoryspinner);
+        Sub_Category_spinner = findViewById(R.id.subcategoryspinner);
+        addattach = (TextView) findViewById(R.id.txtAttachment);
+        imgaeitem = (ImageView) findViewById(R.id.imageitem);
+        post_itemname=(EditText)findViewById(R.id.itemname_post);
+        post_amount=(EditText)findViewById(R.id.amount_post);
+       post_offer=(EditText)findViewById(R.id.offer_post);
+       post_description=(EditText)findViewById(R.id.description_post);
+       post_quantity=(EditText)findViewById(R.id.quantity_post);
         RadioGroup radioGroup = (RadioGroup) findViewById(R.id.cod) ;
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -92,12 +106,13 @@ public class Addpost extends AppCompatActivity {
                 cod_eligibility = String.valueOf(rb1.getText());
             }
         });
-        RadioGroup radiogroup1 = (RadioGroup) findViewById(R.id.cod) ;
+        RadioGroup radiogroup1 = (RadioGroup) findViewById(R.id.refund) ;
         radiogroup1.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                RadioButton rb1 = (RadioButton) findViewById(checkedId);
-                cod_eligibility = String.valueOf(rb1.getText());
+                RadioButton rb2 = (RadioButton) findViewById(checkedId);
+                refund_eligibility = String.valueOf(rb2.getText());
+
             }
         });
 
@@ -105,27 +120,98 @@ public class Addpost extends AppCompatActivity {
         post.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String it_name_post,amount_post,description_post,offer_post,quantity_post,cashondelivery,replace;
+                it_name_post=post_itemname.getText().toString();
+                amount_post =post_amount.getText().toString();
+                description_post=post_description.getText().toString();
+                offer_post=post_offer.getText().toString();
+                quantity_post =post_quantity.getText().toString();
+                Integer sb = Sub_Category_spinner.getSelectedItemPosition();
+                Log.e("addpost","post sub id "+subcategoriescatno_edit.get(sb));
+                Integer ct = Category_spinner.getSelectedItemPosition();
+                Log.e("addpost","cat id "+categoriescatno_edit.get(ct));
+                if(cod_eligibility.equals("COD ELIGIBLE"))
+                {
+                    cashondelivery="1";
+                }
+                else
+                {
+                    cashondelivery="0";
+                }
+                if(refund_eligibility.equals("REPLACEMENT ELIGIBLE"))
+                {
+                    replace="1";
+                }
+                else
+                {
+                    replace="0";
+                }
+
                 if((selectedPathadditem==null)||(selectedPathadditem.length()==0))
                 {
                     Toast.makeText(Addpost.this,"Please select an image",Toast.LENGTH_SHORT).show();
                 }
+                 else if ((it_name_post == null)||(it_name_post.length()==0))
+                {
+                    Toast.makeText(Addpost.this,"Please enter item name",Toast.LENGTH_SHORT).show();
+                }
+                else if ((amount_post == null)||(amount_post.length()==0))
+                {
+                    Toast.makeText(Addpost.this,"Please enter amount",Toast.LENGTH_SHORT).show();
+                }
+                else if ((description_post == null)||(description_post.length()==0))
+                {
+                    Toast.makeText(Addpost.this,"Please  enter description",Toast.LENGTH_SHORT).show();
+                }
+                else if ((quantity_post == null)||(quantity_post.length()==0))
+                {
+                    Toast.makeText(Addpost.this,"Please enter quantity",Toast.LENGTH_SHORT).show();
+                }
+                 else if((categoriescatno_edit.get(ct)==0)||(subcategoriescatno_edit.get(sb)==0))
+                {
+                    Toast.makeText(Addpost.this,"Please select both category and sub category",Toast.LENGTH_SHORT).show();
+
+                }
                 else
                 {
-                    uploadFile(additemImageFile, "1", "meat", "noufal");
+                    if(categoriescatno_edit.get(ct)==matchingcategoriescatno_edit.get(sb))
+                    {
+
+                        uploadItem(additemImageFile,categoriescatno_edit.get(ct).toString(),subcategoriescatno_edit.get(sb).toString(),it_name_post,description_post,quantity_post,amount_post,"0","1",cashondelivery,replace);
+                    }
+                    else
+                    {
+                        Toast.makeText(Addpost.this,"Selected Sub Category does not belong to the selected category ",Toast.LENGTH_SHORT).show();
+
+                    }
+                }
+
+
                 }
 
             }
-        });
+        );
         // Cat_name
         SharedPreferences shared = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
-        Set<String> set = shared.getStringSet("categories", null);
+//        Set<String> set = shared.getStringSet("categories", null);
+//        List<String> categorylist = new ArrayList<String>();
+//        categorylist.add("Select Category");
+//        categorylist.addAll(set);
+        String savedcatString = shared.getString("categories", "");
+        String[] cats = savedcatString.split(",");//if spaces are uneven, use \\s+ instead of " "
         List<String> categorylist = new ArrayList<String>();
         categorylist.add("Select Category");
-        categorylist.addAll(set);
+        for (String ct : cats) {
+
+            categorylist.add(ct);
+        }
 //Cat_number
         SharedPreferences shared2 = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
         String savedString = shared2.getString("categories_no", "subId");
         String[] numbers = savedString.split(",");//if spaces are uneven, use \\s+ instead of " "
+categoriescatno_edit.add(0);
+matchingcategoriescatno_edit.add(0);
+subcategoriescatno_edit.add(0);
         for (String number : numbers) {
             categoriescatno_edit.add(Integer.valueOf(number));
         }
@@ -150,10 +236,7 @@ public class Addpost extends AppCompatActivity {
 //        subcategorylist1.addAll(set4);
 
 
-        Category_spinner = findViewById(R.id.categoryspinner);
-        Sub_Category_spinner = findViewById(R.id.subcategoryspinner);
-        addattach = (TextView) findViewById(R.id.txtAttachment);
-        imgaeitem = (ImageView) findViewById(R.id.imageitem);
+
         subadapter1 = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_item, subcategorylist1);
 
@@ -228,14 +311,12 @@ public class Addpost extends AppCompatActivity {
 
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-            Toast.makeText(Addpost.this, "categoryselected" + position, Toast.LENGTH_LONG).show();
 
-
-            Toast.makeText(Addpost.this, "subcategoryselected" + selected_cat_no, Toast.LENGTH_LONG).show();
-            if (position != 1) {
                 selected_cat_no = categoriescatno_edit.get(position);
-                subcategoryactivatepost();
-            }
+                Log.e("addpost","after selecting the category"+selected_cat_no+position);
+            Log.e("addpost","after selecting the category"+categoriescatno_edit);
+                subcategoryactivatepost(selected_cat_no);
+
         }
 
 
@@ -258,7 +339,7 @@ public class Addpost extends AppCompatActivity {
         }
     }
 
-    private void subcategoryactivatepost() {
+    private void subcategoryactivatepost(final Integer catid_dropdown) {
 
 //        dialog = new ACProgressFlower.Builder(Addpost.this)
 //                .direction(ACProgressConstant.DIRECT_CLOCKWISE)
@@ -267,7 +348,7 @@ public class Addpost extends AppCompatActivity {
 //
 //                .fadeColor(Color.DKGRAY).build();
 //        dialog.show();
-        int type = selected_cat_no;
+
         String url = "http://dailyestoreapp.com/dailyestore/api/";
 
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
@@ -281,7 +362,7 @@ public class Addpost extends AppCompatActivity {
                 .client(okHttpClient)
                 .build();
         ResponseInterface1 mainInterface = retrofit.create(ResponseInterface1.class);
-        Call<ListCategoryResponse> call = mainInterface.SubCategory(type);
+        Call<ListCategoryResponse> call = mainInterface.SubCategory(catid_dropdown);
         call.enqueue(new Callback<ListCategoryResponse>() {
             @Override
             public void onResponse(Call<ListCategoryResponse> call, retrofit2.Response<ListCategoryResponse> response) {
@@ -299,16 +380,21 @@ public class Addpost extends AppCompatActivity {
                             JSONObject j1 = categoriesarray.getJSONObject(i);
                             String sub_name = j1.getString("subName");
                             int item_no = Integer.parseInt(j1.getString("subId"));
-
+                            int cat_item_no = Integer.parseInt(j1.getString("typeId"));
+Log.e("Addpost","subname="+sub_name+catid_dropdown);
                             if (!subcategorylist1.contains(sub_name)) {
                                 subcategorylist1.add(sub_name);
                                 subcategoriescatno_edit.add(item_no);
-
+                                matchingcategoriescatno_edit.add(cat_item_no);
 
                             }
 
                         }
+                    if(subcategorylist1.size()==0)
+{
 
+
+}
                         subadapter1.notifyDataSetChanged();
 
 
@@ -318,7 +404,8 @@ public class Addpost extends AppCompatActivity {
                         e.printStackTrace();
                     }
                 } else {
-                    Toast.makeText(Addpost.this, "No Data found", Toast.LENGTH_LONG).show();
+
+                    Toast.makeText(Addpost.this,"No Sub Categories Found Under This Category",Toast.LENGTH_SHORT).show();
                 }
 
 
@@ -333,12 +420,9 @@ public class Addpost extends AppCompatActivity {
 
     }
 
-    public void uploadFile(final File file, final String typeid, final String subname, final String createdby) {
+    public void uploadItem(final File file, final String typeid, final String subId, final String itemName,final String description,final String quantity,final String price,final String status,final String createdBy,final String cod,final String refund) {
         Log.e("test", "path=" + file);
-        ArrayList<String> dt = new ArrayList<String>(20);
-        dt.add(0, "1");
-        dt.add(1, "test");
-        dt.add(2, "sowmya");
+
         //        String refreshToken = HelperClass.getRefreshToken(PostActivity.this);
 //        String userADID = HelperClass.getUserADID(PostActivity.this);
 //
@@ -350,14 +434,16 @@ public class Addpost extends AppCompatActivity {
         AndroidNetworking.enableLogging();
         AndroidNetworking.upload("http://dailyestoreapp.com/dailyestore/api/addItems")
                 .addMultipartFile("image", file)
-                .addMultipartParameter("typeId", String.valueOf(dt))
-                .addMultipartParameter("subId", subname)
-                .addMultipartParameter("itemName", createdby)
-                .addMultipartParameter("description", createdby)
-                .addMultipartParameter("quantity", createdby)
-                .addMultipartParameter("price", createdby)
-                .addMultipartParameter("status", createdby)
-                .addMultipartParameter("createdBy", createdby)
+                .addMultipartParameter("typeId", String.valueOf(typeid))
+                .addMultipartParameter("subId", subId)
+                .addMultipartParameter("itemName", itemName)
+                .addMultipartParameter("description", description)
+                .addMultipartParameter("quantity", quantity)
+                .addMultipartParameter("price", price)
+                .addMultipartParameter("status", "0")
+                .addMultipartParameter("createdBy", "1")
+                .addMultipartParameter("CashOnDelivery", cod)
+                .addMultipartParameter("Refund", refund)
                 .setTag("uploadTest")
                 .setPriority(Priority.HIGH).doNotCacheResponse()
                 .build()
@@ -369,42 +455,40 @@ public class Addpost extends AppCompatActivity {
 
                     }
                 })
-                .getAsJSONObject(new JSONObjectRequestListener() {
+                .getAsString(new StringRequestListener() {
                     @Override
-                    public void onResponse(JSONObject jsonObject) {
-                        //  progressDialog.dismiss();
-                        // FileUtils.deleteCache(PostActivity.this.getApplicationContext());
-                        Log.e("CATEGORYList---->", "" + jsonObject);
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonObj = new JSONObject(response);
+                            JSONObject cat_no_post = (JSONObject) jsonObj.get("responsedata");
+                            String data_post = String.valueOf(cat_no_post.get("data"));
+                            Integer newaddedcat_no_post = Integer.valueOf(data_post);
+                            String success_value_post = String.valueOf(cat_no_post.get("success"));
+                            Integer s  = Integer.valueOf(success_value_post);
+                            Log.e("addcat","the cat no is "+s);
+                            if(s==1)
+                            {
+                                Toast.makeText(Addpost.this,"Item Added Successfully",Toast.LENGTH_SHORT).show();
 
+                                post_itemname.setText("");
+                               post_amount.setText("");
+                                post_description.setText("");
+                               post_offer.setText("");
+                              post_quantity.setText("");
 
-                        String result = null;
-                        JSONObject fullResponseObject = null;
-
+                            }
+                        }
+                        catch (Exception e)
+                        {
+Log.e("addpost",e.getMessage());
+                        }
 
                     }
 
                     @Override
                     public void onError(ANError anError) {
-
-
-                        Log.e("RESPONSE", "" + anError);
-                        Log.d("", "onError errorCode : " + anError.getErrorCode());
-                        Log.d("", "onError errorBody : " + anError.getErrorBody());
-                        Log.d("", "onError errorDetail : " + anError.getErrorDetail());
-//                        if(anError.toString().contains("javax.net.ssl.SSLPeerUnverifiedException") && count==1){
-//                            uploadFile(file,categoryId,ADID, header, description,  date,  publisher);
-//                            Log.e("Request->",""+file+categoryId+ADID+header+description+date+publisher);
-//                           // ++count;
-//
-//
-//                        }
-//                        else{
-//                          //  showToast("Unable to connect with server,please try after sometime!!");
-//
-//                        }
+                        Log.e("addpost",anError.getMessage());
                     }
-
-
                 });
 
 

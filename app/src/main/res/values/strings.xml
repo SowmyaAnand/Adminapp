@@ -29,8 +29,8 @@
     <string name="category9">Mobile and Accessories</string>
     <string name="cod_not_eligible">COD NOT ELIGIBLE</string>
     <string name="cod_eligible">COD ELIGIBLE</string>
-    <string name="refund_eligible">REFUND ELIGIBLE</string>
-    <string name="refund_not_eligible">REFUND NOT ELIGIBLE</string>
+    <string name="refund_eligible">REPLACEMENT ELIGIBLE</string>
+    <string name="refund_not_eligible">REPLACEMENT NOT ELIGIBLE</string>
 
 
 </resources>
