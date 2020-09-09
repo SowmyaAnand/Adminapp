@@ -10,6 +10,8 @@ import retrofit2.http.Query;
 public interface ResponseInterface1 {
     @GET("listcategory")
     Call<ListCategoryResponse> CategoryList();
+    @GET("viewAllPopup")
+    Call<ListCategoryResponse> firstpop();
     @FormUrlEncoded
     @POST("listSubCategory")
     Call<ListCategoryResponse> SubCategory(@Field("typeId") int id);

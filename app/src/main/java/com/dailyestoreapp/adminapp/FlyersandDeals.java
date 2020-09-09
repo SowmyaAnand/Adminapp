@@ -131,6 +131,7 @@ ImageView img1,img2,img3,img4;
         }
 
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -158,6 +159,8 @@ ImageView img1,img2,img3,img4;
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
+        id= Integer.valueOf(categoryselected);
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
             if (resultCode == RESULT_OK) {
@@ -191,5 +194,15 @@ ImageView img1,img2,img3,img4;
                 Exception error = result.getError();
             }
         }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Bundle val = getIntent().getExtras();
+        categoryselected=val.getString("CATEGORYID");
+        Toast.makeText(FlyersandDeals.this,"the selected post is"+categoryselected,Toast.LENGTH_LONG).show();
+
+        Log.e("iddd","the is selecetd is "+categoryselected);
     }
 }
