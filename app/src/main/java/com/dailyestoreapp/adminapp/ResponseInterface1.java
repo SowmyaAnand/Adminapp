@@ -12,6 +12,10 @@ public interface ResponseInterface1 {
     Call<ListCategoryResponse> CategoryList();
     @GET("viewAllPopup")
     Call<ListCategoryResponse> firstpop();
+    @GET("viewAllFlyers")
+    Call<ListCategoryResponse> allFlyers();
+    @GET("viewAllDeals")
+    Call<ListCategoryResponse> viewalldeal();
     @FormUrlEncoded
     @POST("listSubCategory")
     Call<ListCategoryResponse> SubCategory(@Field("typeId") int id);

@@ -117,6 +117,57 @@ public class ListCategoryResponseData {
     @Expose
     private String categoryImage;
 
+    @SerializedName("flyId")
+    @Expose
+    private String flyId;
+
+    @SerializedName("fromDate")
+    @Expose
+    private String fromDate;
+    @SerializedName("toDate")
+    @Expose
+    private String toDate;
+    @SerializedName("dealId")
+    @Expose
+    private String dealId;
+
+
+    public String getDealId() {
+        return dealId;
+    }
+
+    public void setDealId(String dealId) {
+        this.dealId = dealId;
+    }
+
+
+    public String getFromDate() {
+        return fromDate;
+    }
+
+    public void setFromDate(String fromDate) {
+        this.fromDate = fromDate;
+    }
+
+    public String getToDate() {
+        return toDate;
+    }
+
+    public void setToDate(String toDate) {
+        this.toDate = toDate;
+    }
+
+
+
+    public String getFlyId() {
+        return flyId;
+    }
+
+    public void setFlyId(String flyId) {
+        this.flyId = flyId;
+    }
+
+
 
 
 

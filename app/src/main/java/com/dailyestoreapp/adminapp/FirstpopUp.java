@@ -40,9 +40,11 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class FirstpopUp extends AppCompatActivity {
 ImageView firstpopUp_img;
     Button edit_firstpopUp_change_img ;
+
 Button firstpopUp_change_img ;
 Button firstpopUp_save_img;
-
+    Button edit_firstpopUp_save_img;
+String selectedflyerid="0";
     File firstpopUpImage;
     String selectedPathfirstpopUp="";
     @Override
@@ -54,9 +56,11 @@ Button firstpopUp_save_img;
         firstpopUp_change_img = (Button)findViewById(R.id.addImageFirstPopup);
         edit_firstpopUp_change_img = (Button)findViewById(R.id.editImageFirstPopup);
         firstpopUp_save_img = (Button)findViewById(R.id.saveFirstPopup);
+        edit_firstpopUp_save_img = (Button)findViewById(R.id.edit_saveFirstPopup);
         SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-mm-dd");
         Date d=new Date();
         final String from_to_date=simpleDateFormat.format(d);
+
         firstpopUp_change_img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -66,6 +70,8 @@ Button firstpopUp_save_img;
                         .start(FirstpopUp.this);
             }
         });
+
+
         firstpopUp_save_img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -75,10 +81,39 @@ Button firstpopUp_save_img;
                 }
                 else
                 {
-uploadFirstPopup(firstpopUpImage,from_to_date);
+            uploadFirstPopup(firstpopUpImage,from_to_date);
                 }
             }
         });
+
+
+
+        edit_firstpopUp_save_img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if((selectedPathfirstpopUp==null)||(selectedPathfirstpopUp.length()==0))
+                {
+                    Toast.makeText(FirstpopUp.this,"Please select an image",Toast.LENGTH_SHORT).show();
+                }
+                else
+                {
+                    EditFirstPopup(firstpopUpImage,from_to_date);
+                }
+
+            }
+        });
+
+
+        edit_firstpopUp_change_img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CropImage.activity()
+                        .setMinCropResultSize(913,606)
+                        .setMaxCropResultSize(913,606)
+                        .start(FirstpopUp.this);
+            }
+        });
+
     }
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -102,6 +137,63 @@ uploadFirstPopup(firstpopUpImage,from_to_date);
         AndroidNetworking.enableLogging();
         AndroidNetworking.upload("http://dailyestoreapp.com/dailyestore/api/addFlyers")
                 .addMultipartFile("image",file)
+                .addMultipartParameter("description", "popup")
+                .addMultipartParameter("type", "1")
+                .addMultipartParameter("status", "1")
+                .addMultipartParameter("fromDate", fromdate)
+                .addMultipartParameter("toDate", fromdate)
+                .setTag("uploads/items/")
+                .setPriority(Priority.HIGH).doNotCacheResponse()
+                .build()
+                .setUploadProgressListener(new UploadProgressListener() {
+                    @Override
+                    public void onProgress(long bytesUploaded, long totalBytes) {
+
+
+                    }
+                })
+                .getAsString(new StringRequestListener() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.e("response","response = "+response);
+                        try {
+                            JSONObject jsonObj = new JSONObject(response);
+                            JSONObject cat_no = (JSONObject) jsonObj.get("responsedata");
+
+                            String success_value = String.valueOf(cat_no.get("success"));
+                            Integer s  = Integer.valueOf(success_value);
+                            Log.e("addcat","the cat no is "+s);
+                            if(s==1)
+                            {
+                                Toast.makeText(FirstpopUp.this,"Pop Up Added Successfully",Toast.LENGTH_SHORT).show();
+
+                            }
+                            else
+                            {
+                                Toast.makeText(FirstpopUp.this,"Something went wrong.Please try again",Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            Log.e("addcategory",e.getMessage());
+                        }
+
+
+                    }
+
+                    @Override
+                    public void onError(ANError anError) {
+
+                        Toast.makeText(FirstpopUp.this,"Something went wrong.Please try again",Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+    }
+    public void EditFirstPopup(final File file,final String fromdate){
+Log.e("firstpopup","selected flyerid"+selectedflyerid+file);
+        AndroidNetworking.enableLogging();
+        AndroidNetworking.upload("http://dailyestoreapp.com/dailyestore/api/editFlyers")
+                .addMultipartFile("image",file)
+                .addMultipartParameter("flyId", selectedflyerid)
                 .addMultipartParameter("description", "popup")
                 .addMultipartParameter("type", "1")
                 .addMultipartParameter("status", "1")
@@ -180,23 +272,30 @@ uploadFirstPopup(firstpopUpImage,from_to_date);
                 int success = Integer.parseInt(response.body().getResponsedata().getSuccess());
 Log.e("firstpop","the succes value is "+listCategoryResponseobject.getResponsedata().getSuccess());
                 int data_length = response.body().getResponsedata().getData().size();
-if(data_length>0)
-{
-    edit_firstpopUp_change_img.setVisibility(View.VISIBLE);
-    firstpopUp_change_img.setVisibility(View.GONE);
-}
-else
-{
-    firstpopUp_change_img.setVisibility(View.VISIBLE);
-    edit_firstpopUp_change_img.setVisibility(View.GONE);
-}
+                if(data_length>0)
+                {
+                    edit_firstpopUp_change_img.setVisibility(View.VISIBLE);
+                    firstpopUp_change_img.setVisibility(View.GONE);
+                    edit_firstpopUp_save_img.setVisibility(View.VISIBLE);
+                    firstpopUp_save_img.setVisibility(View.GONE);
+                }
+                else
+                {
+                    edit_firstpopUp_change_img.setVisibility(View.GONE);
+                    firstpopUp_change_img.setVisibility(View.VISIBLE);
+                    edit_firstpopUp_save_img.setVisibility(View.GONE);
+                    firstpopUp_save_img.setVisibility(View.VISIBLE);
+                }
                 try {
                     Toast.makeText(FirstpopUp.this,"response="+success,Toast.LENGTH_LONG).show();
 
                     if(success==1) {
 
                         for (int i = 0; i < data_length; i++)
+
                         {
+                            selectedflyerid=response.body().getResponsedata().getData().get(i).getFlyId();
+                            Log.e("Firstpopup.this","selected flyerid ="+selectedflyerid);
                             String imageurl = response.body().getResponsedata().getData().get(i).getImage();
                             String imageurl_total=url1+imageurl;
                             Log.e("firstpop","the succes value is "+imageurl_total);
