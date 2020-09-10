@@ -99,6 +99,14 @@ refrsh.setOnClickListener(new View.OnClickListener() {
         {
             ViewAllDeals();
         }
+        else if(id==4)
+        {
+            FirstViewFlyers("0");
+        }
+        else if(id==5)
+        {
+            FirstViewFlyers("2");
+        }
 
     }
 });
@@ -112,10 +120,18 @@ ad1.setOnClickListener(new View.OnClickListener() {
             startActivity(next);
 
         }
-        else
+        else if(id==4)
         {
             Intent next = new Intent(FlyersandDeals.this,AddFlyersImage.class);
             next.putExtra("flag", 0);
+            next.putExtra("type","0");
+            startActivity(next);
+        }
+        else if(id==5)
+        {
+            Intent next = new Intent(FlyersandDeals.this,AddFlyersImage.class);
+            next.putExtra("flag", 0);
+            next.putExtra("type","1");
             startActivity(next);
         }
 
@@ -131,10 +147,18 @@ ad1.setOnClickListener(new View.OnClickListener() {
                     startActivity(next);
 
                 }
-                else
+                else if(id==4)
                 {
                     Intent next = new Intent(FlyersandDeals.this,AddFlyersImage.class);
                     next.putExtra("flag", 0);
+                    next.putExtra("type","0");
+                    startActivity(next);
+                }
+                else if(id==5)
+                {
+                    Intent next = new Intent(FlyersandDeals.this,AddFlyersImage.class);
+                    next.putExtra("flag", 0);
+                    next.putExtra("type","1");
                     startActivity(next);
                 }
             }
@@ -149,10 +173,18 @@ ad1.setOnClickListener(new View.OnClickListener() {
                     startActivity(next);
 
                 }
-                else
+                else if(id==4)
                 {
                     Intent next = new Intent(FlyersandDeals.this,AddFlyersImage.class);
                     next.putExtra("flag", 0);
+                    next.putExtra("type","0");
+                    startActivity(next);
+                }
+                else if(id==5)
+                {
+                    Intent next = new Intent(FlyersandDeals.this,AddFlyersImage.class);
+                    next.putExtra("flag", 0);
+                    next.putExtra("type","1");
                     startActivity(next);
                 }
             }
@@ -167,10 +199,18 @@ ad1.setOnClickListener(new View.OnClickListener() {
                     startActivity(next);
 
                 }
-                else
+                else if(id==4)
                 {
                     Intent next = new Intent(FlyersandDeals.this,AddFlyersImage.class);
                     next.putExtra("flag", 0);
+                    next.putExtra("type","0");
+                    startActivity(next);
+                }
+                else if(id==5)
+                {
+                    Intent next = new Intent(FlyersandDeals.this,AddFlyersImage.class);
+                    next.putExtra("flag", 0);
+                    next.putExtra("type","1");
                     startActivity(next);
                 }
             }
@@ -488,85 +528,176 @@ ad1.setOnClickListener(new View.OnClickListener() {
                 .client(okHttpClient)
                 .build();
         ResponseInterface1 mainInterface = retrofit.create(ResponseInterface1.class);
-        Call<ListCategoryResponse> call = mainInterface.allFlyers();
-        call.enqueue(new Callback<ListCategoryResponse>() {
-            @Override
-            public void onResponse(Call<ListCategoryResponse> call, retrofit2.Response<ListCategoryResponse> response) {
-                ListCategoryResponse listCategoryResponseobject = response.body();
-                int success = Integer.parseInt(response.body().getResponsedata().getSuccess());
-                Log.e("firstpop","the succes value is "+listCategoryResponseobject.getResponsedata().getSuccess());
-                int data_length = response.body().getResponsedata().getData().size();
+        if(tid.equals("0"))
+        {
+            Call<ListCategoryResponse> call = mainInterface.allFlyers();
+            call.enqueue(new Callback<ListCategoryResponse>() {
+                @Override
+                public void onResponse(Call<ListCategoryResponse> call, retrofit2.Response<ListCategoryResponse> response) {
+                    ListCategoryResponse listCategoryResponseobject = response.body();
+                    int success = Integer.parseInt(response.body().getResponsedata().getSuccess());
+                    Log.e("firstpop","the succes value is "+listCategoryResponseobject.getResponsedata().getSuccess());
+                    int data_length = response.body().getResponsedata().getData().size();
 
 
-                try {
+                    try {
 
 
-                    if(success==1) {
+                        if(success==1) {
 
-                        for (int i = 0; i < data_length; i++) {
-                            String type = response.body().getResponsedata().getData().get(i).getType();
-                            if (type == tid) {
-                            String selectedflyerid = response.body().getResponsedata().getData().get(i).getFlyId();
-                            Log.e("Firstpopup.this", "selected flyerid =" + selectedflyerid);
-                            if(tid=="0")
-                            {
-                                first_flyers_id.add(selectedflyerid);
-                            }
-                            else if(tid=="2")
-                            {
-                                second_flyers_id.add(selectedflyerid);
-                            }
-                            String imageurl = response.body().getResponsedata().getData().get(i).getImage();
-                            String imageurl_total = url1 + imageurl;
-                            Log.e("firstpop", "the succes value is " + imageurl_total);
-                            if (img1.getDrawable()==null)
-                            {
-                                Glide.with(getApplicationContext()).load(imageurl_total)
-                                        .diskCacheStrategy(DiskCacheStrategy.ALL)
-                                        .into(img1);
-                                ad1.setVisibility(View.GONE);
+                            for (int i = 0; i < data_length; i++) {
+                                String type = response.body().getResponsedata().getData().get(i).getType();
+                                Log.e("Firstpopup.this", "selected flyerid =" + type);
+                                Log.e("Firstpopup.this", "selected flyerid =" + tid);
+                                if (type.equals(tid)) {
+                                    String selectedflyerid = response.body().getResponsedata().getData().get(i).getFlyId();
+                                    Log.e("Firstpopup.this", "selected flyerid =" + selectedflyerid);
+                                    if(tid=="0")
+                                    {
+                                        first_flyers_id.add(selectedflyerid);
+                                    }
+                                    else if(tid=="2")
+                                    {
+                                        second_flyers_id.add(selectedflyerid);
+                                    }
+                                    String imageurl = response.body().getResponsedata().getData().get(i).getImage();
+                                    String imageurl_total = url1 + imageurl;
+                                    Log.e("flyers", "the succes value is "+img1.getDrawable()+imageurl_total);
+                                    if (img1.getDrawable()==null)
+                                    {
+                                        Glide.with(getApplicationContext()).load(imageurl_total)
+                                                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                                .into(img1);
+                                        ad1.setVisibility(View.GONE);
 
+                                    }
+                                    else if (img2.getDrawable()==null) {
+                                        Glide.with(getApplicationContext()).load(imageurl_total)
+                                                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                                .into(img2);
+                                        ad2.setVisibility(View.GONE);
+                                    }
+                                    else if (img3.getDrawable()==null) {
+                                        Glide.with(getApplicationContext()).load(imageurl_total)
+                                                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                                .into(img3);
+                                        ad3.setVisibility(View.GONE);
+                                    }
+                                    else if (img4.getDrawable()==null) {
+                                        Glide.with(getApplicationContext()).load(imageurl_total)
+                                                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                                .into(img4);
+                                        ad4.setVisibility(View.GONE);
+                                    }
+                                }
                             }
-                            else if (img2.getDrawable()==null) {
-                                Glide.with(getApplicationContext()).load(imageurl_total)
-                                        .diskCacheStrategy(DiskCacheStrategy.ALL)
-                                        .into(img2);
-                                ad2.setVisibility(View.GONE);
-                            }
-                            else if (img3.getDrawable()==null) {
-                                Glide.with(getApplicationContext()).load(imageurl_total)
-                                        .diskCacheStrategy(DiskCacheStrategy.ALL)
-                                        .into(img3);
-                                ad3.setVisibility(View.GONE);
-                            }
-                            else if (img4.getDrawable()==null) {
-                                Glide.with(getApplicationContext()).load(imageurl_total)
-                                        .diskCacheStrategy(DiskCacheStrategy.ALL)
-                                        .into(img4);
-                                ad4.setVisibility(View.GONE);
-                            }
+
+
                         }
+                        else {
+
+                            Toast.makeText(FlyersandDeals.this,"No Data found",Toast.LENGTH_LONG).show();
                         }
-
-
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        Toast.makeText(FlyersandDeals.this,"something went wrong",Toast.LENGTH_SHORT).show();
                     }
-                    else {
 
-                        Toast.makeText(FlyersandDeals.this,"No Data found",Toast.LENGTH_LONG).show();
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    Toast.makeText(FlyersandDeals.this,"something went wrong",Toast.LENGTH_SHORT).show();
                 }
 
-            }
+                @Override
+                public void onFailure(Call<ListCategoryResponse> call, Throwable t) {
 
-            @Override
-            public void onFailure(Call<ListCategoryResponse> call, Throwable t) {
+                    Toast.makeText(FlyersandDeals.this,t.getMessage(),Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+        else
+        {
+            Call<ListCategoryResponse> call = mainInterface.allseconfFlyers();
+            call.enqueue(new Callback<ListCategoryResponse>() {
+                @Override
+                public void onResponse(Call<ListCategoryResponse> call, retrofit2.Response<ListCategoryResponse> response) {
+                    ListCategoryResponse listCategoryResponseobject = response.body();
+                    int success = Integer.parseInt(response.body().getResponsedata().getSuccess());
+                    Log.e("firstpop","the succes value is "+listCategoryResponseobject.getResponsedata().getSuccess());
+                    int data_length = response.body().getResponsedata().getData().size();
 
-                Toast.makeText(FlyersandDeals.this,t.getMessage(),Toast.LENGTH_SHORT).show();
-            }
-        });
+
+                    try {
+
+
+                        if(success==1) {
+
+                            for (int i = 0; i < data_length; i++) {
+                                String type = response.body().getResponsedata().getData().get(i).getType();
+                                Log.e("Firstpopup.this", "selected flyerid =" + type);
+                                Log.e("Firstpopup.this", "selected flyerid =" + tid);
+                                if (type.equals(tid)) {
+                                    String selectedflyerid = response.body().getResponsedata().getData().get(i).getFlyId();
+                                    Log.e("Firstpopup.this", "selected flyerid =" + selectedflyerid);
+                                    if(tid=="0")
+                                    {
+                                        first_flyers_id.add(selectedflyerid);
+                                    }
+                                    else if(tid=="2")
+                                    {
+                                        second_flyers_id.add(selectedflyerid);
+                                    }
+                                    String imageurl = response.body().getResponsedata().getData().get(i).getImage();
+                                    String imageurl_total = url1 + imageurl;
+                                    Log.e("flyers", "the succes value is "+img1.getDrawable()+imageurl_total);
+                                    if (img1.getDrawable()==null)
+                                    {
+                                        Glide.with(getApplicationContext()).load(imageurl_total)
+                                                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                                .into(img1);
+                                        ad1.setVisibility(View.GONE);
+
+                                    }
+                                    else if (img2.getDrawable()==null) {
+                                        Glide.with(getApplicationContext()).load(imageurl_total)
+                                                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                                .into(img2);
+                                        ad2.setVisibility(View.GONE);
+                                    }
+                                    else if (img3.getDrawable()==null) {
+                                        Glide.with(getApplicationContext()).load(imageurl_total)
+                                                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                                .into(img3);
+                                        ad3.setVisibility(View.GONE);
+                                    }
+                                    else if (img4.getDrawable()==null) {
+                                        Glide.with(getApplicationContext()).load(imageurl_total)
+                                                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                                .into(img4);
+                                        ad4.setVisibility(View.GONE);
+                                    }
+                                }
+                            }
+
+
+                        }
+                        else {
+
+                            Toast.makeText(FlyersandDeals.this,"No Data found",Toast.LENGTH_LONG).show();
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        Toast.makeText(FlyersandDeals.this,"something went wrong",Toast.LENGTH_SHORT).show();
+                    }
+
+                }
+
+                @Override
+                public void onFailure(Call<ListCategoryResponse> call, Throwable t) {
+
+                    Toast.makeText(FlyersandDeals.this,t.getMessage(),Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+
+
 
 
     }

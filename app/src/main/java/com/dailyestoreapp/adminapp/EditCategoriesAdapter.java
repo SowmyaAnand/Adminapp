@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -36,16 +37,23 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Locale;
 
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
 public class EditCategoriesAdapter extends RecyclerView.Adapter<EditCategoriesAdapter.MyViewHolder> {
     ArrayList<String> categories_editcategory = new ArrayList<String>();
     ArrayList<Integer> categories_no_editcategory= new ArrayList<Integer>();
     Context context;
-
+    final String url1 = "http://dailyestoreapp.com/dailyestore/";
     ArrayList<String> Images = new ArrayList<String>();
     ArrayList<String> lts = new ArrayList<String>();
   //  ArrayList personNames_offers = new ArrayList<>(Arrays.asList("ITEM1", "ITEM2", "ITEM3", "ITEM4", "ITEM5", "ITEM6", "ITEM7"));
     int quantity = 1;
-
+WebServices webServices;
     public EditCategoriesAdapter(Context context, ArrayList personNames, ArrayList Images,ArrayList catno_edit) {
         this.context = context;
         this.categories_editcategory = personNames;
@@ -75,14 +83,12 @@ public class EditCategoriesAdapter extends RecyclerView.Adapter<EditCategoriesAd
             }
         });
         String name_editcategory = (String) categories_editcategory.get(position);
-//        String img_editcategory = (String) Images.get(position);
-//        if(Images.size()>0)
-//        {
-//            Glide.with(context).load(img_editcategory)
-//                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-//                    .into(holder.image_image_edit);
-//        }
+        Log.e("editcategories","the images are "+Images.get(position)+name_editcategory);
+        String imageurl_total = url1 + Images.get(position);
         holder.name_edit.setText(name_editcategory);
+        Glide.with(context).load(imageurl_total)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .into(holder.image_image_edit);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -104,8 +110,49 @@ public class EditCategoriesAdapter extends RecyclerView.Adapter<EditCategoriesAd
                String text = holder.ed_edit.getText().toString();
                if(text.equals("SAVE"))
                {
-                   holder.name_edit.setEnabled(false);
-                   holder.ed_edit.setText("EDIT");
+                   String typeId_editcategory = String.valueOf(categories_no_editcategory.get(position));
+                   String categoryname_editcategory = holder.name_edit.getText().toString();
+                   String image_editcategory = Images.get(position);
+                   int result=0;
+                   String url = "http://dailyestoreapp.com/dailyestore/api/";
+                   HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
+                   loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+                   OkHttpClient okHttpClient = new OkHttpClient.Builder()
+                           .addInterceptor(loggingInterceptor)
+                           .build();
+                   final Retrofit retrofit = new Retrofit.Builder()
+                           .baseUrl(url)
+                           .addConverterFactory(GsonConverterFactory.create())
+                           .client(okHttpClient)
+                           .build();
+                   ResponseInterface1 mainInterface = retrofit.create(ResponseInterface1.class);
+                   Call<LoginResponse> call = mainInterface.EditCategory(typeId_editcategory,"1",categoryname_editcategory,image_editcategory);
+                   call.enqueue(new Callback<LoginResponse>() {
+                       @Override
+                       public void onResponse(Call<LoginResponse> call, retrofit2.Response<LoginResponse> response) {
+                           LoginResponse res= response.body();
+                           String success= res.getResponsedata().getSuccess();
+                           if(success.equals("1"))
+                           {
+                               holder.name_edit.setEnabled(false);
+                               holder.ed_edit.setText("EDIT");
+                               Toast.makeText(context,"Successfully Edited ",Toast.LENGTH_SHORT).show();
+                           }
+                           else
+                           {
+                               Toast.makeText(context,"Something went wrong ",Toast.LENGTH_SHORT).show();
+
+                           }
+
+                       }
+
+                       @Override
+                       public void onFailure(Call<LoginResponse> call, Throwable t) {
+
+                           Toast.makeText(context,"Something went wrong ",Toast.LENGTH_SHORT).show();
+                       }
+                   });
+
                }
                else
                {
@@ -133,12 +180,18 @@ public class EditCategoriesAdapter extends RecyclerView.Adapter<EditCategoriesAd
         public MyViewHolder(View itemView) {
             super(itemView);
             name_edit = (EditText) itemView.findViewById(R.id.Title_editcategory);
-           ed_edit = (Button) itemView.findViewById(R.id.edit_editcategory);
+            ed_edit = (Button) itemView.findViewById(R.id.edit_editcategory);
            ed_pic_edit =(Button)itemView.findViewById(R.id.editpic_editcategory);
             image_image_edit=(ImageView) itemView.findViewById(R.id.im_editcategory);
         }
     }
 
+    public void EditCatgeories( final String typeId,final String categoryName,final String createdBy,final String categoryImage)
+    {
 
+
+        //return return_value_EditCatgeories;
+
+    }
 
 }

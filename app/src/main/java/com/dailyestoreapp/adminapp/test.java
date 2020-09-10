@@ -10,14 +10,19 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+
 import java.util.ArrayList;
 
 public class test  extends RecyclerView.Adapter<test.MyViewHolder2> {
-    ArrayList personNames,Imagesoffer;
+    ArrayList personNames;
+    ArrayList<String> Imagesoffer;
     Context context;
     ArrayList subid;
+    String url = "http://dailyestoreapp.com/dailyestore/";
     categorySubcategoryCommunicaion mComminication;
-    public test(Context context, ArrayList personNames, ArrayList Imagesoffer, ArrayList subid,categorySubcategoryCommunicaion communication) {
+    public test(Context context, ArrayList personNames, ArrayList<String> Imagesoffer, ArrayList subid,categorySubcategoryCommunicaion communication) {
         this.context = context;
         this.personNames = personNames;
         this.Imagesoffer =Imagesoffer;
@@ -38,10 +43,17 @@ public class test  extends RecyclerView.Adapter<test.MyViewHolder2> {
         Log.e("test","personanames="+personNames);
         // set the data in items
         String name = (String) personNames.get(position);
-        int n= (int) Imagesoffer.get(position);
-        holder.img.setImageResource(n);
-        holder.name.setText(name);
 
+        holder.name.setText(name);
+        if(Imagesoffer.size()>0)
+        {
+            String imageurl=  url+Imagesoffer.get(position);
+            Log.e("test","onbined image"+imageurl);
+            Glide.with(context).load(imageurl)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .into(holder.img);
+
+        }
         // holder.name.setText(name);
         // implement setOnClickListener event on item view.
         holder.itemView.setOnClickListener(new View.OnClickListener() {

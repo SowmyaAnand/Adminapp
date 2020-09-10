@@ -253,8 +253,6 @@ subcategoriescatno_edit.add(0);
             @Override
             public void onClick(View v) {
                 CropImage.activity()
-                        .setMinCropResultSize(300, 300)
-                        .setMaxCropResultSize(300, 300)
                         .start(Addpost.this);
             }
         });

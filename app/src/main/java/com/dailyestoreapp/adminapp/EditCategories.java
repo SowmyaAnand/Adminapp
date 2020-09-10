@@ -2,6 +2,7 @@ package com.dailyestoreapp.adminapp;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -61,15 +62,33 @@ public class EditCategories extends Fragment {
         View rootView = inflater.inflate(R.layout.editcategories, container, false);
         ArrayList<String> categoriesEditCategies = new ArrayList<>();
         ArrayList<String> categoriesEditCategies_image = new ArrayList<>();
+
         SharedPreferences shared = getActivity().getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
-        Set<String> set = shared.getStringSet("categories", null);
-        categoriesEditCategies.addAll(set);
+        String savedcatString = shared.getString("categories", "");
+        String[] cats = savedcatString.split(",");//if spaces are uneven, use \\s+ instead of " "
+        for (String ct : cats) {
+            if(!(ct.equals("")||ct.equals(null)))
+            {
+                categoriesEditCategies.add(ct);
+            }
+
+        }
+
+        SharedPreferences shared4 = getActivity().getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
+        String savedcatString_image = shared4.getString("categories_image", "");
+        String[] cats_image = savedcatString_image.split(",");//if spaces are uneven, use \\s+ instead of " "
+        for (String ct : cats_image) {
+            if(!(ct.equals("")||ct.equals(null)))
+            {
+                categoriesEditCategies_image.add(ct);
+            }
+
+        }
+
         SharedPreferences shared2 = getActivity().getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
         String savedString = shared2.getString("categories_no", "");
-
-
+        Log.e("editcategories","the categories are images arae "+categoriesEditCategies_image);
         String[] numbers = savedString.split(",");//if spaces are uneven, use \\s+ instead of " "
-
         for (String number : numbers) {
             categoriescatno_edit.add(Integer.valueOf(number));
         }
@@ -78,6 +97,7 @@ public class EditCategories extends Fragment {
 //        Set<String> set4 = shared.getStringSet("categories_image", null);
 //        categoriesEditCategies.addAll(set4);
         //second recyclerview
+
         categories = (RecyclerView) rootView.findViewById(R.id.categorieslist);
         // set a LinearLayoutManager with default vertical orientation
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(rootView.getContext());

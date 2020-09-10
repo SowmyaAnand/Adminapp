@@ -45,14 +45,17 @@ public class Fragment4 extends Fragment   {
 private String tag = "fragment4";
 private Integer selectedSubCategoryNo;
     int start = 0,limit = 3;
+
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
     ACProgressFlower dialog;
     ProgressBar progressBar;
-    ArrayList Images_offers = new ArrayList<>(Arrays.asList(R.drawable.h1,R.drawable.h2, R.drawable.h1, R.drawable.h2, R.drawable.h1));
+  //  ArrayList Images_sub = new ArrayList<>(Arrays.asList(R.drawable.h1,R.drawable.h2, R.drawable.h1, R.drawable.h2, R.drawable.h1));
     ArrayList Images_images = new ArrayList<>(Arrays.asList(R.drawable.home,R.drawable.home, R.drawable.home, R.drawable.home, R.drawable.home,R.drawable.home));
     ArrayList personNames = new ArrayList<>(Arrays.asList("ITEM1", "ITEM2", "ITEM3", "ITEM4", "ITEM5", "ITEM6"));
+    ArrayList<String> Images_sub = new ArrayList<>();
     ArrayList<String> Sub_categories = new ArrayList<>();
     ArrayList<String> item_image = new ArrayList<>();
     ArrayList<String> Item_categories = new ArrayList<>();
@@ -87,7 +90,8 @@ private Integer selectedSubCategoryNo;
     }
 
 public void pageselect(String param)
-{cat_selected=param;
+{
+    cat_selected=param;
 
 }
 
@@ -127,7 +131,11 @@ public void change()
 
 }
     private void subcategoryactivate()
-    {
+    { int cat_id = 0;
+        Bundle bundle = this.getArguments();
+        if (bundle != null) {
+           cat_id  = bundle.getInt("category");
+        }
 //        dialog = new ACProgressFlower.Builder(getContext())
 //                .direction(ACProgressConstant.DIRECT_CLOCKWISE)
 //                .themeColor(Color.WHITE)
@@ -135,7 +143,7 @@ public void change()
 //
 //                .fadeColor(Color.DKGRAY).build();
 //        dialog.show();
-        Log.e("fragment2","Inside Activate"+cat_number);
+        Log.e("fragment2","Inside Activate"+cat_number+cat_selected);
         int type =1;
         String url = "http://dailyestoreapp.com/dailyestore/api/";
 
@@ -150,7 +158,7 @@ public void change()
                 .client(okHttpClient)
                 .build();
         ResponseInterface1 mainInterface = retrofit.create(ResponseInterface1.class);
-        Call<ListCategoryResponse> call = mainInterface.SubCategory(1);
+        Call<ListCategoryResponse> call = mainInterface.SubCategory(cat_id);
         call.enqueue(new Callback<ListCategoryResponse>() {
             @Override
             public void onResponse(Call<ListCategoryResponse> call, retrofit2.Response<ListCategoryResponse> response) {
@@ -165,9 +173,11 @@ public void change()
                     {
                         JSONObject j1= categoriesarray.getJSONObject(i);
                         String sub_name = j1.getString("subName");
+                        String sub_item =j1.getString("subItemImage");
                         if(!Sub_categories.contains(sub_name))
                         {
                             Sub_categories.add(sub_name);
+                            Images_sub.add(sub_item);
                             int sub_Cat_id = Integer.parseInt(j1.getString("subId"));
                             Sub_categories_id.add(sub_Cat_id);
 
@@ -179,7 +189,7 @@ public void change()
                     Log.e(tag,"sub_cat inside Activate"+Sub_categories);
 //                    dialog.dismiss();
                     selectedSubCategoryNo=1;
-                    ItemsList(1,start,limit);
+                   // ItemsList(Sub_categories_id.get(0),start,limit);
 
 
                     //personNames_offers = new ArrayList<>(Arrays.asList("farg4ITEM1", "frag4ITEM2", "ITEM3", "ITEM4", "ITEM5", "ITEM6"));
@@ -316,8 +326,7 @@ dialog.dismiss();
         }
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
         //nested recyclerview
-        nestedScrollViewItemsbasedonsubCategory = (NestedScrollView)rootView.findViewById(R.id.itembasedonsubcategory);
-        progressBar=rootView.findViewById(R.id.progress_bar);
+
 
        //recyclerview
         itemlistingcategory_offers = (RecyclerView) rootView.findViewById(R.id.recyclerView_categories_offer);
@@ -325,23 +334,10 @@ dialog.dismiss();
         // set a LinearLayoutManager with default vertical orientation
         LinearLayoutManager linearLayoutManager2_offers = new LinearLayoutManager(rootView.getContext(),LinearLayoutManager.HORIZONTAL,false);
         itemlistingcategory_offers.setLayoutManager(linearLayoutManager2_offers);
-        nestedScrollViewItemsbasedonsubCategory.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
-            @Override
-            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                if(scrollY== v.getChildAt(0).getMeasuredHeight()-v.getMeasuredHeight())
-                {
-                    Log.e(tag,"scroled down");
-                    start = limit;
-                    limit=start+limit;
-                    progressBar.setVisibility(View.VISIBLE);
-                   ItemsList(selectedSubCategoryNo,start,limit);
-                }
-            }
-        });
 
         //  call the constructor of CustomAdapter to send the reference and data to Adapter
         Log.e(tag,"sub_cat inside oncreate"+Sub_categories);
-        customadapter2_offers = new test(rootView.getContext(), Sub_categories,Images_offers,Sub_categories_id,communication);
+        customadapter2_offers = new test(rootView.getContext(), Sub_categories,Images_sub,Sub_categories_id,communication);
         itemlistingcategory_offers.setAdapter(customadapter2_offers);
         //second recyclerview
         recyclerView_offers = (RecyclerView) rootView.findViewById(R.id.itemrecycler_offers);

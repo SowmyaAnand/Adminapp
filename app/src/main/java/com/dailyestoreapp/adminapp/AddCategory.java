@@ -5,6 +5,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
@@ -53,6 +54,9 @@ public class AddCategory extends AppCompatActivity {
     String selectedPathMain="";
     Integer sucess_value_catgeory;
     Integer sucess_value_sub_catgeory;
+    ArrayList<String> categoriesEditCategies = new ArrayList<>();
+    ArrayList<String> categoriesEditCategies_image = new ArrayList<>();
+    public static final String MY_PREFS_NAME = "AdminApp";
     ArrayList<String> subcategoryarray = new ArrayList<String>();
     CardView card1,card2,card3,card4,card5,card6,card7,card8;
     //Bitmap to get image from gallery
@@ -86,6 +90,9 @@ public class AddCategory extends AppCompatActivity {
         card6=(CardView)findViewById(R.id.headersub6);
         card7=(CardView)findViewById(R.id.headersub7);
         card8=(CardView)findViewById(R.id.headersub8);
+        SharedPreferences shared = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
+        String savedcatString = shared.getString("categories", "");
+        String[] cats = savedcatString.split(",");//if spaces are uneven, use \\s+ instead of " "
 
         savesubcategory.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -138,8 +145,6 @@ public class AddCategory extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 CropImage.activity()
-                        .setMinCropResultSize(913,606)
-                        .setMaxCropResultSize(913,606)
                         .start(AddCategory.this);
             }
         });
@@ -147,8 +152,6 @@ public class AddCategory extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 CropImage.activity()
-                        .setMinCropResultSize(913,606)
-                        .setMaxCropResultSize(913,606)
                         .start(AddCategory.this);
             }
         });
@@ -298,6 +301,8 @@ public class AddCategory extends AppCompatActivity {
                             Log.e("addcat","the cat no is "+s);
                             if(s==1)
                             {
+                                categoriesEditCategies.add(newcatgoryname);
+
                                 Toast.makeText(AddCategory.this,"Category Added Successfully",Toast.LENGTH_SHORT).show();
                                 card1.setVisibility(View.VISIBLE);
                                 card2.setVisibility(View.GONE);

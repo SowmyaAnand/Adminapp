@@ -12,8 +12,10 @@ public interface ResponseInterface1 {
     Call<ListCategoryResponse> CategoryList();
     @GET("viewAllPopup")
     Call<ListCategoryResponse> firstpop();
-    @GET("viewAllFlyers")
+    @GET("viewAllUpFlyers")
     Call<ListCategoryResponse> allFlyers();
+    @GET("viewAllDownFlyers")
+    Call<ListCategoryResponse> allseconfFlyers();
     @GET("viewAllDeals")
     Call<ListCategoryResponse> viewalldeal();
     @FormUrlEncoded
@@ -45,4 +47,12 @@ public interface ResponseInterface1 {
                                             @Field("password") String passwordres,
                                         @Field("type") String typeres
                                         );
+    @FormUrlEncoded
+    @POST("editCategory")
+    Call<LoginResponse> EditCategory(@Field("typeId") String typeId,
+                                 @Field("createdBy") String createdby,
+                                 @Field("categoryName") String categoryName,
+                                     @Field("categoryImage") String categoryImage
+    );
+
 }

@@ -50,6 +50,7 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class HomeFragment extends Fragment {
     String category_selected;
+   int category_selected_no;
 private String tag ="HomeFragment";
     public static final String MY_PREFS_NAME = "AdminApp";
     ArrayList<String> categoriesHome = new ArrayList<>();
@@ -71,9 +72,17 @@ Fragment4 frag4;
        // Log.e("home","the cat are "+set);
         String savedcatString = shared.getString("categories", "");
         String[] cats = savedcatString.split(",");//if spaces are uneven, use \\s+ instead of " "
-        for (String ct : cats) {
-            categoriesHome.add(ct);
-        }
+       if(cats.length>0)
+       {
+           for (String ct : cats) {
+               if(!(cats.equals("")||(cats.equals(null))))
+               {
+                   categoriesHome.add(ct);
+               }
+
+           }
+       }
+
         //categoriesHome.addAll(set);
 
 
@@ -85,9 +94,17 @@ Fragment4 frag4;
         Log.e(tag,"numbers are"+savedString);
         String[] numbers = savedString.split(",");//if spaces are uneven, use \\s+ instead of " "
         Log.e(tag,"numbers are"+numbers);
-        for (String number : numbers) {
-            categoriesHomeNo2.add(Integer.valueOf(number));
-        }
+
+            for (String number : numbers) {
+                if(!(number.equals("")||(number.equals(null))))
+                {
+                    categoriesHomeNo2.add(Integer.valueOf(number));
+                }
+
+
+            }
+
+
         Log.e("cat_home","cat home num="+categoriesHomeNo2);
 category_selected=categoriesHome.get(0);
 
@@ -99,44 +116,67 @@ category_selected=categoriesHome.get(0);
         {
 category_selected=categoriesHome.get(i);
 
+            category_selected_no=categoriesHomeNo2.get(i);
+            Bundle bundle = new Bundle();
+                bundle.putInt("category", category_selected_no);
+                Fragment4 mapFragment2 = new Fragment4();
+                mapFragment2.setArguments(bundle);
 
-            if(category_selected.equals("Food"))
-            {
-//                Bundle bundle = new Bundle();
-//                bundle.putString("category", category_selected);
-//                Fragment1 mapFragment1 = new Fragment1(category_selected);
-//                mapFragment1.setArguments(bundle);
+                Log.e("tag","tag cat fragment4"+categoriesHome.get(i));
+
+                sectionsPagerAdapter.addFragment(mapFragment2,categoriesHome.get(i));
+//            if(category_selected.equals("Food"))
+//            {
 //
-//                Log.e("tag","tag cat"+categoriesHome.get(0));
-//                sectionsPagerAdapter.addFragment(mapFragment1,categoriesHome.get(i));
-
-                Bundle bundle = new Bundle();
-                bundle.putString("category", category_selected);
-                Fragment4 mapFragment2 = new Fragment4();
-                mapFragment2.setArguments(bundle);
-
-
-                Log.e("tag","tag cat fragment4"+categoriesHome.get(i));
-
-                sectionsPagerAdapter.addFragment(mapFragment2,categoriesHome.get(i));
-            }
-           else if (i==0)  //api integrating in this
-            {
-                Bundle bundle = new Bundle();
-                bundle.putString("category", category_selected);
-                Fragment4 mapFragment2 = new Fragment4();
-                mapFragment2.setArguments(bundle);
-
-
-                Log.e("tag","tag cat fragment4"+categoriesHome.get(i));
-
-                sectionsPagerAdapter.addFragment(mapFragment2,categoriesHome.get(i));
-
-            }
-            else if(i==1)
-            {
+//
 //                Bundle bundle = new Bundle();
-//                bundle.putString("category", category_selected);
+//                bundle.putInt("category", category_selected_no);
+//                Fragment4 mapFragment2 = new Fragment4();
+//                mapFragment2.setArguments(bundle);
+//
+//                Log.e("tag","tag cat fragment4"+categoriesHome.get(i));
+//
+//                sectionsPagerAdapter.addFragment(mapFragment2,categoriesHome.get(i));
+//            }
+//           else if (i==0)  //api integrating in this
+//            {
+//                Bundle bundle = new Bundle();
+//                bundle.putInt("category", category_selected_no);
+//                Fragment4 mapFragment2 = new Fragment4();
+//                mapFragment2.setArguments(bundle);
+//
+//
+//                Log.e("tag","tag cat fragment4"+categoriesHome.get(i));
+//
+//                sectionsPagerAdapter.addFragment(mapFragment2,categoriesHome.get(i));
+//
+//            }
+//            else if(i==1)
+//            {
+////                Bundle bundle = new Bundle();
+////                bundle.putString("category", category_selected);
+////                Fragment2 mapFragment4 = new Fragment2(category_selected,categoriesHomeNo2.get(i));
+////                mapFragment4.setArguments(bundle);
+////
+////
+////                Log.e("tag","tag cat fragment4"+categoriesHome.get(i));
+////
+////                sectionsPagerAdapter.addFragment(mapFragment4,categoriesHome.get(i));
+//                Bundle bundle = new Bundle();
+//                bundle.putInt("category", category_selected_no);
+//                Fragment4 mapFragment2 = new Fragment4();
+//                mapFragment2.setArguments(bundle);
+//
+//
+//                Log.e("tag","tag cat fragment4"+categoriesHome.get(i));
+//
+//                sectionsPagerAdapter.addFragment(mapFragment2,categoriesHome.get(i));
+//
+//            }
+//            else
+//            {
+//                Bundle bundle = new Bundle();
+//                bundle.putInt("category", category_selected_no);
 //                Fragment2 mapFragment4 = new Fragment2(category_selected,categoriesHomeNo2.get(i));
 //                mapFragment4.setArguments(bundle);
 //
@@ -144,29 +184,7 @@ category_selected=categoriesHome.get(i);
 //                Log.e("tag","tag cat fragment4"+categoriesHome.get(i));
 //
 //                sectionsPagerAdapter.addFragment(mapFragment4,categoriesHome.get(i));
-                Bundle bundle = new Bundle();
-                bundle.putString("category", category_selected);
-                Fragment4 mapFragment2 = new Fragment4();
-                mapFragment2.setArguments(bundle);
-
-
-                Log.e("tag","tag cat fragment4"+categoriesHome.get(i));
-
-                sectionsPagerAdapter.addFragment(mapFragment2,categoriesHome.get(i));
-
-            }
-            else
-            {
-                Bundle bundle = new Bundle();
-                bundle.putString("category", category_selected);
-                Fragment2 mapFragment4 = new Fragment2(category_selected,categoriesHomeNo2.get(i));
-                mapFragment4.setArguments(bundle);
-
-
-                Log.e("tag","tag cat fragment4"+categoriesHome.get(i));
-
-                sectionsPagerAdapter.addFragment(mapFragment4,categoriesHome.get(i));
-            }
+//            }
 
         }
 
