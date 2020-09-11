@@ -107,22 +107,7 @@
                     android:layout_height="wrap_content"
                     android:textColorHighlight="@color/colorPrimary"
                     android:inputType="text"/>
-                <EditText
-                    android:id="@+id/Place_account"
-                    android:hint="ADDRESS"
-                    android:layout_marginTop="10dp"
-                    android:padding="8dp"
-                    android:textColor="@color/black"
-                    android:enabled="false"
-                    android:textSize="15sp"
-                    android:textColorHint="@color/Gray"
-                    android:fontFamily="@font/roboto_medium"
-                    android:textAlignment="center"
-                    android:background="@drawable/customized_edittext"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textColorHighlight="@color/colorPrimary"
-                    android:inputType="text"/>
+
 
 
                 <Button

@@ -32,8 +32,22 @@ public interface ResponseInterface1 {
     @GET("viewComments")
     Call<ListCategoryResponse> messagelist();
     @FormUrlEncoded
-    @POST("userDetails")
+    @POST("userDetailsNew")
     Call<ListCategoryResponse> Myaccount(@Field("userId") int id);
+
+    @FormUrlEncoded
+    @POST("updateProfile")
+    Call<ListCategoryResponse> UpdateMyaccount(@Field("userId") int id,
+                                               @Field("firstName") String fname,
+                                               @Field("lastName") String lname,
+                                               @Field("email") String email,
+                                               @Field("phone") String phone,
+                                               @Field("address") String address,
+                                               @Field("pinCode") String pincode,
+                                               @Field("dob") String dob);
+
+
+
     @GET("allOrders")
     Call<ListCategoryResponse> orderslist();
     @FormUrlEncoded
