@@ -64,7 +64,7 @@ public class EditCategories extends Fragment {
         ArrayList<String> categoriesEditCategies_image = new ArrayList<>();
 
         SharedPreferences shared = getActivity().getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
-        String savedcatString = shared.getString("categories", "");
+        String savedcatString = shared.getString("categories_new", "");
         String[] cats = savedcatString.split(",");//if spaces are uneven, use \\s+ instead of " "
         for (String ct : cats) {
             if(!(ct.equals("")||ct.equals(null)))
@@ -75,7 +75,7 @@ public class EditCategories extends Fragment {
         }
 
         SharedPreferences shared4 = getActivity().getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
-        String savedcatString_image = shared4.getString("categories_image", "");
+        String savedcatString_image = shared4.getString("categories_image_new", "");
         String[] cats_image = savedcatString_image.split(",");//if spaces are uneven, use \\s+ instead of " "
         for (String ct : cats_image) {
             if(!(ct.equals("")||ct.equals(null)))
@@ -86,12 +86,16 @@ public class EditCategories extends Fragment {
         }
 
         SharedPreferences shared2 = getActivity().getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
-        String savedString = shared2.getString("categories_no", "");
+        String savedString = shared2.getString("categories_no_new", "");
         Log.e("editcategories","the categories are images arae "+categoriesEditCategies_image);
         String[] numbers = savedString.split(",");//if spaces are uneven, use \\s+ instead of " "
         for (String number : numbers) {
-            categoriescatno_edit.add(Integer.valueOf(number));
-        }
+            if(!(numbers.equals("")||numbers.equals(null)))
+            {
+                categoriescatno_edit.add(Integer.valueOf(number));
+            }
+
+    }
        //uncomment in future for editcategory rimage
 //        SharedPreferences shared2 = getActivity().getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
 //        Set<String> set4 = shared.getStringSet("categories_image", null);

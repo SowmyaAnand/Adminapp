@@ -43,13 +43,9 @@ public class Login extends AppCompatActivity
 
 {
 Button lg;
-    StringBuilder strbul  = new StringBuilder();
-    StringBuilder ct  = new StringBuilder();
-    StringBuilder ct_images  = new StringBuilder();
-    ArrayList<String> categories = new ArrayList<>();
-    ArrayList<String> categories_image = new ArrayList<>();
+
+
     List<String> cat_no = new ArrayList<String>();
-    ArrayList<Integer> nums = new ArrayList<>();
     ACProgressFlower dialog;
 
     public static final String MY_PREFS_NAME = "AdminApp";
@@ -59,10 +55,14 @@ Button lg;
    String uname;
    String password;
    String login_type="1";
+   int login_flag;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        login_flag=0;
+        Log.e("login","the login flag value is"+login_flag);
         lg = (Button)findViewById(R.id.login);
         username = (EditText) findViewById(R.id.edit_text_user);
         pswd = (EditText)findViewById(R.id.edit_text2_pswd);
@@ -74,13 +74,16 @@ Button lg;
                 password = pswd.getText().toString();
                 if( (uname==null)||(uname.length()==0)||(password==null)|(password.length()==0))
                 {
-                    Toast.makeText(Login.this,"Please enter valid username and Password",Toast.LENGTH_LONG).show();
+                    Toast.makeText(Login.this,"Please enter valid username and Password",Toast.LENGTH_SHORT).show();
                 }
                 else
                 {
                    try
                    {
-                       Activate();
+                          lg.setClickable(false);
+                          lg.setEnabled(false);
+                       Log.e("login","the login flag value is"+login_flag);
+                      Activate();
                    }
                    catch (Exception e)
                    {
@@ -93,7 +96,9 @@ Button lg;
         });
     }
 
-    void login_call(String usname,String pass)
+
+
+    void login_call(String usname, String pass)
     {
         String url = "http://dailyestoreapp.com/dailyestore/api/";
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
@@ -116,38 +121,46 @@ Button lg;
                 Log.e(tag,"success="+response.body().getResponsedata());
                int success = Integer.parseInt(obj.getResponsedata().getSuccess());
                 Log.e(tag,"success="+success);
+                dialog.dismiss();
                 if(success==1)
                 {
-                    Toast.makeText(Login.this,"Login Successful",Toast.LENGTH_LONG).show();
+
+                    Toast.makeText(Login.this,"Login Successful",Toast.LENGTH_SHORT).show();
                     Intent next = new Intent(Login.this,Main2Activity.class);
                     startActivity(next);
                 }
               else
                 {
-                    Toast.makeText(Login.this,"Invalid Username and Password",Toast.LENGTH_LONG).show();
+
+                    Toast.makeText(Login.this,"Invalid Username and Password",Toast.LENGTH_SHORT).show();
 
                 }
+
             }
 
             @Override
             public void onFailure(Call<LoginResponse> call, Throwable t) {
-                Toast.makeText(Login.this,t.getMessage(),Toast.LENGTH_LONG).show();
+                Toast.makeText(Login.this,t.getMessage(),Toast.LENGTH_SHORT).show();
 
             }
         });
-
+        lg.setClickable(true);
+        lg.setEnabled(true);
 
     }
     private void Activate()
     {
-//        dialog = new ACProgressFlower.Builder(Login.this)
-//                .direction(ACProgressConstant.DIRECT_CLOCKWISE)
-//                .themeColor(Color.WHITE)
-//                .borderPadding(1)
-//
-//                .fadeColor(Color.DKGRAY).build();
-//        dialog.show();
-
+        final StringBuilder strbul  = new StringBuilder();
+        final StringBuilder ct  = new StringBuilder();
+        final StringBuilder ct_images  = new StringBuilder();
+        dialog = new ACProgressFlower.Builder(Login.this)
+                .direction(ACProgressConstant.DIRECT_CLOCKWISE)
+                .borderPadding(1)
+                .fadeColor(Color.WHITE).build();
+        dialog.show();
+        final ArrayList<String> categories = new ArrayList<>();
+        final ArrayList<String> categories_image = new ArrayList<>();
+        final ArrayList<Integer> nums = new ArrayList<>();
         String url = "http://dailyestoreapp.com/dailyestore/api/";
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
@@ -192,7 +205,9 @@ Button lg;
 
                     }
                     Log.e(tag,"value added "+categories_image);
+                    Log.e(tag,"value added "+categories);
                     Log.e(tag,"value added "+nums);
+
                     Iterator<Integer> iter = nums.iterator();
                     while(iter.hasNext())
                     {
@@ -233,32 +248,34 @@ Button lg;
 
                 Log.e(tag,"categories = "+categories);
                 SharedPreferences.Editor editor = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
-                editor.putString("categories", ct.toString());
+                editor.putString("categories_new", ct.toString());
+                Log.e("homefragment","the catgeories shared preference are  login  ="+ct.toString());
                 editor.apply();
                 if(categories_image.size()>0){
                     Log.e(tag,"images array "+ct_images.toString());
                     SharedPreferences.Editor editor3 = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
-                    editor3.putString("categories_image", ct_images.toString());
+                    editor3.putString("categories_image_new", ct_images.toString());
                     editor3.apply();
                 }
 
 
                 Log.e(tag,"array of numbers "+strbul.toString());
                 SharedPreferences.Editor editor2 = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
-                editor.putString("categories_no", strbul.toString());
+                editor.putString("categories_no_new", strbul.toString());
                 editor.apply();
 
 //                SharedPreferences.Editor editor3= getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
 //                editor.putString("categories_no", String.valueOf(nums.get(0)));
 //                editor.apply();
-
+                
                 login_call(uname,password);
 
             }
 
             @Override
             public void onFailure(Call<ListCategoryResponse> call, Throwable t) {
-
+                lg.setClickable(true);
+                lg.setEnabled(true);
             }
         });
 

@@ -76,7 +76,7 @@
                         android:layout_below="@+id/text_input_layout"
                         app:hintTextAppearance="@style/TextAppearance.App.TextInputLayout"
 
-                        android:hint="EMAIL">
+                        android:hint="PASSWORD">
                         <EditText
                             android:id="@+id/edit_text2_pswd"
                             android:textSize="14dp"

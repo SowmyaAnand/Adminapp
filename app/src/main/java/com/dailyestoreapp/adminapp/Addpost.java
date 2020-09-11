@@ -197,7 +197,7 @@ EditText post_itemname,post_amount,post_offer,post_description,post_quantity;
 //        List<String> categorylist = new ArrayList<String>();
 //        categorylist.add("Select Category");
 //        categorylist.addAll(set);
-        String savedcatString = shared.getString("categories", "");
+        String savedcatString = shared.getString("categories_new", "");
         String[] cats = savedcatString.split(",");//if spaces are uneven, use \\s+ instead of " "
         List<String> categorylist = new ArrayList<String>();
         categorylist.add("Select Category");
@@ -207,7 +207,7 @@ EditText post_itemname,post_amount,post_offer,post_description,post_quantity;
         }
 //Cat_number
         SharedPreferences shared2 = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
-        String savedString = shared2.getString("categories_no", "subId");
+        String savedString = shared2.getString("categories_no_new", "subId");
         String[] numbers = savedString.split(",");//if spaces are uneven, use \\s+ instead of " "
 categoriescatno_edit.add(0);
 matchingcategoriescatno_edit.add(0);

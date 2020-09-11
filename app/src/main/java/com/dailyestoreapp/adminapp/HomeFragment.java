@@ -53,25 +53,23 @@ public class HomeFragment extends Fragment {
    int category_selected_no;
 private String tag ="HomeFragment";
     public static final String MY_PREFS_NAME = "AdminApp";
-    ArrayList<String> categoriesHome = new ArrayList<>();
 
-    ArrayList<Integer> categoriesHomeNo2 = new ArrayList<>();
 Fragment4 frag4;
-
-
-
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+        ArrayList<String> categoriesHome = new ArrayList<>();
 
+        ArrayList<Integer> categoriesHomeNo2 = new ArrayList<>();
 
         View root = inflater.inflate(R.layout.fragment_home, container, false);
 
         SharedPreferences shared = getActivity().getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
-        //Set<String> set =  shared.getStringSet("categories", null);
-       // Log.e("home","the cat are "+set);
-        String savedcatString = shared.getString("categories", "");
+
+        String savedcatString = shared.getString("categories_new", "");
+Log.e("homefragment","the catgeories shared preference are ="+savedcatString);
         String[] cats = savedcatString.split(",");//if spaces are uneven, use \\s+ instead of " "
+
        if(cats.length>0)
        {
            for (String ct : cats) {
@@ -90,7 +88,7 @@ Fragment4 frag4;
 
 
         SharedPreferences shared2 = getActivity().getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
-        String savedString = shared2.getString("categories_no", "");
+        String savedString = shared2.getString("categories_no_new", "");
         Log.e(tag,"numbers are"+savedString);
         String[] numbers = savedString.split(",");//if spaces are uneven, use \\s+ instead of " "
         Log.e(tag,"numbers are"+numbers);
@@ -106,7 +104,7 @@ Fragment4 frag4;
 
 
         Log.e("cat_home","cat home num="+categoriesHomeNo2);
-category_selected=categoriesHome.get(0);
+        category_selected=categoriesHome.get(0);
 
 
 
@@ -114,8 +112,8 @@ category_selected=categoriesHome.get(0);
        // frag4 = new Fragment4();
         for(int i = 0;i<categoriesHome.size();i++)
         {
-category_selected=categoriesHome.get(i);
 
+            category_selected=categoriesHome.get(i);
             category_selected_no=categoriesHomeNo2.get(i);
             Bundle bundle = new Bundle();
                 bundle.putInt("category", category_selected_no);
@@ -124,7 +122,9 @@ category_selected=categoriesHome.get(i);
 
                 Log.e("tag","tag cat fragment4"+categoriesHome.get(i));
 
-                sectionsPagerAdapter.addFragment(mapFragment2,categoriesHome.get(i));
+                    sectionsPagerAdapter.addFragment(mapFragment2,categoriesHome.get(i));
+
+
 //            if(category_selected.equals("Food"))
 //            {
 //

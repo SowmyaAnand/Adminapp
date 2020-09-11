@@ -3,6 +3,7 @@ package com.dailyestoreapp.adminapp;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
@@ -37,6 +38,8 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Locale;
 
+import cc.cloudist.acplibrary.ACProgressConstant;
+import cc.cloudist.acplibrary.ACProgressFlower;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
@@ -48,6 +51,7 @@ public class EditCategoriesAdapter extends RecyclerView.Adapter<EditCategoriesAd
     ArrayList<String> categories_editcategory = new ArrayList<String>();
     ArrayList<Integer> categories_no_editcategory= new ArrayList<Integer>();
     Context context;
+    ACProgressFlower dialog;
     final String url1 = "http://dailyestoreapp.com/dailyestore/";
     ArrayList<String> Images = new ArrayList<String>();
     ArrayList<String> lts = new ArrayList<String>();
@@ -107,9 +111,18 @@ WebServices webServices;
        holder.ed_edit.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View v) {
+
+
                String text = holder.ed_edit.getText().toString();
                if(text.equals("SAVE"))
                {
+                   holder.ed_edit.setClickable(false);
+                   holder.ed_edit.setEnabled(false);
+                   dialog = new ACProgressFlower.Builder(context)
+                           .direction(ACProgressConstant.DIRECT_CLOCKWISE)
+                           .borderPadding(1)
+                           .fadeColor(Color.WHITE).build();
+                   dialog.show();
                    String typeId_editcategory = String.valueOf(categories_no_editcategory.get(position));
                    String categoryname_editcategory = holder.name_edit.getText().toString();
                    String image_editcategory = Images.get(position);
@@ -132,16 +145,22 @@ WebServices webServices;
                        public void onResponse(Call<LoginResponse> call, retrofit2.Response<LoginResponse> response) {
                            LoginResponse res= response.body();
                            String success= res.getResponsedata().getSuccess();
+
                            if(success.equals("1"))
                            {
                                holder.name_edit.setEnabled(false);
                                holder.ed_edit.setText("EDIT");
                                Toast.makeText(context,"Successfully Edited ",Toast.LENGTH_SHORT).show();
+                               dialog.dismiss();
+                               holder.ed_edit.setClickable(true);
+                               holder.ed_edit.setEnabled(true);
                            }
                            else
                            {
                                Toast.makeText(context,"Something went wrong ",Toast.LENGTH_SHORT).show();
-
+                               dialog.dismiss();
+                               holder.ed_edit.setClickable(true);
+                               holder.ed_edit.setEnabled(true);
                            }
 
                        }
@@ -150,6 +169,9 @@ WebServices webServices;
                        public void onFailure(Call<LoginResponse> call, Throwable t) {
 
                            Toast.makeText(context,"Something went wrong ",Toast.LENGTH_SHORT).show();
+                           dialog.dismiss();
+                           holder.ed_edit.setClickable(true);
+                           holder.ed_edit.setEnabled(true);
                        }
                    });
 
