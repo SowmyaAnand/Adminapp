@@ -62,6 +62,7 @@ public class test  extends RecyclerView.Adapter<test.MyViewHolder2> {
 
                 String selectedname = (String) personNames.get(position);
                 Integer selectedid = (Integer)subid.get(position);
+                Log.e("test","sub category id = "+selectedid);
 mComminication.respond(selectedid);
             }
         });

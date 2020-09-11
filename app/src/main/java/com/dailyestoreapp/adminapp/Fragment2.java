@@ -213,7 +213,7 @@ public class Fragment2 extends Fragment   {
                 .client(okHttpClient)
                 .build();
         ResponseInterface1 mainInterface = retrofit.create(ResponseInterface1.class);
-        Call<ListCategoryResponse> call = mainInterface.Items(subId,0,3);
+        Call<ListCategoryResponse> call = mainInterface.Items(subId);
         call.enqueue(new Callback<ListCategoryResponse>() {
             @Override
             public void onResponse(Call<ListCategoryResponse> call, retrofit2.Response<ListCategoryResponse> response) {

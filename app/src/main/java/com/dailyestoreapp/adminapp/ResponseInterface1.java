@@ -22,10 +22,9 @@ public interface ResponseInterface1 {
     @POST("listSubCategory")
     Call<ListCategoryResponse> SubCategory(@Field("typeId") int id);
     @FormUrlEncoded
-    @POST("subItemListNew")
-    Call<ListCategoryResponse> Items(@Field("subId") int id,
-                                     @Field("start") int strt,
-                                     @Field("limit") int limt);
+    @POST("subItemList")
+    Call<ListCategoryResponse> Items(@Field("subId") int id);
+
     @FormUrlEncoded
     @POST("activateItem")
     Call<ItemActivateResponse> ItemActivate(@Field("itemId") int id,

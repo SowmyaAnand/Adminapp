@@ -189,7 +189,7 @@ public void change()
                     Log.e(tag,"sub_cat inside Activate"+Sub_categories);
 //                    dialog.dismiss();
                     selectedSubCategoryNo=1;
-                   // ItemsList(Sub_categories_id.get(0),start,limit);
+                   ItemsList(Sub_categories_id.get(0),start,limit);
 
 
                     //personNames_offers = new ArrayList<>(Arrays.asList("farg4ITEM1", "frag4ITEM2", "ITEM3", "ITEM4", "ITEM5", "ITEM6"));
@@ -232,13 +232,14 @@ public void change()
                 .client(okHttpClient)
                 .build();
         ResponseInterface1 mainInterface = retrofit.create(ResponseInterface1.class);
-        Call<ListCategoryResponse> call = mainInterface.Items(subId,st,lmt);
+        Call<ListCategoryResponse> call = mainInterface.Items(subId);
         call.enqueue(new Callback<ListCategoryResponse>() {
             @Override
             public void onResponse(Call<ListCategoryResponse> call, retrofit2.Response<ListCategoryResponse> response) {
                 ListCategoryResponse listCategoryResponseobject = response.body();
-                int success = Integer.parseInt(response.body().getResponsedata().getSuccess());
+                String success = response.body().getResponsedata().getSuccess();
                 dialog.dismiss();
+                Log.e("frag4","success="+success);
 //                if(success==1)
 //                {
 //                    int data_length = response.body().getResponsedata().getData().size();
@@ -252,10 +253,10 @@ public void change()
 //                    JSONArray categoriesarray = jo2.getJSONArray("data");
 //                    Log.e(tag,"items="+jo2);
                     Item_categories.clear();
-                    if(success==1)
+                    if(success.equals("1"))
                     {
                         int data_length = response.body().getResponsedata().getData().size();
-                    progressBar.setVisibility(View.GONE);
+
 
 
                     for(int i=0; i<data_length; i++)
@@ -265,8 +266,7 @@ public void change()
                         String item_name = response.body().getResponsedata().getData().get(i).getItemName();
                         int it_id = Integer.parseInt(response.body().getResponsedata().getData().get(i).getItemId());
 
-                        if(!item_id.contains(it_id))
-                        {
+
 //                            Integer item_quant = Integer.valueOf(j1.getString("quantity"));
 //                            Integer item_price = Integer.valueOf(j1.getString("price"));
 //                            Integer item_status = Integer.valueOf(j1.getString("price"));
@@ -284,7 +284,7 @@ public void change()
                            item_id_status.add(item_status);
                             item_image.add(imageurl);
 
-                        }
+
 
                     }
 
@@ -352,15 +352,15 @@ dialog.dismiss();
         // gridview.setAdapter(new ImageAdapter(rootView.getContext()));
         return rootView;
     }
+
     categorySubcategoryCommunicaion communication=new categorySubcategoryCommunicaion() {
         @Override
         public void respond(Integer name) {
             Log.e(tag," sub name is"+name);
-            Toast.makeText(getContext(),name,Toast.LENGTH_LONG).show();
             Item_categories.clear();
             selectedSubCategoryNo=name;
            ItemsList(name,0,3);
-           customAdapter_offers.notifyDataSetChanged();
+         //  customAdapter_offers.notifyDataSetChanged();
 
 
         }
