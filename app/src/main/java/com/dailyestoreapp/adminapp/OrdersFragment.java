@@ -100,7 +100,7 @@ public class OrdersFragment extends Fragment {
                             {
 
                                 ListCategoryResponseData dt = response.body().getResponsedata().getData().get(i);
-                                String itemname_orders = dt.getItemId();
+                                String itemname_orders = "ItemName";
                                 String quantity = dt.getQuantity();
                                 String amount = dt.getPrice();
                                 String date = dt.getCreatedAt();

@@ -36,6 +36,9 @@ import org.json.JSONException;
 import java.io.File;
 import java.util.ArrayList;
 
+import cc.cloudist.acplibrary.ACProgressConstant;
+import cc.cloudist.acplibrary.ACProgressFlower;
+
 public class AddCategory extends AppCompatActivity {
   Button addattachcategory,addcategory,savesubcategory,sbaddattachcategory;
   ImageView imgaeitemcategory,sbimageitemcategory;
@@ -52,6 +55,7 @@ public class AddCategory extends AppCompatActivity {
   int subcategoryuploadflag=0;
   String selectedPathsub="";
   String selectedPathMain="";
+  ACProgressFlower dialog;
   Integer sucess_value_catgeory;
   Integer sucess_value_sub_catgeory;
   ArrayList<String> categoriesEditCategies = new ArrayList<>();
@@ -213,6 +217,11 @@ public class AddCategory extends AppCompatActivity {
 
 
   public void uploadSubCategory(final File file, final String newsubcategoryname, final String createdby){
+    dialog = new ACProgressFlower.Builder(AddCategory.this)
+            .direction(ACProgressConstant.DIRECT_CLOCKWISE)
+            .borderPadding(1)
+            .fadeColor(Color.WHITE).build();
+    dialog.show();
     subcategoryuploadflag=0;
     AndroidNetworking.enableLogging();
     AndroidNetworking.upload("http://dailyestoreapp.com/dailyestore/api/addSubCategory")
@@ -267,11 +276,16 @@ public class AddCategory extends AppCompatActivity {
                 Toast.makeText(AddCategory.this,"Error"+anError.getMessage(),Toast.LENGTH_SHORT).show();
 
               }
-            });
 
+            });
+    dialog.dismiss();
   }
   public void uploadCategory(final File file, final String newcatgoryname, final String createdby){
-
+    dialog = new ACProgressFlower.Builder(AddCategory.this)
+            .direction(ACProgressConstant.DIRECT_CLOCKWISE)
+            .borderPadding(1)
+            .fadeColor(Color.WHITE).build();
+    dialog.show();
     AndroidNetworking.enableLogging();
     AndroidNetworking.upload("http://dailyestoreapp.com/dailyestore/api/addcategory")
             .addMultipartFile("categoryImage",file)
@@ -326,6 +340,7 @@ public class AddCategory extends AppCompatActivity {
                   Log.e("addcategory",e.getMessage());
                 }
 
+dialog.dismiss();
 
               }
 

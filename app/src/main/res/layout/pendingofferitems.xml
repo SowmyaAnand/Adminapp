@@ -33,7 +33,7 @@
             android:layout_toRightOf="@+id/img_pending"
             android:textSize="16sp"
             android:fontFamily="@font/roboto_medium"
-            android:text="TITLE"/>
+            android:text="MOBILE"/>
         <TextView
             android:id="@+id/address_pending"
             android:layout_below="@+id/Title_pending"

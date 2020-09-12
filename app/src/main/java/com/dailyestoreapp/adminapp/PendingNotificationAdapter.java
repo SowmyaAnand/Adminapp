@@ -75,59 +75,62 @@ public class PendingNotificationAdapter extends RecyclerView.Adapter<PendingNoti
         holder.name_pending.setText(name);
         String address = pending_orders_list_array_address.get(position);
         orderid_adapter = pending_orders_list_array_orderid.get(position);
-       holder.address_pending.setText(address);
+       holder.address_pending.setText("address");
         holder.pd_pending.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                String url = "http://dailyestoreapp.com/dailyestore/api/";
-
-                HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
-                loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-                OkHttpClient okHttpClient = new OkHttpClient.Builder()
-                        .addInterceptor(loggingInterceptor)
-                        .build();
-                Retrofit retrofit = new Retrofit.Builder()
-                        .baseUrl(url)
-                        .addConverterFactory(GsonConverterFactory.create())
-                        .client(okHttpClient)
-                        .build();
-                ResponseInterface1 mainInterface = retrofit.create(ResponseInterface1.class);
-                Call<ListCategoryResponse> call = mainInterface.changeOrderStatus(orderid_adapter,1);
-                call.enqueue(new Callback<ListCategoryResponse>() {
-                    @Override
-                    public void onResponse(Call<ListCategoryResponse> call, retrofit2.Response<ListCategoryResponse> response) {
-                        ListCategoryResponse listCategoryResponseobject = response.body();
-                        int success = Integer.parseInt(response.body().getResponsedata().getSuccess());
-                        try {
-
-
-                            if(success==1)
-                            {
-                                holder.pd_pending.setText("Approved");
-                                holder.pd_pending.setTextColor(ContextCompat.getColor(context, white));
-                                holder.pd_pending.setBackgroundColor(ContextCompat.getColor(context, green));
-                                Toast.makeText(context,"Aproved",Toast.LENGTH_LONG).show();
-                            }
-                            else {
-                                Toast.makeText(context,"No Data found",Toast.LENGTH_LONG).show();
-                            }
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                            Toast.makeText(context,"something went wrong",Toast.LENGTH_SHORT).show();
-                        }
-
-
-
-
-
-                    }
-
-                    @Override
-                    public void onFailure(Call<ListCategoryResponse> call, Throwable t) {
-
-                    }
-                });
+                holder.pd_pending.setText("Approved");
+                holder.pd_pending.setTextColor(ContextCompat.getColor(context, white));
+                holder.pd_pending.setBackgroundColor(ContextCompat.getColor(context, green));
+                Toast.makeText(context,"Aproved",Toast.LENGTH_LONG).show();
+//                String url = "http://dailyestoreapp.com/dailyestore/api/";
+//
+//                HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
+//                loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+//                OkHttpClient okHttpClient = new OkHttpClient.Builder()
+//                        .addInterceptor(loggingInterceptor)
+//                        .build();
+//                Retrofit retrofit = new Retrofit.Builder()
+//                        .baseUrl(url)
+//                        .addConverterFactory(GsonConverterFactory.create())
+//                        .client(okHttpClient)
+//                        .build();
+//                ResponseInterface1 mainInterface = retrofit.create(ResponseInterface1.class);
+//                Call<ListCategoryResponse> call = mainInterface.changeOrderStatus(orderid_adapter,1);
+//                call.enqueue(new Callback<ListCategoryResponse>() {
+//                    @Override
+//                    public void onResponse(Call<ListCategoryResponse> call, retrofit2.Response<ListCategoryResponse> response) {
+//                        ListCategoryResponse listCategoryResponseobject = response.body();
+//                        int success = Integer.parseInt(response.body().getResponsedata().getSuccess());
+//                        try {
+//
+//
+//                            if(success==1)
+//                            {
+//                                holder.pd_pending.setText("Approved");
+//                                holder.pd_pending.setTextColor(ContextCompat.getColor(context, white));
+//                                holder.pd_pending.setBackgroundColor(ContextCompat.getColor(context, green));
+//                                Toast.makeText(context,"Aproved",Toast.LENGTH_LONG).show();
+//                            }
+//                            else {
+//                                Toast.makeText(context,"No Data found",Toast.LENGTH_LONG).show();
+//                            }
+//                        } catch (Exception e) {
+//                            e.printStackTrace();
+//                            Toast.makeText(context,"something went wrong",Toast.LENGTH_SHORT).show();
+//                        }
+//
+//
+//
+//
+//
+//                    }
+//
+//                    @Override
+//                    public void onFailure(Call<ListCategoryResponse> call, Throwable t) {
+//
+//                    }
+//                });
 
 
 
