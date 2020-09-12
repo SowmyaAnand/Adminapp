@@ -3,6 +3,7 @@ package com.dailyestoreapp.adminapp;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -25,12 +26,16 @@ import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import cc.cloudist.acplibrary.ACProgressConstant;
+import cc.cloudist.acplibrary.ACProgressFlower;
+
 public class AddFlyersImage extends AppCompatActivity {
 Button addimage_flyer,saveimage_flyer;
 ImageView Flyerimg;
 String flyer_cat;
 String selecetd_flyer_id;
 int flag_flyers=0;
+ACProgressFlower dialog;
     File flyersImage;
     String selectedPathflyers="";
     Bundle val;
@@ -69,14 +74,10 @@ int flag_flyers=0;
                 if(flyer_cat=="1")
                 {
                     CropImage.activity()
-                            .setMinCropResultSize(913,606)
-                            .setMaxCropResultSize(913,606)
                             .start(AddFlyersImage.this);
                 }
                 else
                 { CropImage.activity()
-                        .setMinCropResultSize(913,606)
-                        .setMaxCropResultSize(913,606)
                         .start(AddFlyersImage.this);
 
                 }
@@ -86,7 +87,13 @@ int flag_flyers=0;
     }
 
     public void uploadFlyer(final File file, final String fromdate,final String cat){
+        dialog = new ACProgressFlower.Builder(AddFlyersImage.this)
+                .direction(ACProgressConstant.DIRECT_CLOCKWISE)
+                .themeColor(Color.WHITE)
+                .borderPadding(1)
 
+                .fadeColor(Color.DKGRAY).build();
+        dialog.show();
         AndroidNetworking.enableLogging();
         AndroidNetworking.upload("http://dailyestoreapp.com/dailyestore/api/addFlyers")
                 .addMultipartFile("image",file)
@@ -129,7 +136,7 @@ int flag_flyers=0;
                             e.printStackTrace();
                             Log.e("addcategory",e.getMessage());
                         }
-
+dialog.dismiss();
 
                     }
 
@@ -137,11 +144,19 @@ int flag_flyers=0;
                     public void onError(ANError anError) {
 
                         Toast.makeText(AddFlyersImage.this,"Something went wrong.Please try again",Toast.LENGTH_SHORT).show();
+                  dialog.dismiss();
                     }
                 });
 
     }
     public void EditFirstPopup(final File file,final String fromdate,final String cat){
+        dialog = new ACProgressFlower.Builder(AddFlyersImage.this)
+                .direction(ACProgressConstant.DIRECT_CLOCKWISE)
+                .themeColor(Color.WHITE)
+                .borderPadding(1)
+
+                .fadeColor(Color.DKGRAY).build();
+        dialog.show();
         Log.e("firstpopup","selected flyerid"+selecetd_flyer_id+file);
         AndroidNetworking.enableLogging();
         AndroidNetworking.upload("http://dailyestoreapp.com/dailyestore/api/editFlyers")
@@ -186,7 +201,7 @@ int flag_flyers=0;
                             e.printStackTrace();
                             Log.e("addcategory",e.getMessage());
                         }
-
+dialog.dismiss();
 
                     }
 
@@ -194,6 +209,7 @@ int flag_flyers=0;
                     public void onError(ANError anError) {
 
                         Toast.makeText(AddFlyersImage.this,"Something went wrong.Please try again",Toast.LENGTH_SHORT).show();
+                        dialog.dismiss();
                     }
                 });
 

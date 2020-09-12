@@ -90,15 +90,15 @@ ArrayList<Integer> it_quantity = new ArrayList<>() ;
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
-Log.e(tag,"items price"+it_price);
+Log.e(tag,"items price"+position);
         // set the data in items
         String name = (String) personNames.get(position);
-
-
-        //holder.image_image.setImageResource(n);
+        Log.e(tag,"items price"+personNames);
         holder.name.setText(name);
         if(Images.size()>0)
-        {String imageurl=  Images.get(position);
+        {
+            Log.e("offeradapter","images array is "+Images);
+            String imageurl=  Images.get(position);
             Log.e(tag,"onbined image"+imageurl);
             Glide.with(context).load(imageurl)
                     .diskCacheStrategy(DiskCacheStrategy.ALL)

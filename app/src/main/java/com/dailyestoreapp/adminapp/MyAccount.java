@@ -172,18 +172,18 @@ logout.setOnClickListener(new View.OnClickListener() {
                 .client(okHttpClient)
                 .build();
         ResponseInterface1 mainInterface = retrofit.create(ResponseInterface1.class);
-        Call<ListCategoryResponse> call = mainInterface.UpdateMyaccount(1,firstname,lastname,email,phone,address,pincode,dob);
-        call.enqueue(new Callback<ListCategoryResponse>() {
+        Call<LoginResponse> call = mainInterface.UpdateMyaccount(1,firstname,lastname,email,phone,address,pincode,dob);
+        call.enqueue(new Callback<LoginResponse>() {
             @Override
-            public void onResponse(Call<ListCategoryResponse> call, retrofit2.Response<ListCategoryResponse> response) {
-                ListCategoryResponse listCategoryResponseobject = response.body();
-                int success = Integer.parseInt(response.body().getResponsedata().getSuccess());
+            public void onResponse(Call<LoginResponse> call, retrofit2.Response<LoginResponse> response) {
+                LoginResponse listCategoryResponseobject = response.body();
+                String success = response.body().getResponsedata().getSuccess();
                 Log.e(tag,"error"+success);
 
                 try {
 //
 
-                    if(success==1)
+                    if(success.equals("1"))
                     {
                         Toast.makeText(MyAccount.this,"Profile Updated",Toast.LENGTH_LONG).show();
 //
@@ -201,7 +201,7 @@ logout.setOnClickListener(new View.OnClickListener() {
             }
 
             @Override
-            public void onFailure(Call<ListCategoryResponse> call, Throwable t) {
+            public void onFailure(Call<LoginResponse> call, Throwable t) {
                 Log.e(tag,"error"+t.getMessage());
                 Toast.makeText(MyAccount.this,t.getMessage(),Toast.LENGTH_SHORT).show();
             }

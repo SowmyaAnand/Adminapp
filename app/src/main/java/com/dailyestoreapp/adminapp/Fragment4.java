@@ -253,6 +253,11 @@ public void change()
 //                    JSONArray categoriesarray = jo2.getJSONArray("data");
 //                    Log.e(tag,"items="+jo2);
                     Item_categories.clear();
+                    item_image.clear();
+                    Item_Quantity.clear();
+                    Item_Price.clear();
+                    item_id.clear();
+                    item_id_status.clear();
                     if(success.equals("1"))
                     {
                         int data_length = response.body().getResponsedata().getData().size();
@@ -266,23 +271,18 @@ public void change()
                         String item_name = response.body().getResponsedata().getData().get(i).getItemName();
                         int it_id = Integer.parseInt(response.body().getResponsedata().getData().get(i).getItemId());
 
-
-//                            Integer item_quant = Integer.valueOf(j1.getString("quantity"));
-//                            Integer item_price = Integer.valueOf(j1.getString("price"));
-//                            Integer item_status = Integer.valueOf(j1.getString("price"));
-//                            int it_id = Integer.parseInt(j1.getString("itemId"));
                             Integer item_quant = Integer.valueOf(response.body().getResponsedata().getData().get(i).getQuantity());
                             Integer item_price = Integer.valueOf(response.body().getResponsedata().getData().get(i).getPrice());
                             Integer item_status = Integer.valueOf(response.body().getResponsedata().getData().get(i).getStatus());
-                           // String imageurl = response.body().getResponsedata().getData().get(i).getImage();
-                          String imageurl=url1+"uploads/items/1.jpeg";
+                            String imageurl = response.body().getResponsedata().getData().get(i).getImage();
+                          String imageurl_total=url1+imageurl;
                             Log.e(tag,"imageurl"+url1+imageurl);
                             Item_categories.add(item_name);
                             Item_Quantity.add(item_quant);
                             Item_Price.add(item_price);
                             item_id.add(it_id);
                            item_id_status.add(item_status);
-                            item_image.add(imageurl);
+                            item_image.add(imageurl_total);
 
 
 
@@ -291,7 +291,7 @@ public void change()
                     customAdapter_offers.notifyDataSetChanged();
                     }
                     else {
-                        Toast.makeText(getContext(),"No Data found",Toast.LENGTH_LONG).show();
+                        Toast.makeText(getContext(),"No data found in next category",Toast.LENGTH_LONG).show();
                     }
                 } catch (Exception e) {
                     e.printStackTrace();

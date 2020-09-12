@@ -37,7 +37,7 @@ public interface ResponseInterface1 {
 
     @FormUrlEncoded
     @POST("updateProfile")
-    Call<ListCategoryResponse> UpdateMyaccount(@Field("userId") int id,
+    Call<LoginResponse> UpdateMyaccount(@Field("userId") int id,
                                                @Field("firstName") String fname,
                                                @Field("lastName") String lname,
                                                @Field("email") String email,

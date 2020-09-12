@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -35,6 +36,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import cc.cloudist.acplibrary.ACProgressConstant;
+import cc.cloudist.acplibrary.ACProgressFlower;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
@@ -45,6 +48,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class AddDealsImage extends AppCompatActivity {
     Spinner Category_spinner_deal,Sub_Category_spinner_deal;
     Button addimage;
+    ACProgressFlower dialog;
     public static final String MY_PREFS_NAME = "AdminApp";
     ArrayList<Integer> categoriescatno_edit_deals = new ArrayList<>();
     ArrayList<Integer> matchingcategoriescatno_edit_deals = new ArrayList<>();
@@ -78,8 +82,6 @@ public class AddDealsImage extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 CropImage.activity()
-                        .setMinCropResultSize(913,606)
-                        .setMaxCropResultSize(913,606)
                         .start(AddDealsImage.this);
             }
         });
@@ -117,7 +119,7 @@ public class AddDealsImage extends AppCompatActivity {
             }
         });
         SharedPreferences shared = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
-        String savedcatString = shared.getString("categories", "");
+        String savedcatString = shared.getString("categories_new", "");
         String[] cats = savedcatString.split(",");//if spaces are uneven, use \\s+ instead of " "
         List<String> categorylist = new ArrayList<String>();
         categorylist.add("Select Category");
@@ -127,7 +129,7 @@ public class AddDealsImage extends AppCompatActivity {
         }
 //Cat_number
         SharedPreferences shared2 = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
-        String savedString = shared2.getString("categories_no", "subId");
+        String savedString = shared2.getString("categories_no_new", "subId");
         String[] numbers = savedString.split(",");//if spaces are uneven, use \\s+ instead of " "
         categoriescatno_edit_deals.add(0);
         matchingcategoriescatno_edit_deals.add(0);
@@ -270,7 +272,13 @@ public class AddDealsImage extends AppCompatActivity {
 
     }
     public void uploadFirstPopup(final File file, final String ct_deal,final String sb_deal,String from_Date){
+        dialog = new ACProgressFlower.Builder(AddDealsImage.this)
+                .direction(ACProgressConstant.DIRECT_CLOCKWISE)
+                .themeColor(Color.WHITE)
+                .borderPadding(1)
 
+                .fadeColor(Color.DKGRAY).build();
+        dialog.show();
         AndroidNetworking.enableLogging();
         AndroidNetworking.upload("http://dailyestoreapp.com/dailyestore/api/addDeal")
                 .addMultipartFile("image",file)
@@ -324,10 +332,16 @@ public class AddDealsImage extends AppCompatActivity {
                         Toast.makeText(AddDealsImage.this,"Something went wrong.Please try again",Toast.LENGTH_SHORT).show();
                     }
                 });
-
+dialog.dismiss();
     }
     public void updateDeal(final File file, final String ct_deal,final String sb_deal,String from_Date){
+        dialog = new ACProgressFlower.Builder(AddDealsImage.this)
+                .direction(ACProgressConstant.DIRECT_CLOCKWISE)
+                .themeColor(Color.WHITE)
+                .borderPadding(1)
 
+                .fadeColor(Color.DKGRAY).build();
+        dialog.show();
         AndroidNetworking.enableLogging();
         AndroidNetworking.upload("http://dailyestoreapp.com/dailyestore/api/editDeals")
                 .addMultipartFile("image",file)
@@ -382,7 +396,7 @@ public class AddDealsImage extends AppCompatActivity {
                         Toast.makeText(AddDealsImage.this,"Something went wrong.Please try again",Toast.LENGTH_SHORT).show();
                     }
                 });
-
+dialog.dismiss();
     }
 
     @Override

@@ -40,7 +40,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class FirstpopUp extends AppCompatActivity {
 ImageView firstpopUp_img;
     Button edit_firstpopUp_change_img ;
-
+ACProgressFlower dialog;
 Button firstpopUp_change_img ;
 Button firstpopUp_save_img;
     Button edit_firstpopUp_save_img;
@@ -65,8 +65,6 @@ String selectedflyerid="0";
             @Override
             public void onClick(View v) {
                 CropImage.activity()
-                        .setMinCropResultSize(913,606)
-                        .setMaxCropResultSize(913,606)
                         .start(FirstpopUp.this);
             }
         });
@@ -108,8 +106,6 @@ String selectedflyerid="0";
             @Override
             public void onClick(View v) {
                 CropImage.activity()
-                        .setMinCropResultSize(913,606)
-                        .setMaxCropResultSize(913,606)
                         .start(FirstpopUp.this);
             }
         });
@@ -134,6 +130,13 @@ String selectedflyerid="0";
     }
     public void uploadFirstPopup(final File file,final String fromdate){
 
+        dialog = new ACProgressFlower.Builder(FirstpopUp.this)
+                .direction(ACProgressConstant.DIRECT_CLOCKWISE)
+                .themeColor(Color.WHITE)
+                .borderPadding(1)
+
+                .fadeColor(Color.DKGRAY).build();
+        dialog.show();
         AndroidNetworking.enableLogging();
         AndroidNetworking.upload("http://dailyestoreapp.com/dailyestore/api/addFlyers")
                 .addMultipartFile("image",file)
@@ -165,6 +168,7 @@ String selectedflyerid="0";
                             Log.e("addcat","the cat no is "+s);
                             if(s==1)
                             {
+
                                 Toast.makeText(FirstpopUp.this,"Pop Up Added Successfully",Toast.LENGTH_SHORT).show();
 
                             }
@@ -172,9 +176,11 @@ String selectedflyerid="0";
                             {
                                 Toast.makeText(FirstpopUp.this,"Something went wrong.Please try again",Toast.LENGTH_SHORT).show();
                             }
+                            dialog.dismiss();
                         } catch (JSONException e) {
                             e.printStackTrace();
                             Log.e("addcategory",e.getMessage());
+                            dialog.dismiss();
                         }
 
 
@@ -182,13 +188,20 @@ String selectedflyerid="0";
 
                     @Override
                     public void onError(ANError anError) {
-
+                        dialog.dismiss();
                         Toast.makeText(FirstpopUp.this,"Something went wrong.Please try again",Toast.LENGTH_SHORT).show();
                     }
                 });
 
     }
     public void EditFirstPopup(final File file,final String fromdate){
+        dialog = new ACProgressFlower.Builder(FirstpopUp.this)
+                .direction(ACProgressConstant.DIRECT_CLOCKWISE)
+                .themeColor(Color.WHITE)
+                .borderPadding(1)
+
+                .fadeColor(Color.DKGRAY).build();
+        dialog.show();
 Log.e("firstpopup","selected flyerid"+selectedflyerid+file);
         AndroidNetworking.enableLogging();
         AndroidNetworking.upload("http://dailyestoreapp.com/dailyestore/api/editFlyers")
@@ -222,6 +235,7 @@ Log.e("firstpopup","selected flyerid"+selectedflyerid+file);
                             Log.e("addcat","the cat no is "+s);
                             if(s==1)
                             {
+
                                 Toast.makeText(FirstpopUp.this,"Pop Up Added Successfully",Toast.LENGTH_SHORT).show();
 
                             }
@@ -229,9 +243,11 @@ Log.e("firstpopup","selected flyerid"+selectedflyerid+file);
                             {
                                 Toast.makeText(FirstpopUp.this,"Something went wrong.Please try again",Toast.LENGTH_SHORT).show();
                             }
+                            dialog.dismiss();
                         } catch (JSONException e) {
                             e.printStackTrace();
                             Log.e("addcategory",e.getMessage());
+                            dialog.dismiss();
                         }
 
 
@@ -248,7 +264,13 @@ Log.e("firstpopup","selected flyerid"+selectedflyerid+file);
 
     private void FirstPopup()
     {
+        dialog = new ACProgressFlower.Builder(FirstpopUp.this)
+                .direction(ACProgressConstant.DIRECT_CLOCKWISE)
+                .themeColor(Color.WHITE)
+                .borderPadding(1)
 
+                .fadeColor(Color.DKGRAY).build();
+        dialog.show();
 
 
         String url = "http://dailyestoreapp.com/dailyestore/api/";
@@ -287,7 +309,7 @@ Log.e("firstpop","the succes value is "+listCategoryResponseobject.getResponseda
                     firstpopUp_save_img.setVisibility(View.VISIBLE);
                 }
                 try {
-                    Toast.makeText(FirstpopUp.this,"response="+success,Toast.LENGTH_LONG).show();
+
 
                     if(success==1) {
 
@@ -308,10 +330,12 @@ Log.e("firstpop","the succes value is "+listCategoryResponseobject.getResponseda
                     }
                     else {
 
-                        Toast.makeText(FirstpopUp.this,"No Data found",Toast.LENGTH_LONG).show();
+                        Toast.makeText(FirstpopUp.this,"No Data found",Toast.LENGTH_SHORT).show();
                     }
+dialog.dismiss();
                 } catch (Exception e) {
                     e.printStackTrace();
+                    dialog.dismiss();
                     Toast.makeText(FirstpopUp.this,"something went wrong",Toast.LENGTH_SHORT).show();
                 }
 
@@ -319,7 +343,7 @@ Log.e("firstpop","the succes value is "+listCategoryResponseobject.getResponseda
 
             @Override
             public void onFailure(Call<ListCategoryResponse> call, Throwable t) {
-
+                dialog.dismiss();
                 Toast.makeText(FirstpopUp.this,t.getMessage(),Toast.LENGTH_SHORT).show();
             }
         });
