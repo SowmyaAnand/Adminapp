@@ -124,7 +124,7 @@ public class Flyer1Activity extends AppCompatActivity {
         ed2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(first_flyers_id.get(0)=="0")
+                if(first_flyers_id.get(1)=="0")
                 {
                     Toast.makeText(Flyer1Activity.this,"PLease an image before making changes ",Toast.LENGTH_SHORT).show();
                 }
@@ -132,7 +132,7 @@ public class Flyer1Activity extends AppCompatActivity {
                 {
                     Intent next = new Intent(Flyer1Activity.this,AddFlyersImage.class);
                     next.putExtra("flag_flyers", 1);
-                    next.putExtra("flyerid",first_flyers_id.get(0));
+                    next.putExtra("flyerid",first_flyers_id.get(1));
                     next.putExtra("type","0");
                     startActivity(next);
                 }
@@ -141,7 +141,7 @@ public class Flyer1Activity extends AppCompatActivity {
         ed3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(first_flyers_id.get(0)=="0")
+                if(first_flyers_id.get(2)=="0")
                 {
                     Toast.makeText(Flyer1Activity.this,"PLease an image before making changes ",Toast.LENGTH_SHORT).show();
                 }
@@ -149,7 +149,7 @@ public class Flyer1Activity extends AppCompatActivity {
                 {
                     Intent next = new Intent(Flyer1Activity.this,AddFlyersImage.class);
                     next.putExtra("flag_flyers", 1);
-                    next.putExtra("flyerid",first_flyers_id.get(0));
+                    next.putExtra("flyerid",first_flyers_id.get(2));
                     next.putExtra("type","0");
                     startActivity(next);
                 }
@@ -158,7 +158,7 @@ public class Flyer1Activity extends AppCompatActivity {
         ed4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(first_flyers_id.get(0)=="0")
+                if(first_flyers_id.get(3)=="0")
                 {
                     Toast.makeText(Flyer1Activity.this,"PLease an image before making changes ",Toast.LENGTH_SHORT).show();
                 }
@@ -166,7 +166,7 @@ public class Flyer1Activity extends AppCompatActivity {
                 {
                     Intent next = new Intent(Flyer1Activity.this,AddFlyersImage.class);
                     next.putExtra("flag_flyers", 1);
-                    next.putExtra("flyerid",first_flyers_id.get(0));
+                    next.putExtra("flyerid",first_flyers_id.get(3));
                     next.putExtra("type","0");
                     startActivity(next);
                 }
@@ -283,19 +283,21 @@ public class Flyer1Activity extends AppCompatActivity {
                                 String type = response.body().getResponsedata().getData().get(i).getType();
                                 Log.e("Firstpopup.this", "selected flyerid =" + type);
                                 Log.e("Firstpopup.this", "selected flyerid =" + tid);
-                                
+
                                     String selectedflyerid = response.body().getResponsedata().getData().get(i).getFlyId();
                                     Log.e("Firstpopup.this", "selected flyerid =" + selectedflyerid);
-                                  
-                                        first_flyers_id.add(selectedflyerid);
-                                 
+
+
+
+                                first_flyers_id.add(i,selectedflyerid);
+
 
                                     Log.e("Firstpopup.this", "selected flyerid =" + first_flyers_id);
 
                                     String imageurl = response.body().getResponsedata().getData().get(i).getImage();
                                     String imageurl_total = url1 + imageurl;
                                     Log.e("flyers", "the succes value is "+img11.getDrawable()+imageurl_total);
-                                    if (img11.getDrawable()==null)
+                                    if (i==0)
                                     {
                                         Glide.with(getApplicationContext()).load(imageurl_total)
                                                 .diskCacheStrategy(DiskCacheStrategy.ALL)
@@ -303,19 +305,19 @@ public class Flyer1Activity extends AppCompatActivity {
                                         ad1.setVisibility(View.GONE);
 
                                     }
-                                    else if (img21.getDrawable()==null) {
+                                    else if (i==1) {
                                         Glide.with(getApplicationContext()).load(imageurl_total)
                                                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                                                 .into(img21);
                                         ad2.setVisibility(View.GONE);
                                     }
-                                    else if (img31.getDrawable()==null) {
+                                    else if (i==2) {
                                         Glide.with(getApplicationContext()).load(imageurl_total)
                                                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                                                 .into(img31);
                                         ad3.setVisibility(View.GONE);
                                     }
-                                    else if (img41.getDrawable()==null) {
+                                    else if (i==3) {
                                         Glide.with(getApplicationContext()).load(imageurl_total)
                                                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                                                 .into(img41);

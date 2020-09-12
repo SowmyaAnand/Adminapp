@@ -62,6 +62,7 @@ public class Addpost extends AppCompatActivity {
     File additemImageFile;
     String selectedPathadditem="";
     Button post;
+
     Integer SelectedCategoryNumber=0;
     Integer SelectedSubCategoryNumber=0;
     Spinner Category_spinner;
@@ -367,7 +368,7 @@ subcategoriescatno_edit.add(0);
                 String res = new GsonBuilder().setPrettyPrinting().create().toJson(response.body().getResponsedata());
                 JsonObject obj = new JsonParser().parse(res).getAsJsonObject();
                 int success = Integer.parseInt(response.body().getResponsedata().getSuccess());
-//                dialog.dismiss();
+
                 if (success == 1) {
                     try {
                         JSONObject jo2 = new JSONObject(obj.toString());
@@ -429,6 +430,13 @@ Log.e("Addpost","subname="+sub_name+catid_dropdown);
 //        progressDialog.setTitle("Please Wait");
 //        progressDialog.setMessage("Loading...");
 //        progressDialog.show();
+                dialog = new ACProgressFlower.Builder(Addpost.this)
+                .direction(ACProgressConstant.DIRECT_CLOCKWISE)
+                .themeColor(Color.WHITE)
+                .borderPadding(1)
+
+                .fadeColor(Color.DKGRAY).build();
+        dialog.show();
         AndroidNetworking.enableLogging();
         AndroidNetworking.upload("http://dailyestoreapp.com/dailyestore/api/addItems")
                 .addMultipartFile("image", file)
@@ -488,7 +496,7 @@ Log.e("addpost",e.getMessage());
                         Log.e("addpost",anError.getMessage());
                     }
                 });
-
+dialog.dismiss();
 
     }
 }

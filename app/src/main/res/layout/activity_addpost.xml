@@ -187,6 +187,7 @@
                   android:background="#FFF"
                   android:layout_marginTop="10dp"
                   android:textColor="@color/black"
+                  android:inputType="number"
                   android:textColorHint="@color/Gray"
                   android:hint="ADD AMOUNT"
                   android:fontFamily="@font/roboto_light"
@@ -228,6 +229,7 @@
                   android:background="#FFF"
                   android:layout_marginTop="10dp"
                   android:singleLine="true"
+                  android:inputType="number"
                   android:textColor="@color/black"
                   android:textColorHint="@color/Gray"
                   android:hint="ADD QUANTITY"
@@ -266,6 +268,7 @@
                   android:layout_width="match_parent"
                   android:layout_height="wrap_content"
                   android:background="#FFF"
+                  android:inputType="number"
                   android:layout_marginTop="10dp"
                   android:singleLine="true"
                   android:textColor="@color/black"
@@ -409,15 +412,15 @@
             android:fontFamily="@font/roboto_light"
             android:background="@color/colorPrimary"
             android:textColor="@color/white"/>
-        <Button
-            android:id="@+id/btnoffer"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="CLICK TO ADD OFFER"
-            android:layout_marginTop="20dp"
-            android:fontFamily="@font/roboto_light"
-            android:background="@color/colorPrimary"
-            android:textColor="@color/white"/>
+<!--        <Button-->
+<!--            android:id="@+id/btnoffer"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="CLICK TO ADD OFFER"-->
+<!--            android:layout_marginTop="20dp"-->
+<!--            android:fontFamily="@font/roboto_light"-->
+<!--            android:background="@color/colorPrimary"-->
+<!--            android:textColor="@color/white"/>-->
       </LinearLayout>
     </RelativeLayout>
 
