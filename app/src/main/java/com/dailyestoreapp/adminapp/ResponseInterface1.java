@@ -27,6 +27,10 @@ public interface ResponseInterface1 {
 
     @FormUrlEncoded
     @POST("activateItem")
+    Call<ItemActivateResponse> couponActivate(@Field("itemId") int id,
+                                            @Field("status") int status);
+    @FormUrlEncoded
+    @POST("activateItem")
     Call<ItemActivateResponse> ItemActivate(@Field("itemId") int id,
                                             @Field("status") int status);
     @GET("viewComments")

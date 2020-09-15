@@ -107,8 +107,8 @@ public class editsubcategory extends AppCompatActivity {
                                 SubcategoriesEditCategies_no.add(item_no);
 
 
-//                            String sub_img = j1.getString("subItemImage");
-//                           SubcategoriesEditCategies_image.add(sub_img);
+                            String sub_img = j1.getString("subItemImage");
+                          SubcategoriesEditCategies_image.add(sub_img);
 
                             }
 

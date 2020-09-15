@@ -22,6 +22,9 @@ public class EditSubCategoriesAdapter extends RecyclerView.Adapter<EditSubCatego
     ArrayList<String> subcat_names = new ArrayList<String>();
     Context context;
     ArrayList Images;
+
+    final String url1 = "http://dailyestoreapp.com/dailyestore/";
+
     ArrayList<String> lts = new ArrayList<String>();
    // ArrayList personNames_offers = new ArrayList<>(Arrays.asList("ITEM1", "ITEM2", "ITEM3", "ITEM4", "ITEM5", "ITEM6", "ITEM7"));
     int quantity = 1;
@@ -54,10 +57,11 @@ public class EditSubCategoriesAdapter extends RecyclerView.Adapter<EditSubCatego
         String name = (String) subcat_names.get(position);
 
 holder.name_subbedit.setText(name);
-//        String sub_image = (String) Images.get(position);
-//        Glide.with(context).load(sub_image)
-//                .diskCacheStrategy(DiskCacheStrategy.ALL)
-//                .into(holder.image_image_subbedit);
+
+        String imageurl_total = url1 + Images.get(position);
+        Glide.with(context).load(imageurl_total)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .into(holder.image_image_subbedit);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

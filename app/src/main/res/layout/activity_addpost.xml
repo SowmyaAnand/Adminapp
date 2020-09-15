@@ -412,15 +412,15 @@
             android:fontFamily="@font/roboto_light"
             android:background="@color/colorPrimary"
             android:textColor="@color/white"/>
-<!--        <Button-->
-<!--            android:id="@+id/btnoffer"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="CLICK TO ADD OFFER"-->
-<!--            android:layout_marginTop="20dp"-->
-<!--            android:fontFamily="@font/roboto_light"-->
-<!--            android:background="@color/colorPrimary"-->
-<!--            android:textColor="@color/white"/>-->
+        <Button
+            android:id="@+id/btnoffer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="CLICK TO ADD OFFER"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/roboto_light"
+            android:background="@color/colorPrimary"
+            android:textColor="@color/white"/>
       </LinearLayout>
     </RelativeLayout>
 
