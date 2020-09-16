@@ -13,6 +13,7 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -28,6 +29,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class CouponsList extends AppCompatActivity {
 Button save ;
+EditText cpName,cpPercent,cpDesc;
 ACProgressFlower dialog;
 EditText coupon_name,desc,offer_percent;
     @Override
@@ -35,11 +37,16 @@ EditText coupon_name,desc,offer_percent;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_coupons_list);
         save = findViewById(R.id.save);
+        cpName=findViewById(R.id.coupon_name);
+        cpDesc=findViewById(R.id.coupon_description);
+        cpPercent=findViewById(R.id.coupon_percentage);
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               CouponsList.CustomDialogClass1 cdd2=new CouponsList.CustomDialogClass1(CouponsList.this);
-                cdd2.show();
+                String cpDescription = cpDesc.getText().toString();
+                String cpPercentage = cpPercent.getText().toString();
+                String cpNames = cpName.getText().toString();
+             addCoupon(cpDescription,cpPercentage,cpNames);
             }
         });
 
@@ -88,15 +95,19 @@ EditText coupon_name,desc,offer_percent;
 
         }
     }
-    private void addCoupon()
+    private void addCoupon(String description,String percent,String couponName)
     {
-
         dialog = new ACProgressFlower.Builder(CouponsList.this)
                 .direction(ACProgressConstant.DIRECT_CLOCKWISE)
+                .themeColor(Color.WHITE)
                 .borderPadding(1)
-                .fadeColor(Color.WHITE).build();
+
+                .fadeColor(Color.DKGRAY).build();
         dialog.show();
+
+
         String url = "http://dailyestoreapp.com/dailyestore/api/";
+
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
@@ -108,21 +119,37 @@ EditText coupon_name,desc,offer_percent;
                 .client(okHttpClient)
                 .build();
         ResponseInterface1 mainInterface = retrofit.create(ResponseInterface1.class);
-        Call<ListCategoryResponse> call = mainInterface.CategoryList();
-        call.enqueue(new Callback<ListCategoryResponse>() {
+        Call<LoginResponse> call = mainInterface.addcoupon(description,percent,couponName);
+        call.enqueue(new Callback<LoginResponse>() {
             @Override
-            public void onResponse(Call<ListCategoryResponse> call, retrofit2.Response<ListCategoryResponse> response) {
-                ListCategoryResponse catObj = response.body();
-                int cat_length = catObj.getResponsedata().getData().size();
+            public void onResponse(Call<LoginResponse> call, retrofit2.Response<LoginResponse> response) {
 
-//
+                String success = response.body().getResponsedata().getSuccess();
+                dialog.dismiss();
+                Log.e("frag4","success="+success);
+
+                try {
+
+                    if(success.equals("1"))
+                    {
+
+                        CouponsList.CustomDialogClass1 cdd2=new CouponsList.CustomDialogClass1(CouponsList.this);
+                           cdd2.show();
+
+                    }
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Toast.makeText(CouponsList.this,"something went wrong",Toast.LENGTH_SHORT).show();
+                }
 
             }
 
             @Override
-            public void onFailure(Call<ListCategoryResponse> call, Throwable t) {
-
-        }
+            public void onFailure(Call<LoginResponse> call, Throwable t) {
+                dialog.dismiss();
+                Toast.makeText(CouponsList.this,t.getMessage(),Toast.LENGTH_SHORT).show();
+            }
         });
 
 

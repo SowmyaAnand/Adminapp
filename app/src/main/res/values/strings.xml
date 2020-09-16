@@ -31,6 +31,7 @@
     <string name="cod_eligible">COD ELIGIBLE</string>
     <string name="refund_eligible">REPLACEMENT ELIGIBLE</string>
     <string name="refund_not_eligible">REPLACEMENT NOT ELIGIBLE</string>
+    <string name="coupons">Coupons</string>
 
 
 </resources>

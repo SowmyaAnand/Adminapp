@@ -271,18 +271,18 @@ public void change()
                         String item_name = response.body().getResponsedata().getData().get(i).getItemName();
                         int it_id = Integer.parseInt(response.body().getResponsedata().getData().get(i).getItemId());
 
-                            Integer item_quant = Integer.valueOf(response.body().getResponsedata().getData().get(i).getQuantity());
-                            Integer item_price = Integer.valueOf(response.body().getResponsedata().getData().get(i).getPrice());
-                            Integer item_status = Integer.valueOf(response.body().getResponsedata().getData().get(i).getStatus());
-                            String imageurl = response.body().getResponsedata().getData().get(i).getImage();
-                          String imageurl_total=url1+imageurl;
-                            Log.e(tag,"imageurl"+url1+imageurl);
-                            Item_categories.add(item_name);
-                            Item_Quantity.add(item_quant);
-                            Item_Price.add(item_price);
-                            item_id.add(it_id);
-                           item_id_status.add(item_status);
-                            item_image.add(imageurl_total);
+                        Integer item_quant = Integer.valueOf(response.body().getResponsedata().getData().get(i).getQuantity());
+                        Integer item_price = Integer.valueOf(response.body().getResponsedata().getData().get(i).getPrice());
+                        Integer item_status = Integer.valueOf(response.body().getResponsedata().getData().get(i).getStatus());
+                        String imageurl = response.body().getResponsedata().getData().get(i).getImage();
+                        String imageurl_total=url1+imageurl;
+                        Log.e(tag,"imageurl"+url1+imageurl);
+                        Item_categories.add(item_name);
+                        Item_Quantity.add(item_quant);
+                        Item_Price.add(item_price);
+                        item_id.add(it_id);
+                        item_id_status.add(item_status);
+                        item_image.add(imageurl_total);
 
 
 

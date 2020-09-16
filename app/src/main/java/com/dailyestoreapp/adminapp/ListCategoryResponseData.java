@@ -131,6 +131,44 @@ public class ListCategoryResponseData {
     @Expose
     private String dealId;
 
+    @SerializedName("couponId")
+    @Expose
+    private String couponId;
+    @SerializedName("couponName")
+    @Expose
+    private String couponName;
+
+    @SerializedName("percent")
+    @Expose
+    private String percent;
+
+    public String getCouponId() {
+        return couponId;
+    }
+
+    public void setCouponId(String couponId) {
+        this.couponId = couponId;
+    }
+
+    public String getCouponName() {
+        return couponName;
+    }
+
+    public void setCouponName(String couponName) {
+        this.couponName = couponName;
+    }
+
+
+
+    public String getPercent() {
+        return percent;
+    }
+
+    public void setPercent(String percent) {
+        this.percent = percent;
+    }
+
+
 
     public String getDealId() {
         return dealId;

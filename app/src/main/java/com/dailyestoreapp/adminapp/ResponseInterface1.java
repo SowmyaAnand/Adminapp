@@ -14,6 +14,8 @@ public interface ResponseInterface1 {
     Call<ListCategoryResponse> firstpop();
     @GET("viewAllUpFlyers")
     Call<ListCategoryResponse> allFlyers();
+    @GET("viewAllCoupons")
+    Call<ListCategoryResponse> allcoupons();
     @GET("viewAllDownFlyers")
     Call<ListCategoryResponse> allseconfFlyers();
     @GET("viewAllDeals")
@@ -26,12 +28,17 @@ public interface ResponseInterface1 {
     Call<ListCategoryResponse> Items(@Field("subId") int id);
 
     @FormUrlEncoded
-    @POST("activateItem")
-    Call<ItemActivateResponse> couponActivate(@Field("itemId") int id,
-                                            @Field("status") int status);
+    @POST("addCoupon")
+    Call<LoginResponse> addcoupon(@Field("description") String description,
+                                  @Field("percent") String percent,
+                                  @Field("couponName")String name);
     @FormUrlEncoded
     @POST("activateItem")
     Call<ItemActivateResponse> ItemActivate(@Field("itemId") int id,
+                                            @Field("status") int status);
+    @FormUrlEncoded
+    @POST("activateCoupon")
+    Call<ItemActivateResponse> CouponActivate(@Field("copuonId") int id,
                                             @Field("status") int status);
     @GET("viewComments")
     Call<ListCategoryResponse> messagelist();

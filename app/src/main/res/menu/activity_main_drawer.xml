@@ -26,7 +26,10 @@
             android:id="@+id/nav_cat"
             android:icon="@drawable/ic_settings_black_24dp"
             android:title="@string/categories" />
-
+        <item
+            android:id="@+id/nav_coupons"
+            android:icon="@drawable/ic_settings_black_24dp"
+            android:title="@string/coupons" />
     </group>
     <item android:title="About Developer">
         <menu>

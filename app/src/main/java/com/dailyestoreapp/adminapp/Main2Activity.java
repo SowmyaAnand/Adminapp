@@ -92,6 +92,8 @@ if(savedInstanceState == null)
                 break;
             case R.id.nav_cat:getSupportFragmentManager().beginTransaction().replace(R.id.fragment_cont,new EditCategories()).commit();
                 break;
+            case R.id.nav_coupons:getSupportFragmentManager().beginTransaction().replace(R.id.fragment_cont,new CouponsListingForEditing()).commit();
+                break;
 
 
         }
