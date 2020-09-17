@@ -15,7 +15,7 @@ public interface ResponseInterface1 {
     @GET("viewAllUpFlyers")
     Call<ListCategoryResponse> allFlyers();
     @GET("viewAllCoupons")
-    Call<ListCategoryResponse> allcoupons();
+    Call<ListCategoryResponse> viewallcoupons();
     @GET("viewAllDownFlyers")
     Call<ListCategoryResponse> allseconfFlyers();
     @GET("viewAllDeals")
@@ -26,19 +26,31 @@ public interface ResponseInterface1 {
     @FormUrlEncoded
     @POST("subItemList")
     Call<ListCategoryResponse> Items(@Field("subId") int id);
-
+//    @FormUrlEncoded
+//    @POST("subItemListWithOfferPercentage")
+//    Call<ListCategoryResponse> Items(@Field("subId") int id);
     @FormUrlEncoded
     @POST("addCoupon")
     Call<LoginResponse> addcoupon(@Field("description") String description,
                                   @Field("percent") String percent,
                                   @Field("couponName")String name);
     @FormUrlEncoded
+    @POST("addOffer")
+    Call<LoginResponse> addOfferItem(@Field("itemId") int id,
+                                     @Field("originalPrice")int originalPrice,
+                                    @Field("offerPrice")int offerPrice,
+                                     @Field("offer")int offer,
+                                     @Field("description")String description,
+                                     @Field("fromDate")String fromDate,
+                                     @Field("toDate")String toDate
+                                     );
+    @FormUrlEncoded
     @POST("activateItem")
     Call<ItemActivateResponse> ItemActivate(@Field("itemId") int id,
                                             @Field("status") int status);
     @FormUrlEncoded
     @POST("activateCoupon")
-    Call<ItemActivateResponse> CouponActivate(@Field("copuonId") int id,
+    Call<LoginResponse> CouponActivate(@Field("couponId") int id,
                                             @Field("status") int status);
     @GET("viewComments")
     Call<ListCategoryResponse> messagelist();

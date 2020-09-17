@@ -103,48 +103,58 @@ public void couponList()
             .client(okHttpClient)
             .build();
     ResponseInterface1 mainInterface = retrofit.create(ResponseInterface1.class);
-    Call<ListCategoryResponse> call = mainInterface.allcoupons();
+    Call<ListCategoryResponse> call = mainInterface.viewallcoupons();
     call.enqueue(new Callback<ListCategoryResponse>() {
         @Override
         public void onResponse(Call<ListCategoryResponse> call, retrofit2.Response<ListCategoryResponse> response) {
 
             String success = response.body().getResponsedata().getSuccess();
-            dialog.dismiss();
+
             Log.e("frag4","success="+success);
             try {
                 if(success.equals("1"))
                 {
                     String cpNames,cpDesc;
 
-                    int percnt,st,cpId;
+                    Integer percnt,st,cpId;
                     cpNames = response.body().getResponsedata().getData().get(1).getCouponName();
                     cpDesc = response.body().getResponsedata().getData().get(1).getDescription();
                     percnt = Integer.parseInt(response.body().getResponsedata().getData().get(1).getPercent());
 
                     int len = response.body().getResponsedata().getData().size();
+                    Log.e("couponsedit","length"+len);
+                    Coupon_Names.clear();
+                    Coupon_Desc.clear();
+                    Coupon_percentage.clear();
+                    Coupon_status.clear();
+                    Coupon_id.clear();
                     for(int i=0;i<len;i++)
                     {
                         cpNames = response.body().getResponsedata().getData().get(i).getCouponName();
                         cpDesc = response.body().getResponsedata().getData().get(i).getDescription();
                         percnt = Integer.parseInt(response.body().getResponsedata().getData().get(i).getPercent());
-                        st = Integer.parseInt(response.body().getResponsedata().getData().get(i).getStatus());
-                        cpId= Integer.parseInt(response.body().getResponsedata().getData().get(i).getCId());
-                        Log.e("couponsedit","++"+cpNames+cpDesc+percnt);
+                        st = Integer.valueOf(response.body().getResponsedata().getData().get(i).getStatus());
+                        cpId= Integer.valueOf(response.body().getResponsedata().getData().get(i).getCouponId());
+                        Log.e("couponsedit","++"+cpNames+cpDesc+percnt+st);
+                        if(st==1)
+                        {
+                            Coupon_Names.add(cpNames);
+                            Coupon_Desc.add(cpDesc);
+                            Coupon_percentage.add(percnt);
+                            Coupon_status.add(st);
+                            Coupon_id.add(cpId);
+                        }
 
-                        Coupon_Names.add(cpNames);
-                        Coupon_Desc.add(cpDesc);
-                        Coupon_percentage.add(percnt);
-                        Coupon_status.add(st);
-                        Coupon_id.add(cpId);
                     }
                 }
                 Log.e("couponsedit","++ values"+Coupon_Names+Coupon_Desc+Coupon_percentage+Coupon_id);
+                dialog.dismiss();
                 customAdapter_coupons.notifyDataSetChanged();
 
             }
             catch (Exception e)
             {
-
+Log.e("couponsedit","the coupons are exception"+e);
             }
         }
 

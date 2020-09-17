@@ -41,7 +41,7 @@
 
             <EditText
                 android:padding="10dp"
-                android:id="@+id/itemname_post"
+                android:id="@+id/itemname_itemoffer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="#FFF"
@@ -56,6 +56,88 @@
 
 
 
+    <androidx.cardview.widget.CardView
+        android:layout_margin="16dp"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        app:cardBackgroundColor="@color/white"
+        app:cardElevation="15dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:padding="10dp"
+                android:fontFamily="@font/roboto_light"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Actual Amount"
+                android:textColor="@color/colorPrimary"
+                android:textSize="16dp"></TextView>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/white"></View>
+
+            <EditText
+                android:padding="15dp"
+                android:id="@+id/actualamount__itemoffer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#FFF"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/black"
+                android:inputType="number"
+                android:textColorHint="@color/Gray"
+                android:hint="ADD AMOUNT"
+                android:fontFamily="@font/roboto_light"
+                android:singleLine="true"
+                android:maxLength="60"/>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+    <androidx.cardview.widget.CardView
+        android:layout_margin="16dp"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        app:cardBackgroundColor="@color/white"
+        app:cardElevation="15dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:padding="10dp"
+                android:fontFamily="@font/roboto_light"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Reduced Amount"
+                android:textColor="@color/colorPrimary"
+                android:textSize="16dp"></TextView>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/white"></View>
+
+            <EditText
+                android:padding="15dp"
+                android:id="@+id/Reducedamount_post_itemoffer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#FFF"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/black"
+                android:inputType="number"
+                android:textColorHint="@color/Gray"
+                android:hint="ADD AMOUNT"
+                android:fontFamily="@font/roboto_light"
+                android:singleLine="true"
+                android:maxLength="60"/>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
     <androidx.cardview.widget.CardView
         android:layout_margin="16dp"
         android:id="@+id/headerTextCard2"
@@ -73,7 +155,7 @@
                 android:fontFamily="@font/roboto_light"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Amount"
+                android:text="Description"
                 android:textColor="@color/colorPrimary"
                 android:textSize="16dp"></TextView>
             <View
@@ -83,7 +165,7 @@
 
             <EditText
                 android:padding="15dp"
-                android:id="@+id/amount_post"
+                android:id="@+id/description_post_itemoffer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="#FFF"
@@ -92,6 +174,47 @@
                 android:inputType="number"
                 android:textColorHint="@color/Gray"
                 android:hint="ADD AMOUNT"
+                android:fontFamily="@font/roboto_light"
+                android:singleLine="true"
+                android:maxLength="60"/>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+    <androidx.cardview.widget.CardView
+        android:layout_margin="16dp"
+        android:id="@+id/offerpercentage_calculated"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        app:cardBackgroundColor="@color/white"
+        app:cardElevation="15dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:padding="10dp"
+                android:fontFamily="@font/roboto_light"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Offer percentage"
+                android:textColor="@color/colorPrimary"
+                android:textSize="16dp"></TextView>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/white"></View>
+
+            <EditText
+                android:padding="15dp"
+                android:id="@+id/offer_percent_calculated"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#FFF"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/black"
+                android:inputType="number"
+                android:textColorHint="@color/Gray"
                 android:fontFamily="@font/roboto_light"
                 android:singleLine="true"
                 android:maxLength="60"/>

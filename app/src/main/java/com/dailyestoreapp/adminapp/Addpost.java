@@ -62,7 +62,9 @@ public class Addpost extends AppCompatActivity {
     File additemImageFile;
     String selectedPathadditem="";
     Button post;
-
+    Integer item_Id;
+    String item_Name;
+Button addoffer;
     Integer SelectedCategoryNumber=0;
     Integer SelectedSubCategoryNumber=0;
     Spinner Category_spinner;
@@ -91,6 +93,7 @@ EditText post_itemname,post_amount,post_offer,post_description,post_quantity;
         setSupportActionBar(toolbar);
         final ArrayList<String> categoriesEditCategies = new ArrayList<>();
         Category_spinner = findViewById(R.id.categoryspinner);
+        addoffer = findViewById(R.id.btnoffer);
         Sub_Category_spinner = findViewById(R.id.subcategoryspinner);
         addattach = (TextView) findViewById(R.id.txtAttachment);
         imgaeitem = (ImageView) findViewById(R.id.imageitem);
@@ -99,7 +102,16 @@ EditText post_itemname,post_amount,post_offer,post_description,post_quantity;
        post_offer=(EditText)findViewById(R.id.offer_post);
        post_description=(EditText)findViewById(R.id.description_post);
        post_quantity=(EditText)findViewById(R.id.quantity_post);
-        RadioGroup radioGroup = (RadioGroup) findViewById(R.id.cod) ;
+        RadioGroup radioGroup = (RadioGroup) findViewById(R.id.cod);
+        addoffer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent next = new Intent(Addpost.this,OffersActivity.class);
+                next.putExtra("itemId",item_Id);
+                next.putExtra("itemName",item_Name);
+                startActivity(next);
+            }
+        });
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -475,6 +487,9 @@ Log.e("Addpost","subname="+sub_name+catid_dropdown);
                             if(s==1)
                             {
                                 Toast.makeText(Addpost.this,"Item Added Successfully",Toast.LENGTH_SHORT).show();
+                                item_Name=post_itemname.getText().toString();
+                                item_Id=newaddedcat_no_post;
+                                addoffer.setVisibility(View.VISIBLE);
 
                                 post_itemname.setText("");
                                post_amount.setText("");

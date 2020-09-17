@@ -26,7 +26,11 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -100,6 +104,45 @@ public class Coupon_Adapter extends RecyclerView.Adapter<Coupon_Adapter.MyViewHo
             @Override
             public void onClick(View v) {
 
+                 int coupon_adapter_function_id=coupon_id.get(position);
+                 int status_coupon_adapter=coupon_status.get(position);
+                String url = "http://dailyestoreapp.com/dailyestore/api/";
+                Log.e("coupon_adapter",""+coupon_adapter_function_id+status_coupon_adapter);
+                HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
+                loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+                OkHttpClient okHttpClient = new OkHttpClient.Builder()
+                        .addInterceptor(loggingInterceptor)
+                        .build();
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(url)
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(okHttpClient)
+                        .build();
+                ResponseInterface1 mainInterface = retrofit.create(ResponseInterface1.class);
+                Call<LoginResponse> call = mainInterface.CouponActivate(coupon_adapter_function_id,0);
+                call.enqueue(new Callback<LoginResponse>() {
+                    @Override
+                    public void onResponse(Call<LoginResponse> call, retrofit2.Response<LoginResponse> response) {
+                        String success_coupon_adapter = response.body().getResponsedata().getSuccess();
+                        if(success_coupon_adapter.equals("1"))
+                        {
+                            holder.act.setText("INACTIVE");
+
+                            Coupon_Adapter.CustomDialogClass1 cdd1=new Coupon_Adapter.CustomDialogClass1(context,"Your Coupon is Deactivated");
+                            cdd1.show();
+                        }
+                        else
+                        {
+                            Coupon_Adapter.CustomDialogClass1 cdd1=new Coupon_Adapter.CustomDialogClass1(context,"Your Coupon is already Deactivated");
+                            cdd1.show();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<LoginResponse> call, Throwable t) {
+
+                    }
+                });
             }
         });
     }
@@ -149,7 +192,7 @@ public class Coupon_Adapter extends RecyclerView.Adapter<Coupon_Adapter.MyViewHo
             yes = (Button) findViewById(R.id.btn_yes);
 
             textdisplayed=(TextView)findViewById(R.id.txt_dia);
-            textdisplayed.setText("Your Coupon is marked as "+this.txt);
+            textdisplayed.setText(this.txt);
             yes.setOnClickListener(this);
 
 
@@ -169,5 +212,7 @@ public class Coupon_Adapter extends RecyclerView.Adapter<Coupon_Adapter.MyViewHo
         }
     }
 
+    private void Activate(){
 
+    }
 }
