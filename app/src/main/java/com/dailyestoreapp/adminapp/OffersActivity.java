@@ -28,21 +28,20 @@ public class OffersActivity extends AppCompatActivity {
     Button offerActvitybtn;
 String item_name_offers,description;
 Integer item_id_offers,actual_amount,reduced_amount;
-Integer item_offer_percentage;
+Double item_offer_percentage;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_offers);
-        Intent in = getIntent();
-        Bundle extras = in.getExtras();
-        item_name_offers =  extras.getString("itemName");
-        item_id_offers = extras.getInt("itemId");
+String id = getIntent().getExtras().getString("name");
+int i = getIntent().getExtras().getInt("id");
+Log.e("offers",""+id+i);
+        item_id_offers=i;
+
         actualprice=findViewById(R.id.actualamount__itemoffer);
         reducedprice=findViewById(R.id.Reducedamount_post_itemoffer);
         description_item_offer=findViewById(R.id.description_post_itemoffer);
-        description= description_item_offer.getText().toString();
-        actual_amount= Integer.valueOf(actualprice.getText().toString());
-        reduced_amount= Integer.valueOf(actualprice.getText().toString());
+
         offer_card = findViewById(R.id.offerpercentage_calculated);
         offer_cal=findViewById(R.id.offer_percent_calculated);
         offerActvitybtn = findViewById(R.id.offer_btn);
@@ -55,7 +54,14 @@ Integer item_offer_percentage;
     }
     private void addCoupon()
     {
-        item_offer_percentage=((actual_amount-reduced_amount)/100)*actual_amount;
+        description= description_item_offer.getText().toString();
+        actual_amount= Integer.valueOf(actualprice.getText().toString());
+        reduced_amount= Integer.valueOf(reducedprice.getText().toString());
+        Double  dif = Double.valueOf(actual_amount-reduced_amount);
+        Double p = dif/actual_amount;
+        double pt = p*100;
+        Log.e("offer","calculate"+dif+""+p+""+pt);
+        item_offer_percentage=pt;
         offer_card.setVisibility(View.VISIBLE);
 offer_cal.setText(item_offer_percentage+"%");
         dialog = new ACProgressFlower.Builder(OffersActivity.this)
@@ -79,6 +85,11 @@ offer_cal.setText(item_offer_percentage+"%");
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(okHttpClient)
                 .build();
+Log.e("offeractivity","params are ="+item_id_offers);
+        Log.e("offeractivity","params are ="+actual_amount);
+        Log.e("offeractivity","params are ="+reduced_amount);
+        Log.e("offeractivity","params are ="+item_offer_percentage);
+        Log.e("offeractivity","params are ="+description);
         ResponseInterface1 mainInterface = retrofit.create(ResponseInterface1.class);
         Call<LoginResponse> call = mainInterface.addOfferItem(item_id_offers,actual_amount,reduced_amount,item_offer_percentage,description,"0000-00-00","0000-00-00");
         call.enqueue(new Callback<LoginResponse>() {

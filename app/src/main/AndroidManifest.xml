@@ -15,9 +15,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar"
         android:usesCleartextTraffic="true">
-        <activity android:name=".OffersActivity"></activity>
-        <activity android:name=".Flyer2Activity"></activity>
-        <activity android:name=".Flyer1Activity"></activity>
+        <activity android:name=".AddSubcategory"></activity>
+        <activity android:name=".AddSubCategory" />
+        <activity android:name=".OffersActivity" />
+        <activity android:name=".Flyer2Activity" />
+        <activity android:name=".Flyer1Activity" />
         <activity android:name=".AddFlyersImage" />
         <activity android:name=".AddDealsImage" />
         <activity android:name=".CouponsList" />

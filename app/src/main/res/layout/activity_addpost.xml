@@ -236,47 +236,7 @@
                   android:maxLength="60"/>
             </LinearLayout>
           </androidx.cardview.widget.CardView>
-          <androidx.cardview.widget.CardView
-              android:layout_margin="16dp"
-              android:id="@+id/headerTextCard"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              app:cardBackgroundColor="@color/white"
-              app:cardElevation="15dp">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-              <TextView
-                  android:padding="10dp"
-                  android:fontFamily="@font/roboto_light"
-                  android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
-                  android:text="Offer"
-                  android:textColor="@color/colorPrimary"
-                  android:textSize="16dp"></TextView>
-              <View
-                  android:layout_width="match_parent"
-                  android:layout_height="1dp"
-                  android:background="@color/Gray"></View>
 
-              <EditText
-                  android:padding="15dp"
-                  android:id="@+id/offer_post"
-                  android:fontFamily="@font/roboto_light"
-                  android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
-                  android:background="#FFF"
-                  android:inputType="number"
-                  android:layout_marginTop="10dp"
-                  android:singleLine="true"
-                  android:textColor="@color/black"
-                  android:textColorHint="@color/Gray"
-                  android:hint="ADD OFFER RATE"
-                  android:maxLength="60"/>
-            </LinearLayout>
-          </androidx.cardview.widget.CardView>
           <androidx.cardview.widget.CardView
               android:layout_margin="16dp"
               android:id="@+id/descriptionCard"

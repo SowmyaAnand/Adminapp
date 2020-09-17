@@ -53,6 +53,8 @@ private DrawerLayout drawerLayout;
         categoryID.add(6);
         categoryNameList.add("ADD NEW COUPONS");
         categoryID.add(7);
+        categoryNameList.add("ADD NEW SUB CATEGORY");
+        categoryID.add(8);
 
 if(savedInstanceState == null)
 {
@@ -171,6 +173,12 @@ if(savedInstanceState == null)
                 else if(categoryId[which].equals(7))
                 {
                     Intent i = new Intent(Main2Activity.this, CouponsList.class);
+                    i.putExtra("CATEGORYID", selectedCategoryId);
+                    startActivity(i);
+                }
+                else if(categoryId[which].equals(8))
+                {
+                    Intent i = new Intent(Main2Activity.this, AddSubcategory.class);
                     i.putExtra("CATEGORYID", selectedCategoryId);
                     startActivity(i);
                 }

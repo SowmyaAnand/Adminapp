@@ -39,7 +39,7 @@ public interface ResponseInterface1 {
     Call<LoginResponse> addOfferItem(@Field("itemId") int id,
                                      @Field("originalPrice")int originalPrice,
                                     @Field("offerPrice")int offerPrice,
-                                     @Field("offer")int offer,
+                                     @Field("offer")Double offer,
                                      @Field("description")String description,
                                      @Field("fromDate")String fromDate,
                                      @Field("toDate")String toDate

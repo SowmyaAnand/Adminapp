@@ -99,7 +99,7 @@ EditText post_itemname,post_amount,post_offer,post_description,post_quantity;
         imgaeitem = (ImageView) findViewById(R.id.imageitem);
         post_itemname=(EditText)findViewById(R.id.itemname_post);
         post_amount=(EditText)findViewById(R.id.amount_post);
-       post_offer=(EditText)findViewById(R.id.offer_post);
+
        post_description=(EditText)findViewById(R.id.description_post);
        post_quantity=(EditText)findViewById(R.id.quantity_post);
         RadioGroup radioGroup = (RadioGroup) findViewById(R.id.cod);
@@ -107,8 +107,8 @@ EditText post_itemname,post_amount,post_offer,post_description,post_quantity;
             @Override
             public void onClick(View v) {
                 Intent next = new Intent(Addpost.this,OffersActivity.class);
-                next.putExtra("itemId",item_Id);
-                next.putExtra("itemName",item_Name);
+                next.putExtra("id",item_Id);
+                next.putExtra("name",item_Name);
                 startActivity(next);
             }
         });
@@ -137,7 +137,7 @@ EditText post_itemname,post_amount,post_offer,post_description,post_quantity;
                 it_name_post=post_itemname.getText().toString();
                 amount_post =post_amount.getText().toString();
                 description_post=post_description.getText().toString();
-                offer_post=post_offer.getText().toString();
+
                 quantity_post =post_quantity.getText().toString();
                 Integer sb = Sub_Category_spinner.getSelectedItemPosition();
                 Log.e("addpost","post sub id "+subcategoriescatno_edit.get(sb));

@@ -14,45 +14,7 @@
         android:background="@color/colorPrimary"
         app:popupTheme="@style/AppTheme.PopupOverlay" />
 
-    <androidx.cardview.widget.CardView
-        android:layout_margin="16dp"
-        android:id="@+id/TextCard"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        app:cardBackgroundColor="@color/white"
-        app:cardElevation="15dp">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <TextView
-                android:padding="10dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Item Name"
-                android:fontFamily="@font/roboto_light"
-                android:textColor="@color/colorPrimary"
-                android:textSize="16dp"></TextView>
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/white"></View>
 
-            <EditText
-                android:padding="10dp"
-                android:id="@+id/itemname_itemoffer"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#FFF"
-                android:textColor="@color/black"
-                android:textColorHint="@color/Gray"
-                android:hint="ADD NEW ITEM NAME"
-                android:fontFamily="@font/roboto_light"
-                android:layout_marginTop="10dp"
-                />
-        </LinearLayout>
-    </androidx.cardview.widget.CardView>
 
 
 
@@ -171,7 +133,6 @@
                 android:background="#FFF"
                 android:layout_marginTop="10dp"
                 android:textColor="@color/black"
-                android:inputType="number"
                 android:textColorHint="@color/Gray"
                 android:hint="ADD AMOUNT"
                 android:fontFamily="@font/roboto_light"
