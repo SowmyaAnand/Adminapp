@@ -14,7 +14,7 @@
         xmlns:android="http://schemas.android.com/apk/res/android">
 
         <ImageView
-            android:id="@+id/img_orders"
+            android:id="@+id/img_orders_img"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:src="@drawable/h2"
@@ -81,7 +81,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/black"
-            android:layout_toRightOf="@+id/img_orders"
+            android:layout_toRightOf="@+id/img_orders_img"
             android:textSize="16sp"
             android:fontFamily="@font/roboto_medium"
             android:text="TITLE"/>
@@ -93,7 +93,7 @@
             android:textColor="@color/black"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/img_orders"
+            android:layout_toRightOf="@+id/img_orders_img"
             android:textSize="13sp"
             android:fontFamily="@font/roboto_light"
             android:text="QUANTITY:1"
@@ -107,7 +107,7 @@
             android:textColor="@color/black"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/img_orders"
+            android:layout_toRightOf="@+id/img_orders_img"
             android:textSize="13sp"
             android:fontFamily="@font/roboto_light"
             android:text="RS:25000"
@@ -120,7 +120,7 @@
             android:textColor="@color/black"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/img_orders"
+            android:layout_toRightOf="@+id/img_orders_img"
             android:textSize="13sp"
             android:fontFamily="@font/roboto_light"
 

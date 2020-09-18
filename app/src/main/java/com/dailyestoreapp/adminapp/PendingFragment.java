@@ -32,7 +32,7 @@ public class PendingFragment extends Fragment {
 ACProgressFlower dialog;
     PendingNotificationAdapter customAdapter_offers_pending;
    // ArrayList personNames_offers = new ArrayList<>(Arrays.asList("ITEM1", "ITEM2", "ITEM3", "ITEM4", "ITEM5", "ITEM6", "ITEM7"));
-
+   ArrayList<String> item_image_pending = new ArrayList<>();
     ArrayList<String> pending_orders_list_array_item = new ArrayList<>();
     ArrayList<String> pending_orders_list_array_address = new ArrayList<>();
     ArrayList<String> pending_orders_list_array_satus = new ArrayList<>();
@@ -50,7 +50,7 @@ ACProgressFlower dialog;
         recyclerView_offers.setLayoutManager(linearLayoutManager);
         //  call the constructor of CustomAdapter to send the reference and data to Adapter
 
-        customAdapter_offers_pending = new PendingNotificationAdapter(root.getContext(),pending_orders_list_array_address,pending_orders_list_array_item,pending_orders_list_array_satus,pending_orders_list_array_orderid,orders_list_array_quantity_pending,orders_list_array_amount_pending);
+        customAdapter_offers_pending = new PendingNotificationAdapter(root.getContext(),pending_orders_list_array_address,pending_orders_list_array_item,pending_orders_list_array_satus,pending_orders_list_array_orderid,orders_list_array_quantity_pending,orders_list_array_amount_pending,item_image_pending);
         recyclerView_offers.setAdapter(customAdapter_offers_pending);
         return root;
 
@@ -64,7 +64,7 @@ ACProgressFlower dialog;
         dialog.show();
 
         String url = "http://dailyestoreapp.com/dailyestore/api/";
-
+        final String url1 = "http://dailyestoreapp.com/dailyestore/";
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
@@ -109,7 +109,10 @@ ACProgressFlower dialog;
                                 int order_no = Integer.parseInt(orderid);
                                 String quantity_pending = dt.getQuantity();
                                 String amount_pending = dt.getPrice();
+                                String imageurl = dt.getImage();
+                                String imageurl_total=url1+imageurl;
                                 pending_orders_list_array_satus.add(status);
+                                item_image_pending.add(imageurl_total);
                                 pending_orders_list_array_address.add(address);
                                 pending_orders_list_array_item.add(itemname_orders);
                                 pending_orders_list_array_orderid.add(order_no);

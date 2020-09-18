@@ -11,6 +11,9 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -20,6 +23,7 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.MyViewHold
     
     Context context;
     ArrayList<String> lts=new ArrayList<String>();
+    ArrayList<String> orders_list_adapter_item_images = new ArrayList<>();
     ArrayList<String> orders_list_adapter_item = new ArrayList<>();
     ArrayList<String> orders_list_adapter_item_address = new ArrayList<>();
     ArrayList<String> orders_list_adapter_quantity = new ArrayList<>();
@@ -27,13 +31,14 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.MyViewHold
     ArrayList<String> orders_list_adapter_date = new ArrayList<>();
    // ArrayList orders_list_adapter_item_offers = new ArrayList<>(Arrays.asList("ITEM1", "ITEM2", "ITEM3", "ITEM4", "ITEM5", "ITEM6", "ITEM7"));
     int quantity=1;
-    public OrdersAdapter(Context context, ArrayList<String> orders_list_adapter_item, ArrayList<String> orders_list_adapter_quantity, ArrayList<String> orders_list_adapter_amount, ArrayList<String> orders_list_adapter_date,ArrayList<String> orders_list_adapter_item_address) {
+    public OrdersAdapter(Context context, ArrayList<String> orders_list_adapter_item, ArrayList<String> orders_list_adapter_quantity, ArrayList<String> orders_list_adapter_amount, ArrayList<String> orders_list_adapter_date,ArrayList<String> orders_list_adapter_item_address,ArrayList<String> orders_list_adapter_item_img) {
         this.context = context;
         this.orders_list_adapter_amount = orders_list_adapter_amount;
         this.orders_list_adapter_item = orders_list_adapter_item;
         this.orders_list_adapter_date = orders_list_adapter_date;
         this.orders_list_adapter_quantity = orders_list_adapter_quantity;
         this.orders_list_adapter_item_address=orders_list_adapter_item_address;
+        this.orders_list_adapter_item_images=orders_list_adapter_item_img;
         this.lts.addAll(orders_list_adapter_item);
 
     }
@@ -71,6 +76,15 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.MyViewHold
                         holder.price_orders.setText(price);
 
                     }
+                    if(orders_list_adapter_item_images.size()>0)
+                    {
+                        String imageurl=  orders_list_adapter_item_images.get(position);
+                        Glide.with(context).load(imageurl)
+                                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                .into(holder.ig);
+                    }
+
+
     }
 
 
@@ -81,12 +95,14 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.MyViewHold
     public class MyViewHolder extends RecyclerView.ViewHolder {
         TextView name_orders,quantityy_orders,price_orders,dt_orders;// init the item view's
         Button addition,substraction,addbtn;
+        ImageView ig;
         public MyViewHolder(View itemView) {
             super(itemView);
             name_orders = (TextView) itemView.findViewById(R.id.Title_orders);
            quantityy_orders = (TextView) itemView.findViewById(R.id.publishNme_orders);
             price_orders = (TextView) itemView.findViewById(R.id.prce_orders);
             dt_orders = (TextView) itemView.findViewById(R.id.dte_orders);
+            ig=(ImageView)itemView.findViewById(R.id.img_orders_img);
 
 
         }

@@ -40,6 +40,7 @@ public class OrdersFragment extends Fragment {
 ACProgressFlower dialog;
     OrdersAdapter customAdapter_offers_orders;
    // ArrayList personNames_offers = new ArrayList<>(Arrays.asList("ITEM1", "ITEM2", "ITEM3", "ITEM4", "ITEM5", "ITEM6", "ITEM7"));
+   ArrayList<String> item_image_orders = new ArrayList<>();
     ArrayList<String> orders_list_array_item = new ArrayList<>();
     ArrayList<String> orders_list_array_item_address = new ArrayList<>();
     ArrayList<String> orders_list_array_quantity = new ArrayList<>();
@@ -56,7 +57,7 @@ ACProgressFlower dialog;
         recyclerView_offers.setLayoutManager(linearLayoutManager);
         //  call the constructor of CustomAdapter to send the reference and data to Adapter
 
-        customAdapter_offers_orders = new OrdersAdapter(root.getContext(), orders_list_array_item,orders_list_array_quantity,orders_list_array_amount,orders_list_array_date,orders_list_array_item_address);
+        customAdapter_offers_orders = new OrdersAdapter(root.getContext(), orders_list_array_item,orders_list_array_quantity,orders_list_array_amount,orders_list_array_date,orders_list_array_item_address,item_image_orders);
         recyclerView_offers.setAdapter(customAdapter_offers_orders);
 
         return root;
@@ -70,7 +71,7 @@ ACProgressFlower dialog;
         dialog.show();
 
         String url = "http://dailyestoreapp.com/dailyestore/api/";
-
+        final String url1 = "http://dailyestoreapp.com/dailyestore/";
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
@@ -114,6 +115,9 @@ ACProgressFlower dialog;
                                 String amount = dt.getPrice();
                                 String date = dt.getCreatedAt();
                                 String add= dt.getAddress();
+                                String imageurl = dt.getImage();
+                                String imageurl_total=url1+imageurl;
+                                item_image_orders.add(imageurl_total);
                                 orders_list_array_quantity.add(quantity);
                                 orders_list_array_item.add(itemname_orders);
                                 orders_list_array_amount.add(amount);

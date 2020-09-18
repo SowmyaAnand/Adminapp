@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,6 +21,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -47,6 +50,7 @@ public class PendingNotificationAdapter extends RecyclerView.Adapter<PendingNoti
   Integer orderid_adapter;
   ACProgressFlower  dialog;
     ArrayList<String> lts=new ArrayList<String>();
+    ArrayList<String> pending_orders_list_array_item_image = new ArrayList<>();
     ArrayList<String> pending_orders_list_array_item = new ArrayList<>();
     ArrayList<String> pending_orders_list_array_address = new ArrayList<>();
     ArrayList<String> pending_orders_list_array_quantity = new ArrayList<>();
@@ -55,9 +59,10 @@ public class PendingNotificationAdapter extends RecyclerView.Adapter<PendingNoti
     ArrayList<Integer> pending_orders_list_array_orderid = new ArrayList<>();
     //ArrayList pending_orders_list_array_item_offers = new ArrayList<>(Arrays.asList("ITEM1", "ITEM2", "ITEM3", "ITEM4", "ITEM5", "ITEM6", "ITEM7"));
     int quantity=1;
-    public PendingNotificationAdapter(Context context, ArrayList<String> pending_orders_list_array_address,ArrayList<String> pending_orders_list_array_item, ArrayList<String> pending_orders_list_array_satus, ArrayList<Integer> pending_orders_list_array_orderid,ArrayList<String> pending_orders_list_array_qnty,ArrayList<String> pending_orders_list_array_amnt) {
+    public PendingNotificationAdapter(Context context, ArrayList<String> pending_orders_list_array_address,ArrayList<String> pending_orders_list_array_item, ArrayList<String> pending_orders_list_array_satus, ArrayList<Integer> pending_orders_list_array_orderid,ArrayList<String> pending_orders_list_array_qnty,ArrayList<String> pending_orders_list_array_amnt,ArrayList<String> pending_orders_list_array_item_img) {
         this.context = context;
         this.pending_orders_list_array_address=pending_orders_list_array_address;
+        this.pending_orders_list_array_item_image=pending_orders_list_array_item_img;
                 this.pending_orders_list_array_item=pending_orders_list_array_item;
                         this.pending_orders_list_array_satus=pending_orders_list_array_satus;
                         this.pending_orders_list_array_orderid = pending_orders_list_array_orderid;
@@ -86,6 +91,10 @@ public class PendingNotificationAdapter extends RecyclerView.Adapter<PendingNoti
         orderid_adapter = pending_orders_list_array_orderid.get(position);
         String qty = "QUANTITY:"+pending_orders_list_array_quantity.get(position);
         String pr = "PRICE:"+pending_orders_list_array_amount.get(position);
+        String imageurl=  pending_orders_list_array_item_image.get(position);
+        Glide.with(context).load(imageurl)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .into(holder.pImage);
         holder.q_pending.setText(qty);
         holder.p_pending.setText(pr);
 
@@ -165,6 +174,7 @@ dialog.dismiss();
     public class MyViewHolder extends RecyclerView.ViewHolder {
         TextView name_pending,address_pending,q_pending,p_pending;// init the item view's
         Button pd_pending;
+        ImageView pImage;
         public MyViewHolder(View itemView) {
             super(itemView);
             name_pending = (TextView) itemView.findViewById(R.id.Title_pending);
@@ -172,6 +182,7 @@ dialog.dismiss();
             address_pending=(TextView)itemView.findViewById(R.id.address_pending);
             q_pending=(TextView)itemView.findViewById(R.id.Quantity_pending);
             p_pending=(TextView)itemView.findViewById(R.id.Price_pending);
+            pImage=(ImageView)itemView.findViewById(R.id.img_pending);
             // get the reference of item view's
 
         }

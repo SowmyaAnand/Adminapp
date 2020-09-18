@@ -147,6 +147,19 @@
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true" />
 
+
+            <TextView
+                android:id="@+id/offerdesc"
+                android:layout_below="@+id/outofstock"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/colorPrimary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="13sp"
+                android:fontFamily="@font/roboto_light"
+                android:text=""
+                />
         </RelativeLayout>
 
 
