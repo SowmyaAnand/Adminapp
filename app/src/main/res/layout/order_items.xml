@@ -123,17 +123,10 @@
             android:layout_toRightOf="@+id/img_orders"
             android:textSize="13sp"
             android:fontFamily="@font/roboto_light"
-            android:text="05-08-2020"
+
             />
 
-        <TextView
-            android:id="@+id/unread_check_orders"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="8% Off"
-            android:textColor="@color/colorPrimary"
-            android:layout_alignParentRight="true"
-            />
+
 
 
 

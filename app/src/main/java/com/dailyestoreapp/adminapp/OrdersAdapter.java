@@ -21,17 +21,19 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.MyViewHold
     Context context;
     ArrayList<String> lts=new ArrayList<String>();
     ArrayList<String> orders_list_adapter_item = new ArrayList<>();
+    ArrayList<String> orders_list_adapter_item_address = new ArrayList<>();
     ArrayList<String> orders_list_adapter_quantity = new ArrayList<>();
     ArrayList<String> orders_list_adapter_amount = new ArrayList<>();
     ArrayList<String> orders_list_adapter_date = new ArrayList<>();
    // ArrayList orders_list_adapter_item_offers = new ArrayList<>(Arrays.asList("ITEM1", "ITEM2", "ITEM3", "ITEM4", "ITEM5", "ITEM6", "ITEM7"));
     int quantity=1;
-    public OrdersAdapter(Context context, ArrayList<String> orders_list_adapter_item, ArrayList<String> orders_list_adapter_quantity, ArrayList<String> orders_list_adapter_amount, ArrayList<String> orders_list_adapter_date) {
+    public OrdersAdapter(Context context, ArrayList<String> orders_list_adapter_item, ArrayList<String> orders_list_adapter_quantity, ArrayList<String> orders_list_adapter_amount, ArrayList<String> orders_list_adapter_date,ArrayList<String> orders_list_adapter_item_address) {
         this.context = context;
         this.orders_list_adapter_amount = orders_list_adapter_amount;
         this.orders_list_adapter_item = orders_list_adapter_item;
         this.orders_list_adapter_date = orders_list_adapter_date;
         this.orders_list_adapter_quantity = orders_list_adapter_quantity;
+        this.orders_list_adapter_item_address=orders_list_adapter_item_address;
         this.lts.addAll(orders_list_adapter_item);
 
     }
@@ -58,9 +60,9 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.MyViewHold
                 String quantity = "QUANTITY:"+orders_list_adapter_quantity.get(position);
                 holder.quantityy_orders.setText(quantity);
             }
-                if(orders_list_adapter_date.size()>0)
+                if(orders_list_adapter_item_address.size()>0)
                 {
-                    String created = orders_list_adapter_date.get(position);
+                    String created = orders_list_adapter_item_address.get(position);
                     holder.dt_orders.setText(created);
                 }
                     if(orders_list_adapter_amount.size()>0) {

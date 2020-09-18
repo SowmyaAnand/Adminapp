@@ -1,6 +1,7 @@
 package com.dailyestoreapp.adminapp;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,6 +29,8 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Locale;
 
+import cc.cloudist.acplibrary.ACProgressConstant;
+import cc.cloudist.acplibrary.ACProgressFlower;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
@@ -42,19 +45,24 @@ public class PendingNotificationAdapter extends RecyclerView.Adapter<PendingNoti
     //ArrayList<String> pending_orders_list_array_item = new ArrayList<String>();
     Context context;
   Integer orderid_adapter;
+  ACProgressFlower  dialog;
     ArrayList<String> lts=new ArrayList<String>();
     ArrayList<String> pending_orders_list_array_item = new ArrayList<>();
     ArrayList<String> pending_orders_list_array_address = new ArrayList<>();
+    ArrayList<String> pending_orders_list_array_quantity = new ArrayList<>();
+    ArrayList<String> pending_orders_list_array_amount = new ArrayList<>();
     ArrayList<String> pending_orders_list_array_satus = new ArrayList<>();
     ArrayList<Integer> pending_orders_list_array_orderid = new ArrayList<>();
     //ArrayList pending_orders_list_array_item_offers = new ArrayList<>(Arrays.asList("ITEM1", "ITEM2", "ITEM3", "ITEM4", "ITEM5", "ITEM6", "ITEM7"));
     int quantity=1;
-    public PendingNotificationAdapter(Context context, ArrayList<String> pending_orders_list_array_address,ArrayList<String> pending_orders_list_array_item, ArrayList<String> pending_orders_list_array_satus, ArrayList<Integer> pending_orders_list_array_orderid) {
+    public PendingNotificationAdapter(Context context, ArrayList<String> pending_orders_list_array_address,ArrayList<String> pending_orders_list_array_item, ArrayList<String> pending_orders_list_array_satus, ArrayList<Integer> pending_orders_list_array_orderid,ArrayList<String> pending_orders_list_array_qnty,ArrayList<String> pending_orders_list_array_amnt) {
         this.context = context;
         this.pending_orders_list_array_address=pending_orders_list_array_address;
                 this.pending_orders_list_array_item=pending_orders_list_array_item;
                         this.pending_orders_list_array_satus=pending_orders_list_array_satus;
                         this.pending_orders_list_array_orderid = pending_orders_list_array_orderid;
+                        this.pending_orders_list_array_quantity=pending_orders_list_array_qnty;
+                        this.pending_orders_list_array_amount=pending_orders_list_array_amnt;
         this.lts.addAll(pending_orders_list_array_item);
 
     }
@@ -74,63 +82,73 @@ public class PendingNotificationAdapter extends RecyclerView.Adapter<PendingNoti
         String name = pending_orders_list_array_item.get(position);
         holder.name_pending.setText(name);
         String address = pending_orders_list_array_address.get(position);
+        holder.address_pending.setText(address);
         orderid_adapter = pending_orders_list_array_orderid.get(position);
-       holder.address_pending.setText("address");
+        String qty = "QUANTITY:"+pending_orders_list_array_quantity.get(position);
+        String pr = "PRICE:"+pending_orders_list_array_amount.get(position);
+        holder.q_pending.setText(qty);
+        holder.p_pending.setText(pr);
+
         holder.pd_pending.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 holder.pd_pending.setText("Approved");
                 holder.pd_pending.setTextColor(ContextCompat.getColor(context, white));
                 holder.pd_pending.setBackgroundColor(ContextCompat.getColor(context, green));
-                Toast.makeText(context,"Aproved",Toast.LENGTH_LONG).show();
-//                String url = "http://dailyestoreapp.com/dailyestore/api/";
-//
-//                HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
-//                loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-//                OkHttpClient okHttpClient = new OkHttpClient.Builder()
-//                        .addInterceptor(loggingInterceptor)
-//                        .build();
-//                Retrofit retrofit = new Retrofit.Builder()
-//                        .baseUrl(url)
-//                        .addConverterFactory(GsonConverterFactory.create())
-//                        .client(okHttpClient)
-//                        .build();
-//                ResponseInterface1 mainInterface = retrofit.create(ResponseInterface1.class);
-//                Call<ListCategoryResponse> call = mainInterface.changeOrderStatus(orderid_adapter,1);
-//                call.enqueue(new Callback<ListCategoryResponse>() {
-//                    @Override
-//                    public void onResponse(Call<ListCategoryResponse> call, retrofit2.Response<ListCategoryResponse> response) {
-//                        ListCategoryResponse listCategoryResponseobject = response.body();
-//                        int success = Integer.parseInt(response.body().getResponsedata().getSuccess());
-//                        try {
-//
-//
-//                            if(success==1)
-//                            {
-//                                holder.pd_pending.setText("Approved");
-//                                holder.pd_pending.setTextColor(ContextCompat.getColor(context, white));
-//                                holder.pd_pending.setBackgroundColor(ContextCompat.getColor(context, green));
-//                                Toast.makeText(context,"Aproved",Toast.LENGTH_LONG).show();
-//                            }
-//                            else {
-//                                Toast.makeText(context,"No Data found",Toast.LENGTH_LONG).show();
-//                            }
-//                        } catch (Exception e) {
-//                            e.printStackTrace();
-//                            Toast.makeText(context,"something went wrong",Toast.LENGTH_SHORT).show();
-//                        }
-//
-//
-//
-//
-//
-//                    }
-//
-//                    @Override
-//                    public void onFailure(Call<ListCategoryResponse> call, Throwable t) {
-//
-//                    }
-//                });
+               // Toast.makeText(context,"Aproved",Toast.LENGTH_LONG).show();
+                dialog = new ACProgressFlower.Builder(context)
+                        .direction(ACProgressConstant.DIRECT_CLOCKWISE)
+                        .borderPadding(1)
+                        .fadeColor(Color.WHITE).build();
+                dialog.show();
+                String url = "http://dailyestoreapp.com/dailyestore/api/";
+
+                HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
+                loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+                OkHttpClient okHttpClient = new OkHttpClient.Builder()
+                        .addInterceptor(loggingInterceptor)
+                        .build();
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(url)
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(okHttpClient)
+                        .build();
+                ResponseInterface1 mainInterface = retrofit.create(ResponseInterface1.class);
+                Call<ListCategoryResponse> call = mainInterface.changeOrderStatus(orderid_adapter,1);
+                call.enqueue(new Callback<ListCategoryResponse>() {
+                    @Override
+                    public void onResponse(Call<ListCategoryResponse> call, retrofit2.Response<ListCategoryResponse> response) {
+                        ListCategoryResponse listCategoryResponseobject = response.body();
+                        int success = Integer.parseInt(response.body().getResponsedata().getSuccess());
+                        try {
+
+
+                            if(success==1)
+                            {
+                                holder.pd_pending.setText("Approved");
+                                holder.pd_pending.setTextColor(ContextCompat.getColor(context, white));
+                                holder.pd_pending.setBackgroundColor(ContextCompat.getColor(context, green));
+                                Toast.makeText(context,"Aproved",Toast.LENGTH_LONG).show();
+                            }
+                            else {
+                                Toast.makeText(context,"No Data found",Toast.LENGTH_LONG).show();
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            Toast.makeText(context,"something went wrong",Toast.LENGTH_SHORT).show();
+                        }
+
+
+
+                        dialog.dismiss();
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<ListCategoryResponse> call, Throwable t) {
+dialog.dismiss();
+                    }
+                });
 
 
 
@@ -145,13 +163,15 @@ public class PendingNotificationAdapter extends RecyclerView.Adapter<PendingNoti
         return pending_orders_list_array_item.size();
     }
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        TextView name_pending,address_pending;// init the item view's
+        TextView name_pending,address_pending,q_pending,p_pending;// init the item view's
         Button pd_pending;
         public MyViewHolder(View itemView) {
             super(itemView);
             name_pending = (TextView) itemView.findViewById(R.id.Title_pending);
             pd_pending=(Button)itemView.findViewById(R.id.pending_pending);
             address_pending=(TextView)itemView.findViewById(R.id.address_pending);
+            q_pending=(TextView)itemView.findViewById(R.id.Quantity_pending);
+            p_pending=(TextView)itemView.findViewById(R.id.Price_pending);
             // get the reference of item view's
 
         }

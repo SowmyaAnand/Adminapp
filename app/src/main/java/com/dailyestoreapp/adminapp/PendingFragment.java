@@ -1,5 +1,6 @@
 package com.dailyestoreapp.adminapp;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +18,8 @@ import com.dailyestoreapp.adminapp.ui.Messages.MessagesViewModel;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import cc.cloudist.acplibrary.ACProgressConstant;
+import cc.cloudist.acplibrary.ACProgressFlower;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
@@ -26,13 +29,15 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class PendingFragment extends Fragment {
     RecyclerView recyclerView_offers;
-
+ACProgressFlower dialog;
     PendingNotificationAdapter customAdapter_offers_pending;
    // ArrayList personNames_offers = new ArrayList<>(Arrays.asList("ITEM1", "ITEM2", "ITEM3", "ITEM4", "ITEM5", "ITEM6", "ITEM7"));
 
     ArrayList<String> pending_orders_list_array_item = new ArrayList<>();
     ArrayList<String> pending_orders_list_array_address = new ArrayList<>();
     ArrayList<String> pending_orders_list_array_satus = new ArrayList<>();
+    ArrayList<String> orders_list_array_quantity_pending = new ArrayList<>();
+    ArrayList<String> orders_list_array_amount_pending = new ArrayList<>();
     ArrayList<Integer> pending_orders_list_array_orderid = new ArrayList<>();
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -45,14 +50,18 @@ public class PendingFragment extends Fragment {
         recyclerView_offers.setLayoutManager(linearLayoutManager);
         //  call the constructor of CustomAdapter to send the reference and data to Adapter
 
-        customAdapter_offers_pending = new PendingNotificationAdapter(root.getContext(),pending_orders_list_array_address,pending_orders_list_array_item,pending_orders_list_array_satus,pending_orders_list_array_orderid);
+        customAdapter_offers_pending = new PendingNotificationAdapter(root.getContext(),pending_orders_list_array_address,pending_orders_list_array_item,pending_orders_list_array_satus,pending_orders_list_array_orderid,orders_list_array_quantity_pending,orders_list_array_amount_pending);
         recyclerView_offers.setAdapter(customAdapter_offers_pending);
         return root;
 
     }
     private void pending_orders_list()
     {
-
+        dialog = new ACProgressFlower.Builder(getContext())
+                .direction(ACProgressConstant.DIRECT_CLOCKWISE)
+                .borderPadding(1)
+                .fadeColor(Color.WHITE).build();
+        dialog.show();
 
         String url = "http://dailyestoreapp.com/dailyestore/api/";
 
@@ -90,18 +99,22 @@ public class PendingFragment extends Fragment {
                             String item_name = dt.getItemName();
                             String status = dt.getStatus();
                             int st = Integer.parseInt(status);
-                            if(!pending_orders_list_array_item.contains(item_name)&&(st == 0) )
+                            if(st == 0)
                             {
 
 
-                                String itemname_orders = dt.getItemId();
+                                String itemname_orders = dt.getItemName();
                                 String address = dt.getAddress();
                                 String orderid = dt.getOrderId();
                                 int order_no = Integer.parseInt(orderid);
+                                String quantity_pending = dt.getQuantity();
+                                String amount_pending = dt.getPrice();
                                 pending_orders_list_array_satus.add(status);
                                 pending_orders_list_array_address.add(address);
                                 pending_orders_list_array_item.add(itemname_orders);
                                 pending_orders_list_array_orderid.add(order_no);
+                                orders_list_array_quantity_pending.add(quantity_pending);
+                                orders_list_array_amount_pending.add(amount_pending);
                             }
 
                         }
@@ -115,12 +128,12 @@ public class PendingFragment extends Fragment {
                     e.printStackTrace();
                     Toast.makeText(getContext(),"something went wrong",Toast.LENGTH_SHORT).show();
                 }
-
+dialog.dismiss();
             }
 
             @Override
             public void onFailure(Call<ListCategoryResponse> call, Throwable t) {
-
+dialog.dismiss();
             }
         });
 

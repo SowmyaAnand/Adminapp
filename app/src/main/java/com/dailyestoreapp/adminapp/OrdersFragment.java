@@ -37,10 +37,11 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class OrdersFragment extends Fragment {
     RecyclerView recyclerView_offers;
-
+ACProgressFlower dialog;
     OrdersAdapter customAdapter_offers_orders;
    // ArrayList personNames_offers = new ArrayList<>(Arrays.asList("ITEM1", "ITEM2", "ITEM3", "ITEM4", "ITEM5", "ITEM6", "ITEM7"));
     ArrayList<String> orders_list_array_item = new ArrayList<>();
+    ArrayList<String> orders_list_array_item_address = new ArrayList<>();
     ArrayList<String> orders_list_array_quantity = new ArrayList<>();
     ArrayList<String> orders_list_array_amount = new ArrayList<>();
     ArrayList<String> orders_list_array_date = new ArrayList<>();
@@ -55,14 +56,18 @@ public class OrdersFragment extends Fragment {
         recyclerView_offers.setLayoutManager(linearLayoutManager);
         //  call the constructor of CustomAdapter to send the reference and data to Adapter
 
-        customAdapter_offers_orders = new OrdersAdapter(root.getContext(), orders_list_array_item,orders_list_array_quantity,orders_list_array_amount,orders_list_array_date);
+        customAdapter_offers_orders = new OrdersAdapter(root.getContext(), orders_list_array_item,orders_list_array_quantity,orders_list_array_amount,orders_list_array_date,orders_list_array_item_address);
         recyclerView_offers.setAdapter(customAdapter_offers_orders);
 
         return root;
     }
     private void orders_list()
     {
-
+        dialog = new ACProgressFlower.Builder(getContext())
+                .direction(ACProgressConstant.DIRECT_CLOCKWISE)
+                .borderPadding(1)
+                .fadeColor(Color.WHITE).build();
+        dialog.show();
 
         String url = "http://dailyestoreapp.com/dailyestore/api/";
 
@@ -96,21 +101,30 @@ public class OrdersFragment extends Fragment {
                         {
 
                             String item_name = response.body().getResponsedata().getData().get(i).getItemName();
-                            if(!orders_list_array_item.contains(item_name))
-                            {
+                           // if(!orders_list_array_item.contains(item_name))
+                           // {
 
                                 ListCategoryResponseData dt = response.body().getResponsedata().getData().get(i);
-                                String itemname_orders = "ItemName";
+                            String status = dt.getStatus();
+                            int st = Integer.parseInt(status);
+                            if(st == 1)
+                            {
+                                String itemname_orders = dt.getItemName();
                                 String quantity = dt.getQuantity();
                                 String amount = dt.getPrice();
                                 String date = dt.getCreatedAt();
+                                String add= dt.getAddress();
                                 orders_list_array_quantity.add(quantity);
                                 orders_list_array_item.add(itemname_orders);
                                 orders_list_array_amount.add(amount);
                                 orders_list_array_date.add(date);
+                                orders_list_array_item_address.add(add);
                             }
 
+                           // }
+
                         }
+                        Log.e("orders","the values are "+orders_list_array_item+orders_list_array_quantity+orders_list_array_amount+orders_list_array_date);
 
                         customAdapter_offers_orders.notifyDataSetChanged();
                     }
@@ -121,12 +135,12 @@ public class OrdersFragment extends Fragment {
                     e.printStackTrace();
                     Toast.makeText(getContext(),"something went wrong",Toast.LENGTH_SHORT).show();
                 }
-
+dialog.dismiss();
             }
 
             @Override
             public void onFailure(Call<ListCategoryResponse> call, Throwable t) {
-
+dialog.dismiss();
             }
         });
 
