@@ -55,7 +55,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class Offers_ItemAdapter extends RecyclerView.Adapter<Offers_ItemAdapter.MyViewHolder> {
     ArrayList personNames = new ArrayList<String>();
     Context context;
-
+    String Item_d;
     ArrayList<Integer> adapteritem_id = new ArrayList<>();
     ArrayList<Integer> item_id_offerss = new ArrayList<>();
     ArrayList<String>Images=new ArrayList<>();
@@ -96,7 +96,7 @@ ArrayList<Integer> it_quantity = new ArrayList<>() ;
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
 Log.e(tag,"items price"+position);
         // set the data in items
-        String name = (String) personNames.get(position);
+        final String name = (String) personNames.get(position);
         Log.e(tag,"items price"+personNames);
         holder.name.setText(name);
         if(Images.size()>0)
@@ -134,20 +134,40 @@ if(item_status_adapter.size()>0)
         }
         if(item_id_offerss.get(position)>0)
         {
+            holder.adddoffer_adapter.setVisibility(View.GONE);
             String ofr = String.valueOf(item_id_offerss.get(position));
             String ofr_t =ofr+"% OFF";
             holder.offer_percent.setText(ofr_t);
+
         }
-        String Item_d = Item_desc.get(position);
+
+        Item_d = Item_desc.get(position);
             if(Item_d.equals("none"))
             {
 
             }
             else
             {
+                holder.adddoffer_adapter.setVisibility(View.GONE);
                 holder.offer_desc.setText(Item_d);
-            }
 
+            }
+        if((item_id_offerss.get(position)==0)&&(Item_d.equals("none")))
+        {
+
+
+            holder.adddoffer_adapter.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Integer idd= adapteritem_id.get(position);
+                    String name_ofr = (String) personNames.get(position);
+                    Intent next = new Intent(context,OffersActivity.class);
+                    next.putExtra("id",idd);
+                    next.putExtra("name",name_ofr);
+                    context.startActivity(next);
+                }
+            });
+        }
 
 
         //holder.i_price.setText(it_price.get(position));
@@ -174,6 +194,7 @@ holder.outofstock.setOnClickListener(new View.OnClickListener() {
         {
 status_param=1;
         }
+
          final int item_clicked_id = adapteritem_id.get(position);
         Log.e("url","url");
         dialog = new ACProgressFlower.Builder(context)
@@ -249,7 +270,7 @@ dialog.dismiss();
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        TextView name, i_quantityy,i_price,offer_percent,offer_desc;// init the item view's
+        TextView name, i_quantityy,i_price,offer_percent,offer_desc,adddoffer_adapter;// init the item view's
         Button outofstock;
 
         ImageView image_image;
@@ -262,6 +283,7 @@ dialog.dismiss();
             image_image=(ImageView)itemView.findViewById(R.id.im);
             offer_percent=(TextView)itemView.findViewById(R.id.percentage_offer);
 offer_desc=(TextView)itemView.findViewById(R.id.offerdesc);
+            adddoffer_adapter=(TextView)itemView.findViewById(R.id.adddoffer);
         }
     }
 
