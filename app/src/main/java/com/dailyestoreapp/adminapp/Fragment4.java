@@ -59,10 +59,12 @@ private Integer selectedSubCategoryNo;
     ArrayList<String> Sub_categories = new ArrayList<>();
     ArrayList<String> item_image = new ArrayList<>();
     ArrayList<String> Item_categories = new ArrayList<>();
+    ArrayList<String> Item_categories_offer_desc = new ArrayList<>();
     ArrayList<Integer> Item_Quantity = new ArrayList<>();
     ArrayList<Integer> Item_Price = new ArrayList<>();
     ArrayList<Integer> Sub_categories_id = new ArrayList<>();
     ArrayList<Integer> item_id = new ArrayList<>();
+    ArrayList<Integer> item_id_offer = new ArrayList<>();
     ArrayList<Integer> item_id_status = new ArrayList<>();
     ArrayList personNames_offers = new ArrayList<>(Arrays.asList("farg4ITEM1", "ITEM2", "ITEM3", "ITEM4", "ITEM5", "ITEM6"));
     RecyclerView recyclerView_offers,itemlistingcategory_offers;
@@ -258,6 +260,8 @@ public void change()
                     Item_Price.clear();
                     item_id.clear();
                     item_id_status.clear();
+                    Item_categories_offer_desc.clear();
+                    item_id_offer.clear();
                     if(success.equals("1"))
                     {
                         int data_length = response.body().getResponsedata().getData().size();
@@ -275,6 +279,8 @@ public void change()
                         Integer item_price = Integer.valueOf(response.body().getResponsedata().getData().get(i).getPrice());
                         Integer item_status = Integer.valueOf(response.body().getResponsedata().getData().get(i).getStatus());
                         String imageurl = response.body().getResponsedata().getData().get(i).getImage();
+                        Integer offer_percent =Integer.valueOf(response.body().getResponsedata().getData().get(i).getoffer());
+                        String offer_desc = response.body().getResponsedata().getData().get(i).getofdescription();
                         String imageurl_total=url1+imageurl;
                         Log.e(tag,"imageurl"+url1+imageurl);
                         Item_categories.add(item_name);
@@ -283,6 +289,8 @@ public void change()
                         item_id.add(it_id);
                         item_id_status.add(item_status);
                         item_image.add(imageurl_total);
+                        Item_categories_offer_desc.add(offer_desc);
+                        item_id_offer.add(offer_percent);
 
 
 
@@ -346,7 +354,7 @@ dialog.dismiss();
         recyclerView_offers.setLayoutManager(linearLayoutManager);
         //  call the constructor of CustomAdapter to send the reference and data to Adapter
 
-        customAdapter_offers = new Offers_ItemAdapter(rootView.getContext(), Item_categories,item_image,Item_Quantity,Item_Price,item_id,item_id_status);
+        customAdapter_offers = new Offers_ItemAdapter(rootView.getContext(), Item_categories,item_image,Item_Quantity,Item_Price,item_id,item_id_status,Item_categories_offer_desc,item_id_offer);
         recyclerView_offers.setAdapter(customAdapter_offers);
         // GridView gridview = (GridView) rootView.findViewById(R.id.gridview);
         // gridview.setAdapter(new ImageAdapter(rootView.getContext()));

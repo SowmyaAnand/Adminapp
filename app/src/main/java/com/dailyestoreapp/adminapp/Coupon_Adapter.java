@@ -90,8 +90,25 @@ public class Coupon_Adapter extends RecyclerView.Adapter<Coupon_Adapter.MyViewHo
 
         Log.e("adapater",coup_name+coup_desc+coup_pr);
         holder.coupon_name.setText(coup_name);
+        if(coup_desc.equals(""))
+        {
+            holder.coupon_desc.setVisibility(View.GONE);
+        }
+        else
+        {
+            holder.coupon_desc.setVisibility(View.VISIBLE);
+            holder.coupon_desc.setText(coup_desc);
+        }
         holder.coupon_desc.setText(coup_desc);
-      holder.coupon_percent_adapter.setText(coup_pr+"% OFF");
+        if(coup_pr==0)
+        {
+holder.coupon_percent_adapter.setVisibility(View.GONE);
+        }
+        else {
+            holder.coupon_percent_adapter.setVisibility(View.VISIBLE);
+            holder.coupon_percent_adapter.setText(coup_pr+"% OFF");
+        }
+
       if(coupon_status.get(position)==1)
       {
           holder.act.setText("ACTIVE");

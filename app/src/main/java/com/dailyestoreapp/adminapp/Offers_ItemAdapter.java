@@ -57,7 +57,9 @@ public class Offers_ItemAdapter extends RecyclerView.Adapter<Offers_ItemAdapter.
     Context context;
 
     ArrayList<Integer> adapteritem_id = new ArrayList<>();
+    ArrayList<Integer> item_id_offerss = new ArrayList<>();
     ArrayList<String>Images=new ArrayList<>();
+    ArrayList<String>Item_desc=new ArrayList<>();
 ArrayList<Integer> it_quantity = new ArrayList<>() ;
     ArrayList<Integer> it_price = new ArrayList<>();
     ArrayList<String> lts = new ArrayList<String>();
@@ -67,12 +69,14 @@ ArrayList<Integer> it_quantity = new ArrayList<>() ;
     String text_item_status;
     private String tag ="OfferItemadapter";
     ACProgressFlower dialog;
-    public Offers_ItemAdapter(Context context, ArrayList personNames, ArrayList<String> Images,ArrayList itm_quantity,ArrayList itm_price,ArrayList adpaterit_id,ArrayList item_status) {
+    public Offers_ItemAdapter(Context context, ArrayList personNames, ArrayList<String> Images,ArrayList itm_quantity,ArrayList itm_price,ArrayList adpaterit_id,ArrayList item_status,ArrayList item_description,ArrayList item_offers) {
         this.context = context;
         this.personNames = personNames;
         this.Images=Images;
         this.it_price=itm_price;
         this.it_quantity=itm_quantity;
+        this.Item_desc=item_description;
+        this.item_id_offerss=item_offers;
         this.item_status_adapter=item_status;
         this.lts.addAll(personNames);
         this.adapteritem_id= adpaterit_id;
@@ -128,6 +132,24 @@ if(item_status_adapter.size()>0)
             String prce  = String.valueOf(it_price.get(position));
             holder.i_price.setText(prce);
         }
+        if(item_id_offerss.get(position)>0)
+        {
+            String ofr = String.valueOf(item_id_offerss.get(position));
+            String ofr_t =ofr+"% OFF";
+            holder.offer_percent.setText(ofr_t);
+        }
+        String Item_d = Item_desc.get(position);
+            if(Item_d.equals("none"))
+            {
+
+            }
+            else
+            {
+                holder.offer_desc.setText(Item_d);
+            }
+
+
+
         //holder.i_price.setText(it_price.get(position));
         //holder.i_quantityy.setText(it_quantity.get(position));
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -137,6 +159,7 @@ if(item_status_adapter.size()>0)
 
             }
         });
+
 holder.outofstock.setOnClickListener(new View.OnClickListener() {
     @Override
     public void onClick(View v) {
@@ -226,8 +249,9 @@ dialog.dismiss();
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        TextView name, i_quantityy,i_price;// init the item view's
+        TextView name, i_quantityy,i_price,offer_percent,offer_desc;// init the item view's
         Button outofstock;
+
         ImageView image_image;
         public MyViewHolder(View itemView) {
             super(itemView);
@@ -236,7 +260,8 @@ dialog.dismiss();
             i_price = (TextView)itemView.findViewById(R.id.prce);
             outofstock = (Button) itemView.findViewById(R.id.outofstock);
             image_image=(ImageView)itemView.findViewById(R.id.im);
-
+            offer_percent=(TextView)itemView.findViewById(R.id.percentage_offer);
+offer_desc=(TextView)itemView.findViewById(R.id.offerdesc);
         }
     }
 

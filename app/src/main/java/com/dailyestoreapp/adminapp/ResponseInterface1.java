@@ -23,12 +23,12 @@ public interface ResponseInterface1 {
     @FormUrlEncoded
     @POST("listSubCategory")
     Call<ListCategoryResponse> SubCategory(@Field("typeId") int id);
-    @FormUrlEncoded
-    @POST("subItemList")
-    Call<ListCategoryResponse> Items(@Field("subId") int id);
 //    @FormUrlEncoded
-//    @POST("subItemListWithOfferPercentage")
+//    @POST("subItemList")
 //    Call<ListCategoryResponse> Items(@Field("subId") int id);
+    @FormUrlEncoded
+    @POST("subItemListWithOfferPercentage")
+    Call<ListCategoryResponse> Items(@Field("subId") int id);
     @FormUrlEncoded
     @POST("addCoupon")
     Call<LoginResponse> addcoupon(@Field("description") String description,

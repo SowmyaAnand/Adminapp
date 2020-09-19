@@ -52,6 +52,8 @@ public class Fragment2 extends Fragment   {
     ArrayList<Integer> Item_Price = new ArrayList<>();
     ArrayList<Integer> Sub_categories_id = new ArrayList<>();
     ArrayList<Integer> item_id = new ArrayList<>();
+    ArrayList<Integer> item_id_offer = new ArrayList<>();
+    ArrayList<String> Item_categories_offer_desc = new ArrayList<>();
     ArrayList<Integer> item_id_status = new ArrayList<>();
     ArrayList personNames_offers = new ArrayList<>(Arrays.asList("farg4ITEM1", "ITEM2", "ITEM3", "ITEM4", "ITEM5", "ITEM6"));
     RecyclerView recyclerView_offers,itemlistingcategory_offers;
@@ -321,7 +323,7 @@ public class Fragment2 extends Fragment   {
         recyclerView_offers.setLayoutManager(linearLayoutManager);
         //  call the constructor of CustomAdapter to send the reference and data to Adapter
 
-        customAdapter_offers = new Offers_ItemAdapter(rootView.getContext(), Item_categories,item_image,Item_Quantity,Item_Price,item_id,item_id_status);
+        customAdapter_offers = new Offers_ItemAdapter(rootView.getContext(), Item_categories,item_image,Item_Quantity,Item_Price,item_id,item_id_status,Item_categories_offer_desc,item_id_offer);
         recyclerView_offers.setAdapter(customAdapter_offers);
         // GridView gridview = (GridView) rootView.findViewById(R.id.gridview);
         // gridview.setAdapter(new ImageAdapter(rootView.getContext()));

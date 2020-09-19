@@ -134,10 +134,15 @@ public class ListCategoryResponseData {
     @SerializedName("couponId")
     @Expose
     private String couponId;
+    @SerializedName("offer")
+    @Expose
+    private String offer;
     @SerializedName("couponName")
     @Expose
     private String couponName;
-
+    @SerializedName("ofdescription")
+    @Expose
+    private String ofdescription;
     @SerializedName("percent")
     @Expose
     private String percent;
@@ -148,6 +153,13 @@ public class ListCategoryResponseData {
 
     public void setCouponId(String couponId) {
         this.couponId = couponId;
+    }
+    public String getoffer() {
+        return offer;
+    }
+
+    public void setoffer(String offer) {
+        this.offer = offer;
     }
 
     public String getCouponName() {
@@ -216,6 +228,14 @@ public class ListCategoryResponseData {
 
     public void setCategoryName(String categoryName) {
         this.categoryName = categoryName;
+    }
+
+    public String getofdescription() {
+        return ofdescription;
+    }
+
+    public void setofdescription(String ofdescription) {
+        this.ofdescription = ofdescription;
     }
 
     public String getCategoryImage() {

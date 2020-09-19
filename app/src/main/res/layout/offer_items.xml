@@ -115,10 +115,9 @@
 
 
         <TextView
-            android:id="@+id/unread_check"
+            android:id="@+id/percentage_offer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="8% Off"
             android:textColor="@color/colorPrimary"
             android:layout_alignParentRight="true"
             />
@@ -154,9 +153,9 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
                 android:textColor="@color/colorPrimary"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="13sp"
+                android:textSize="15sp"
                 android:fontFamily="@font/roboto_light"
                 android:text=""
                 />
