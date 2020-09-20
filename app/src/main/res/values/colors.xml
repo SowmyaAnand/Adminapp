@@ -12,4 +12,5 @@
     <color name="active">#ED1A63</color>
     <color name = "inactive">#696969</color>
     <color name ="red">#FF0000</color>
+    <color name="gray">#DCDCDC</color>
 </resources>

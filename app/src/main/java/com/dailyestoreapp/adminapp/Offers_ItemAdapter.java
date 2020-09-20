@@ -55,7 +55,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class Offers_ItemAdapter extends RecyclerView.Adapter<Offers_ItemAdapter.MyViewHolder> {
     ArrayList personNames = new ArrayList<String>();
     Context context;
-    String Item_d;
+
     ArrayList<Integer> adapteritem_id = new ArrayList<>();
     ArrayList<Integer> item_id_offerss = new ArrayList<>();
     ArrayList<String>Images=new ArrayList<>();
@@ -94,7 +94,7 @@ ArrayList<Integer> it_quantity = new ArrayList<>() ;
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
-Log.e(tag,"items price"+position);
+Log.e(tag,"items price"+Item_desc);
         // set the data in items
         final String name = (String) personNames.get(position);
         Log.e(tag,"items price"+personNames);
@@ -132,42 +132,78 @@ if(item_status_adapter.size()>0)
             String prce  = String.valueOf(it_price.get(position));
             holder.i_price.setText(prce);
         }
-        if(item_id_offerss.get(position)>0)
+        if(item_id_offerss.size()>0)
         {
-            holder.adddoffer_adapter.setVisibility(View.GONE);
-            String ofr = String.valueOf(item_id_offerss.get(position));
-            String ofr_t =ofr+"% OFF";
-            holder.offer_percent.setText(ofr_t);
-
-        }
-
-        Item_d = Item_desc.get(position);
-            if(Item_d.equals("none"))
+            int i= item_id_offerss.get(position);
+            if(i>0)
             {
-
+                String ofr = String.valueOf(item_id_offerss.get(position));
+                String ofr_t =ofr+"% OFF";
+                holder.offer_percent.setText(ofr_t);
             }
             else
             {
-                holder.adddoffer_adapter.setVisibility(View.GONE);
-                holder.offer_desc.setText(Item_d);
-
+                String ofr = String.valueOf("");
+                holder.offer_percent.setText(ofr);
             }
-        if((item_id_offerss.get(position)==0)&&(Item_d.equals("none")))
-        {
 
-
-            holder.adddoffer_adapter.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Integer idd= adapteritem_id.get(position);
-                    String name_ofr = (String) personNames.get(position);
-                    Intent next = new Intent(context,OffersActivity.class);
-                    next.putExtra("id",idd);
-                    next.putExtra("name",name_ofr);
-                    context.startActivity(next);
-                }
-            });
         }
+        if(Item_desc.size()>0)
+        {
+            String d=Item_desc.get(position);
+            if(d.contains("none"))
+            {
+                holder.offer_desc.setText("");
+            }
+            else
+            {
+                holder.offer_desc.setText(Item_desc.get(position));
+            }
+
+        }
+String p= String.valueOf(holder.offer_percent.getText());
+        String dd = holder.offer_desc.getText().toString();
+//        if(p.equals("")&&dd.equals(""))
+//        {
+//            holder.adddoffer_adapter.setVisibility(View.VISIBLE);
+//        }
+
+//        if(ofr_pcntg>0)
+//        {
+//            holder.adddoffer_adapter.setVisibility(View.GONE);
+//            String ofr = String.valueOf(item_id_offerss.get(position));
+//            String ofr_t =ofr+"% OFF";
+//            holder.offer_percent.setText(ofr_t);
+//
+//        }
+
+//        holder.adddoffer_adapter.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    Integer idd= adapteritem_id.get(position);
+//                    String name_ofr = (String) personNames.get(position);
+//                    Intent next = new Intent(context,OffersActivity.class);
+//                    next.putExtra("id",idd);
+//                    next.putExtra("name",name_ofr);
+//                    context.startActivity(next);
+//                }
+//            });
+//            if(Item_des.equals("none"))
+//            {
+//
+//            }
+//            else
+//            {
+//                holder.adddoffer_adapter.setVisibility(View.GONE);
+//                holder.offer_desc.setText(Item_des);
+//
+//            }
+//        if((item_id_offerss.get(position)==0)&&(Item_des.equals("none")))
+//        {
+//
+//
+//
+//        }
 
 
         //holder.i_price.setText(it_price.get(position));

@@ -8,10 +8,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
+
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SearchView;
 import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -28,6 +33,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Locale;
 import java.util.Set;
 
 import cc.cloudist.acplibrary.ACProgressConstant;
@@ -43,15 +50,19 @@ public class Fragment4 extends Fragment   {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 private String tag = "fragment4";
+    SearchView sr;
+
+
 private Integer selectedSubCategoryNo;
     int start = 0,limit = 3;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-
+ImageView refresh;
     ACProgressFlower dialog;
     ProgressBar progressBar;
+    ArrayList<String> lts = new ArrayList<String>();
   //  ArrayList Images_sub = new ArrayList<>(Arrays.asList(R.drawable.h1,R.drawable.h2, R.drawable.h1, R.drawable.h2, R.drawable.h1));
     ArrayList Images_images = new ArrayList<>(Arrays.asList(R.drawable.home,R.drawable.home, R.drawable.home, R.drawable.home, R.drawable.home,R.drawable.home));
     ArrayList personNames = new ArrayList<>(Arrays.asList("ITEM1", "ITEM2", "ITEM3", "ITEM4", "ITEM5", "ITEM6"));
@@ -66,6 +77,21 @@ private Integer selectedSubCategoryNo;
     ArrayList<Integer> item_id = new ArrayList<>();
     ArrayList<Integer> item_id_offer = new ArrayList<>();
     ArrayList<Integer> item_id_status = new ArrayList<>();
+    ArrayList<String> original_Item_categories_lts = new ArrayList<>();
+    ArrayList<String> item_image_lts = new ArrayList<>();
+    ArrayList<Integer> Item_Quantity_lts = new ArrayList<>();
+    ArrayList<Integer> Item_Price_lts = new ArrayList<>();
+    ArrayList<Integer> item_id_lts = new ArrayList<>();
+    ArrayList<Integer> item_id_status_lts = new ArrayList<>();
+    ArrayList<String> Item_categories_offer_desc_lts = new ArrayList<>();
+    ArrayList<Integer> item_id_offer_lts = new ArrayList<>();
+    ArrayList<String> original_item_image_lts = new ArrayList<>();
+    ArrayList<Integer> original_Item_Quantity_lts = new ArrayList<>();
+    ArrayList<Integer> original_Item_Price_lts = new ArrayList<>();
+    ArrayList<Integer> original_item_id_lts = new ArrayList<>();
+    ArrayList<Integer> original_item_id_status_lts = new ArrayList<>();
+    ArrayList<String> original_Item_categories_offer_desc_lts = new ArrayList<>();
+    ArrayList<Integer> original_item_id_offer_lts = new ArrayList<>();
     ArrayList personNames_offers = new ArrayList<>(Arrays.asList("farg4ITEM1", "ITEM2", "ITEM3", "ITEM4", "ITEM5", "ITEM6"));
     RecyclerView recyclerView_offers,itemlistingcategory_offers;
     LinearLayoutManager linearLayoutManager_offers,linearLayoutManager2_offers;
@@ -262,6 +288,14 @@ public void change()
                     item_id_status.clear();
                     Item_categories_offer_desc.clear();
                     item_id_offer.clear();
+                    original_Item_categories_lts.clear();
+                    original_Item_Quantity_lts.clear();
+                    original_Item_Price_lts.clear();
+                    original_item_id_lts.clear();
+                    original_item_id_status_lts.clear();
+                    original_item_image_lts.clear();
+                    original_Item_categories_offer_desc_lts.clear();
+                    original_item_id_offer_lts.clear();
                     if(success.equals("1"))
                     {
                         int data_length = response.body().getResponsedata().getData().size();
@@ -295,11 +329,18 @@ public void change()
 
 
                     }
-
+                        original_Item_categories_lts.addAll(Item_categories);
+                        original_Item_Quantity_lts.addAll(Item_Quantity);
+                        original_Item_Price_lts.addAll(Item_Price);
+                        original_item_id_lts.addAll(item_id);
+                        original_item_id_status_lts.addAll(item_id_status);
+                        original_item_image_lts.addAll(item_image);
+                        original_Item_categories_offer_desc_lts.addAll(Item_categories_offer_desc);
+                        original_item_id_offer_lts.addAll(item_id_offer);
                     customAdapter_offers.notifyDataSetChanged();
                     }
                     else {
-                        Toast.makeText(getContext(),"No data found in next category",Toast.LENGTH_LONG).show();
+                      //  Toast.makeText(getContext(),"No data found in next category",Toast.LENGTH_LONG).show();
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -322,6 +363,7 @@ dialog.dismiss();
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+
         change();
         subcategoryactivate();
         Log.e(tag,"onactivityview called");
@@ -335,7 +377,93 @@ dialog.dismiss();
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
         //nested recyclerview
 
+        sr = (SearchView)rootView.findViewById(R.id.searchview);
 
+        sr.setQueryHint("Type here to search( Based on sub category ) ");
+        sr.setBackgroundColor(getResources().getColor(R.color.white));
+        sr.setIconifiedByDefault(false);
+        EditText txtSearch = ((EditText)sr.findViewById(androidx.appcompat.R.id.search_src_text));
+      //  txtSearch.setHint("Type here to search");
+        txtSearch.setHintTextColor(Color.LTGRAY);
+        txtSearch.setTextColor(getResources().getColor(R.color.black));
+        txtSearch.setTextSize(12);
+        sr.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                Log.e("text","textclose");
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+Log.e("the text is","text"+newText);
+//customAdapter_offers.filter(newText);
+                lts.addAll(Item_categories);
+                item_image_lts.addAll(item_image);
+                Item_Quantity_lts.addAll(Item_Quantity);
+                Item_Price_lts.addAll(Item_Price);
+                item_id_lts.addAll(item_id);
+                item_id_status_lts.addAll(item_id_status);
+                Item_categories_offer_desc_lts.addAll(Item_categories_offer_desc);
+                item_id_offer_lts.addAll(item_id_offer);
+                Log.e("texting if", "persons=" + newText);
+               // newText = newText.toLowerCase(Locale.getDefault());
+                Log.e("texting if2", "persons=" + newText);
+                Item_categories.clear();
+                item_image.clear();
+                Item_Quantity.clear();
+                Item_Price.clear();
+                item_id.clear();
+                item_id_status.clear();
+                Item_categories_offer_desc.clear();
+                item_id_offer.clear();
+                Iterator itr = Item_categories.iterator();
+                if (newText.length() == 0) {
+                    Log.e("texting if3", "persons=" + newText);
+                    Item_categories.addAll(original_Item_categories_lts);
+                    item_image.addAll(original_item_image_lts);
+                    Item_Quantity.addAll(original_Item_Quantity_lts);
+                    Item_Price.addAll(original_Item_Price_lts);
+                    item_id.addAll(original_item_id_lts);
+                    item_id_status.addAll(original_item_id_status_lts);
+                    Item_categories_offer_desc.addAll(original_Item_categories_offer_desc_lts);
+                    item_id_offer.addAll(original_item_id_offer_lts);
+                } else {
+                    for (int i = 0; i < lts.size(); i++) {
+                        Log.e("texting else", "persons=" + lts.get(i));
+                        String s = (String) lts.get(i); String s_img = item_image_lts.get(i);
+                        Integer s_qnty =Item_Quantity_lts.get(i);
+                        Integer s_price =Item_Price_lts.get(i);
+                        Integer s_id =item_id_lts.get(i);
+                        Integer s_status = item_id_status_lts.get(i);
+                        String s_desc =Item_categories_offer_desc_lts.get(i);
+                        Integer s_offer =item_id_offer_lts.get(i);
+
+                        if (s.toLowerCase(Locale.getDefault()).contains(newText)) {
+                            if(Item_categories.contains(s))
+                            {
+
+                            }
+                            else
+                            {
+                                Item_categories.add(s);
+                                item_image.add(s_img);
+                                Item_Quantity.add(s_qnty);
+                                Item_Price.add(s_price);
+                                item_id.add(s_id);
+                                item_id_status.add(s_status);
+                                Item_categories_offer_desc.add(s_desc);
+                                item_id_offer.add(s_offer);
+                            }
+
+                        }
+                    }
+                }
+                Log.e("text", "persons=" + Item_categories);
+                customAdapter_offers.notifyDataSetChanged();
+                return true;
+            }
+        });
        //recyclerview
         itemlistingcategory_offers = (RecyclerView) rootView.findViewById(R.id.recyclerView_categories_offer);
 
@@ -348,6 +476,13 @@ dialog.dismiss();
         customadapter2_offers = new test(rootView.getContext(), Sub_categories,Images_sub,Sub_categories_id,communication);
         itemlistingcategory_offers.setAdapter(customadapter2_offers);
         //second recyclerview
+        refresh = (ImageView)rootView.findViewById(R.id.refresh);
+        refresh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                subcategoryactivate();
+            }
+        });
         recyclerView_offers = (RecyclerView) rootView.findViewById(R.id.itemrecycler_offers);
         // set a LinearLayoutManager with default vertical orientation
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(rootView.getContext());
@@ -366,6 +501,13 @@ dialog.dismiss();
         public void respond(Integer name) {
             Log.e(tag," sub name is"+name);
             Item_categories.clear();
+            item_image.clear();
+            Item_Quantity.clear();
+            Item_Price.clear();
+            item_id.clear();
+            item_id_status.clear();
+            Item_categories_offer_desc.clear();
+            item_id_offer.clear();
             selectedSubCategoryNo=name;
            ItemsList(name,0,3);
          //  customAdapter_offers.notifyDataSetChanged();

@@ -36,5 +36,10 @@
         <item name="background">@color/white</item>
         <!-- your other custom widget styles -->
     </style>
-
+<style name="fontforselectedsubcategory">
+    <item name = "android:fontFamily">@font/roboto_medium</item>
+</style>
+    <style name="fontfornormalsubcategory">
+        <item name = "android:fontFamily">@font/roboto_light</item>
+    </style>
 </resources>
