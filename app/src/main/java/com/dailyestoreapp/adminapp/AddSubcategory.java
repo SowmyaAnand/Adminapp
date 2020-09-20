@@ -71,7 +71,7 @@ public class AddSubcategory extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_subcategory);
         Toolbar toolbar = findViewById(R.id.toolbar);
-        toolbar.setTitle("ADD ITEM");
+        toolbar.setTitle("ADD SUB CATEGORY");
         toolbar.setTitleTextColor(Color.WHITE);
         setSupportActionBar(toolbar);
         final ArrayList<String> categoriesEditCategies = new ArrayList<>();

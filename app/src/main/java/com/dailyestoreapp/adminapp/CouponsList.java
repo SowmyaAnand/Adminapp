@@ -1,13 +1,17 @@
 package com.dailyestoreapp.adminapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -36,6 +40,10 @@ EditText coupon_name,desc,offer_percent;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_coupons_list);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.setTitle("ADD COUPON");
+        toolbar.setTitleTextColor(Color.WHITE);
+        setSupportActionBar(toolbar);
         save = findViewById(R.id.save);
         cpName=findViewById(R.id.coupon_name);
         cpDesc=findViewById(R.id.coupon_description);
@@ -50,6 +58,30 @@ EditText coupon_name,desc,offer_percent;
             }
         });
 
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu3, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Log.e("MAin", "Item selected =" + item.getItemId());
+        switch (item.getItemId()) {
+            case R.id.logout:
+                Intent cart = new Intent(CouponsList.this, Login.class);
+                startActivity(cart);
+                return true;
+            case R.id.account:
+                Intent account1 = new Intent(CouponsList.this, MyAccount.class);
+                startActivity(account1);
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
     public class CustomDialogClass1 extends Dialog implements
             android.view.View.OnClickListener {

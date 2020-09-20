@@ -1,12 +1,15 @@
 package com.dailyestoreapp.adminapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -51,6 +54,10 @@ String selectedflyerid="0";
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_firstpop_up);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.setTitle("ADD FIRST POP UP");
+        toolbar.setTitleTextColor(Color.WHITE);
+        setSupportActionBar(toolbar);
         FirstPopup();
         firstpopUp_img =(ImageView)findViewById(R.id.first_popup_img);
         firstpopUp_change_img = (Button)findViewById(R.id.addImageFirstPopup);
@@ -126,6 +133,30 @@ String selectedflyerid="0";
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
                 Exception error = result.getError();
             }
+        }
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu3, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Log.e("MAin", "Item selected =" + item.getItemId());
+        switch (item.getItemId()) {
+            case R.id.logout:
+                Intent cart = new Intent(FirstpopUp.this, Login.class);
+                startActivity(cart);
+                return true;
+            case R.id.account:
+                Intent account1 = new Intent(FirstpopUp.this, MyAccount.class);
+                startActivity(account1);
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
     public void uploadFirstPopup(final File file,final String fromdate){
