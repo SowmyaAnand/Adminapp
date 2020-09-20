@@ -130,7 +130,7 @@ if(item_status_adapter.size()>0)
         if(it_price.size()>0)
         {
             String prce  = String.valueOf(it_price.get(position));
-            holder.i_price.setText(prce);
+            holder.i_price.setText("Rs "+prce+" /-");
         }
         if(item_id_offerss.size()>0)
         {
