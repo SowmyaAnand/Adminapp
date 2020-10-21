@@ -68,7 +68,7 @@ Button addoffer;
     Integer SelectedCategoryNumber=0;
     Integer SelectedSubCategoryNumber=0;
     Spinner Category_spinner;
-EditText post_itemname,post_amount,post_offer,post_description,post_quantity;
+EditText post_itemname,post_amount,post_offer,post_description,post_quantity,qty_val__detail;
     Spinner Sub_Category_spinner;
     public static final String MY_PREFS_NAME = "AdminApp";
     private static final String[] paths = {"item 1", "item 2", "item 3"};
@@ -99,7 +99,7 @@ EditText post_itemname,post_amount,post_offer,post_description,post_quantity;
         imgaeitem = (ImageView) findViewById(R.id.imageitem);
         post_itemname=(EditText)findViewById(R.id.itemname_post);
         post_amount=(EditText)findViewById(R.id.amount_post);
-
+        qty_val__detail=findViewById(R.id.quantity_post_detail);
        post_description=(EditText)findViewById(R.id.description_post);
        post_quantity=(EditText)findViewById(R.id.quantity_post);
         RadioGroup radioGroup = (RadioGroup) findViewById(R.id.cod);
@@ -133,12 +133,14 @@ EditText post_itemname,post_amount,post_offer,post_description,post_quantity;
         post.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String it_name_post,amount_post,description_post,offer_post,quantity_post,cashondelivery,replace;
+                String it_name_post,amount_post,description_post,offer_post,quantity_post,quantity_post_detail,quantity_post_val,cashondelivery,replace;
                 it_name_post=post_itemname.getText().toString();
                 amount_post =post_amount.getText().toString();
                 description_post=post_description.getText().toString();
+                quantity_post_val=post_quantity.getText().toString();
+                quantity_post_detail=qty_val__detail.getText().toString();
+                quantity_post =quantity_post_val+" "+quantity_post_detail;
 
-                quantity_post =post_quantity.getText().toString();
                 Integer sb = Sub_Category_spinner.getSelectedItemPosition();
                 Log.e("addpost","post sub id "+subcategoriescatno_edit.get(sb));
                 Integer ct = Category_spinner.getSelectedItemPosition();
@@ -458,7 +460,7 @@ Log.e("Addpost","subname="+sub_name+catid_dropdown);
                 .addMultipartParameter("description", description)
                 .addMultipartParameter("quantity", quantity)
                 .addMultipartParameter("price", price)
-                .addMultipartParameter("status", "0")
+                .addMultipartParameter("status", "1")
                 .addMultipartParameter("createdBy", "1")
                 .addMultipartParameter("CashOnDelivery", cod)
                 .addMultipartParameter("Refund", refund)

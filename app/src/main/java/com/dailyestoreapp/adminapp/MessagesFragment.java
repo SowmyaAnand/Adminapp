@@ -106,9 +106,8 @@ MsgList();
 //                        String item_name = j1.getString("itemName");
                             String item_name = response.body().getResponsedata().getData().get(i).getMessage();
                           //  Log.e(tag,"message="+response.body().getResponsedata().getData().get(i).getMessage());
-                            personNames_offers.clear();
-                            if(!personNames_offers.contains(item_name))
-                            {
+
+
                               //  String prson_name = response.body().getResponsedata().getData().get(i).getMessage();
                                 String prson_email = response.body().getResponsedata().getData().get(i).getEmail();
                                 String prson_mob = response.body().getResponsedata().getData().get(i).getMobile();
@@ -117,9 +116,9 @@ MsgList();
                                 person__email.add(prson_email);
                                 person__mob.add(prson_mob);
                                 personNames_offers.add(item_name);
-                             //   Log.e(tag,"message="+messages_names);
+                               Log.e("msg","message="+person__email+person__mob+personNames_offers);
 
-                            }
+
 
                         }
 

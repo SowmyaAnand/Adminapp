@@ -71,7 +71,8 @@ ImageView refresh;
     ArrayList<String> item_image = new ArrayList<>();
     ArrayList<String> Item_categories = new ArrayList<>();
     ArrayList<String> Item_categories_offer_desc = new ArrayList<>();
-    ArrayList<Integer> Item_Quantity = new ArrayList<>();
+//    ArrayList<Integer> Item_Quantity = new ArrayList<>();
+ArrayList<String> Item_Quantity = new ArrayList<>();
     ArrayList<Integer> Item_Price = new ArrayList<>();
     ArrayList<Integer> Sub_categories_id = new ArrayList<>();
     ArrayList<Integer> item_id = new ArrayList<>();
@@ -79,14 +80,14 @@ ImageView refresh;
     ArrayList<Integer> item_id_status = new ArrayList<>();
     ArrayList<String> original_Item_categories_lts = new ArrayList<>();
     ArrayList<String> item_image_lts = new ArrayList<>();
-    ArrayList<Integer> Item_Quantity_lts = new ArrayList<>();
+    ArrayList<String> Item_Quantity_lts = new ArrayList<>();
     ArrayList<Integer> Item_Price_lts = new ArrayList<>();
     ArrayList<Integer> item_id_lts = new ArrayList<>();
     ArrayList<Integer> item_id_status_lts = new ArrayList<>();
     ArrayList<String> Item_categories_offer_desc_lts = new ArrayList<>();
     ArrayList<Integer> item_id_offer_lts = new ArrayList<>();
     ArrayList<String> original_item_image_lts = new ArrayList<>();
-    ArrayList<Integer> original_Item_Quantity_lts = new ArrayList<>();
+    ArrayList<String> original_Item_Quantity_lts = new ArrayList<>();
     ArrayList<Integer> original_Item_Price_lts = new ArrayList<>();
     ArrayList<Integer> original_item_id_lts = new ArrayList<>();
     ArrayList<Integer> original_item_id_status_lts = new ArrayList<>();
@@ -309,7 +310,7 @@ public void change()
                         String item_name = response.body().getResponsedata().getData().get(i).getItemName();
                         int it_id = Integer.parseInt(response.body().getResponsedata().getData().get(i).getItemId());
 
-                        Integer item_quant = Integer.valueOf(response.body().getResponsedata().getData().get(i).getQuantity());
+                        String item_quant = response.body().getResponsedata().getData().get(i).getQuantity();
                         Integer item_price = Integer.valueOf(response.body().getResponsedata().getData().get(i).getPrice());
                         Integer item_status = Integer.valueOf(response.body().getResponsedata().getData().get(i).getStatus());
                         String imageurl = response.body().getResponsedata().getData().get(i).getImage();
@@ -363,7 +364,6 @@ dialog.dismiss();
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-
         change();
         subcategoryactivate();
         Log.e(tag,"onactivityview called");
@@ -432,7 +432,7 @@ Log.e("the text is","text"+newText);
                     for (int i = 0; i < lts.size(); i++) {
                         Log.e("texting else", "persons=" + lts.get(i));
                         String s = (String) lts.get(i); String s_img = item_image_lts.get(i);
-                        Integer s_qnty =Item_Quantity_lts.get(i);
+                        String s_qnty =Item_Quantity_lts.get(i);
                         Integer s_price =Item_Price_lts.get(i);
                         Integer s_id =item_id_lts.get(i);
                         Integer s_status = item_id_status_lts.get(i);

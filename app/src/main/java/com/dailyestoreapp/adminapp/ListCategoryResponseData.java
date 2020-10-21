@@ -6,6 +6,14 @@ import com.google.gson.annotations.SerializedName;
 
 public class ListCategoryResponseData {
 
+    @SerializedName("paymentType")
+    @Expose
+    private String paymentType;
+
+    @SerializedName("count")
+    @Expose
+    private String count;
+
     @SerializedName("typeId")
     @Expose
     private String typeId;
@@ -80,9 +88,7 @@ public class ListCategoryResponseData {
     @Expose
     private String cartId;
 
-    @SerializedName("count")
-    @Expose
-    private String count;
+
 
 
     @SerializedName("type")
@@ -218,7 +224,13 @@ public class ListCategoryResponseData {
     }
 
 
+    public String getpaymentType() {
+        return paymentType;
+    }
 
+    public void setpaymentType(String paymentType) {
+        this.paymentType = paymentType;
+    }
 
 
 

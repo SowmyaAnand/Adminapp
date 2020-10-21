@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -38,26 +39,35 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class OrdersFragment extends Fragment {
     RecyclerView recyclerView_offers;
 ACProgressFlower dialog;
+
     OrdersAdapter customAdapter_offers_orders;
    // ArrayList personNames_offers = new ArrayList<>(Arrays.asList("ITEM1", "ITEM2", "ITEM3", "ITEM4", "ITEM5", "ITEM6", "ITEM7"));
    ArrayList<String> item_image_orders = new ArrayList<>();
     ArrayList<String> orders_list_array_item = new ArrayList<>();
+    ArrayList<String> orders_list_array_item_description = new ArrayList<>();
     ArrayList<String> orders_list_array_item_address = new ArrayList<>();
+    ArrayList<String> orders_list_array_item_status = new ArrayList<>();
     ArrayList<String> orders_list_array_quantity = new ArrayList<>();
     ArrayList<String> orders_list_array_amount = new ArrayList<>();
     ArrayList<String> orders_list_array_date = new ArrayList<>();
+
+
+    ArrayList<String> payment_typeadapter_pending = new ArrayList<>();
+    ArrayList<String> count_typeadapter_pending = new ArrayList<>();
+    ArrayList<String> order_Date_pending = new ArrayList<>();
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
         View root = inflater.inflate(R.layout.fragment2, container, false);
         orders_list();
         recyclerView_offers = (RecyclerView) root.findViewById(R.id.itemrecycler_offers);
+
         // set a LinearLayoutManager with default vertical orientation
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(root.getContext());
         recyclerView_offers.setLayoutManager(linearLayoutManager);
         //  call the constructor of CustomAdapter to send the reference and data to Adapter
 
-        customAdapter_offers_orders = new OrdersAdapter(root.getContext(), orders_list_array_item,orders_list_array_quantity,orders_list_array_amount,orders_list_array_date,orders_list_array_item_address,item_image_orders);
+        customAdapter_offers_orders = new OrdersAdapter(root.getContext(), orders_list_array_item,orders_list_array_quantity,orders_list_array_amount,orders_list_array_date,orders_list_array_item_address,item_image_orders,orders_list_array_item_status,payment_typeadapter_pending,count_typeadapter_pending, order_Date_pending,orders_list_array_item_description);
         recyclerView_offers.setAdapter(customAdapter_offers_orders);
 
         return root;
@@ -108,7 +118,7 @@ ACProgressFlower dialog;
                                 ListCategoryResponseData dt = response.body().getResponsedata().getData().get(i);
                             String status = dt.getStatus();
                             int st = Integer.parseInt(status);
-                            if(st == 1)
+                            if(st == 1||st==3)
                             {
                                 String itemname_orders = dt.getItemName();
                                 String quantity = dt.getQuantity();
@@ -117,12 +127,32 @@ ACProgressFlower dialog;
                                 String add= dt.getAddress();
                                 String imageurl = dt.getImage();
                                 String imageurl_total=url1+imageurl;
+                                String order_dt =  dt.getCreatedAt();
+                                String order_desc =dt.getDescription();
+                                String count =dt.getCount();
+                                String pay_type =dt.getpaymentType();
+                                String pay_text="";
+                                if(pay_type.equals("0"))
+                                {
+
+                                    pay_text="CASH ON DELIVERY";
+                                }
+                                else
+                                if(pay_type.equals("1"))
+                                {
+                                    pay_text="PAID ON GPAY";
+                                }
+                                payment_typeadapter_pending.add(pay_text);
+                                count_typeadapter_pending.add(count);
+                                order_Date_pending.add(order_dt);
                                 item_image_orders.add(imageurl_total);
+                                orders_list_array_item_description.add(order_desc);
                                 orders_list_array_quantity.add(quantity);
                                 orders_list_array_item.add(itemname_orders);
                                 orders_list_array_amount.add(amount);
                                 orders_list_array_date.add(date);
                                 orders_list_array_item_address.add(add);
+                                orders_list_array_item_status.add(status);
                             }
 
                            // }

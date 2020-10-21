@@ -57,17 +57,25 @@ public class PendingNotificationAdapter extends RecyclerView.Adapter<PendingNoti
     ArrayList<String> pending_orders_list_array_amount = new ArrayList<>();
     ArrayList<String> pending_orders_list_array_satus = new ArrayList<>();
     ArrayList<Integer> pending_orders_list_array_orderid = new ArrayList<>();
+    ArrayList<String> offer_desc = new ArrayList<>();
+    ArrayList<String> payment_typeadapter_pending_adpater = new ArrayList<>();
+    ArrayList<String> count_typeadapter_pending_adapter = new ArrayList<>();
+    ArrayList<String> order_Date_pending_adapter = new ArrayList<>();
     //ArrayList pending_orders_list_array_item_offers = new ArrayList<>(Arrays.asList("ITEM1", "ITEM2", "ITEM3", "ITEM4", "ITEM5", "ITEM6", "ITEM7"));
     int quantity=1;
-    public PendingNotificationAdapter(Context context, ArrayList<String> pending_orders_list_array_address,ArrayList<String> pending_orders_list_array_item, ArrayList<String> pending_orders_list_array_satus, ArrayList<Integer> pending_orders_list_array_orderid,ArrayList<String> pending_orders_list_array_qnty,ArrayList<String> pending_orders_list_array_amnt,ArrayList<String> pending_orders_list_array_item_img) {
+    public PendingNotificationAdapter(Context context, ArrayList<String> pending_orders_list_array_address,ArrayList<String> pending_orders_list_array_item, ArrayList<String> pending_orders_list_array_satus, ArrayList<Integer> pending_orders_list_array_orderid,ArrayList<String> pending_orders_list_array_qnty,ArrayList<String> pending_orders_list_array_amnt,ArrayList<String> pending_orders_list_array_item_img,    ArrayList<String> payment_typeadapter_pending_adpater, ArrayList<String> count_typeadapter_pending_adapter,ArrayList<String> order_Date_pending_adapter,ArrayList<String> offer_desc) {
         this.context = context;
         this.pending_orders_list_array_address=pending_orders_list_array_address;
         this.pending_orders_list_array_item_image=pending_orders_list_array_item_img;
+        this.payment_typeadapter_pending_adpater=payment_typeadapter_pending_adpater;
+        this.count_typeadapter_pending_adapter=count_typeadapter_pending_adapter;
+        this.order_Date_pending_adapter=order_Date_pending_adapter;
                 this.pending_orders_list_array_item=pending_orders_list_array_item;
                         this.pending_orders_list_array_satus=pending_orders_list_array_satus;
                         this.pending_orders_list_array_orderid = pending_orders_list_array_orderid;
                         this.pending_orders_list_array_quantity=pending_orders_list_array_qnty;
                         this.pending_orders_list_array_amount=pending_orders_list_array_amnt;
+                        this.offer_desc=offer_desc;
         this.lts.addAll(pending_orders_list_array_item);
 
     }
@@ -88,20 +96,50 @@ public class PendingNotificationAdapter extends RecyclerView.Adapter<PendingNoti
         holder.name_pending.setText(name);
         String address = pending_orders_list_array_address.get(position);
         holder.address_pending.setText(address);
-        orderid_adapter = pending_orders_list_array_orderid.get(position);
-        String qty = "QUANTITY:"+pending_orders_list_array_quantity.get(position);
-        String pr = "PRICE:"+pending_orders_list_array_amount.get(position);
+
+        holder.ofr_description.setText(offer_desc.get(position));
+        String qty = pending_orders_list_array_quantity.get(position);
+        String price_val = pending_orders_list_array_amount.get(position);
+        String ccnntt = count_typeadapter_pending_adapter.get(position);
+        String[] separated = price_val .split(" ");
+        Log.e("cart","the value is "+separated[1] );
+        String val = separated[1];
+        int price_val_int = Integer.parseInt(val);
+        int ccnntt_int = Integer.parseInt(ccnntt);
+        int tot_price_val = price_val_int*ccnntt_int;
+        String int_tot_price_val = String.valueOf(tot_price_val);
+        String pr = "PRICE:"+ "RS "+int_tot_price_val;
         String imageurl=  pending_orders_list_array_item_image.get(position);
         Glide.with(context).load(imageurl)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(holder.pImage);
         holder.q_pending.setText(qty);
         holder.p_pending.setText(pr);
-
+        holder.pay_type_pending.setText(payment_typeadapter_pending_adpater.get(position));
+        String cntt ="COUNT: "+count_typeadapter_pending_adapter.get(position);
+        holder.cnt_pending.setText(cntt);
+        holder.dt_pending.setText(order_Date_pending_adapter.get(position));
+if(pending_orders_list_array_satus.get(position).equals("2"))
+{
+    holder.pd_pending.setText("RETURN REQUESTED");
+}
         holder.pd_pending.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                holder.pd_pending.setText("Approved");
+                String st =pending_orders_list_array_satus.get(position);
+                int intial_status_val = Integer.parseInt(st);
+                int changes_status_val=1;
+                if(intial_status_val==0)
+                {
+                    holder.pd_pending.setText("Approved");
+                    changes_status_val=1;
+                }
+                else if(intial_status_val==2)
+                {
+                    holder.pd_pending.setText("Return Approved");
+                    changes_status_val=3;
+                }
+Log.e("pending","changes_status_val="+changes_status_val);
                 holder.pd_pending.setTextColor(ContextCompat.getColor(context, white));
                 holder.pd_pending.setBackgroundColor(ContextCompat.getColor(context, green));
                // Toast.makeText(context,"Aproved",Toast.LENGTH_LONG).show();
@@ -123,7 +161,9 @@ public class PendingNotificationAdapter extends RecyclerView.Adapter<PendingNoti
                         .client(okHttpClient)
                         .build();
                 ResponseInterface1 mainInterface = retrofit.create(ResponseInterface1.class);
-                Call<ListCategoryResponse> call = mainInterface.changeOrderStatus(orderid_adapter,1);
+                orderid_adapter = pending_orders_list_array_orderid.get(position);
+                Log.e("pending","changes_status_val="+changes_status_val+orderid_adapter);
+                Call<ListCategoryResponse> call = mainInterface.changeOrderStatus(orderid_adapter,changes_status_val);
                 call.enqueue(new Callback<ListCategoryResponse>() {
                     @Override
                     public void onResponse(Call<ListCategoryResponse> call, retrofit2.Response<ListCategoryResponse> response) {
@@ -155,6 +195,7 @@ public class PendingNotificationAdapter extends RecyclerView.Adapter<PendingNoti
 
                     @Override
                     public void onFailure(Call<ListCategoryResponse> call, Throwable t) {
+
 dialog.dismiss();
                     }
                 });
@@ -172,7 +213,7 @@ dialog.dismiss();
         return pending_orders_list_array_item.size();
     }
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        TextView name_pending,address_pending,q_pending,p_pending;// init the item view's
+        TextView name_pending,address_pending,q_pending,p_pending,pay_type_pending,cnt_pending,dt_pending,ofr_description;// init the item view's
         Button pd_pending;
         ImageView pImage;
         public MyViewHolder(View itemView) {
@@ -183,6 +224,10 @@ dialog.dismiss();
             q_pending=(TextView)itemView.findViewById(R.id.Quantity_pending);
             p_pending=(TextView)itemView.findViewById(R.id.Price_pending);
             pImage=(ImageView)itemView.findViewById(R.id.img_pending);
+            pay_type_pending=itemView.findViewById(R.id.payment_pending);
+            cnt_pending=itemView.findViewById(R.id.count_pending);
+            dt_pending=itemView.findViewById(R.id.oder_date_pending);
+            ofr_description=itemView.findViewById(R.id.offer_desc);
             // get the reference of item view's
 
         }

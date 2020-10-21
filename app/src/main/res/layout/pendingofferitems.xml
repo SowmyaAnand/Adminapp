@@ -32,8 +32,21 @@
             android:textColor="@color/black"
             android:layout_toRightOf="@+id/img_pending"
             android:textSize="13sp"
-            android:fontFamily="@font/roboto_light"
+            android:fontFamily="@font/roboto_medium"
             android:text="MOBILE"/>
+        <TextView
+            android:layout_marginRight="30dp"
+            android:id="@+id/offer_desc"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:layout_below="@+id/Title_pending"
+            android:layout_toRightOf="@+id/img_pending"
+            android:textSize="13sp"
+            android:fontFamily="@font/roboto_medium"
+            android:text=""/>
         <TextView
             android:layout_marginRight="30dp"
             android:id="@+id/Quantity_pending"
@@ -43,13 +56,13 @@
             android:layout_height="wrap_content"
             android:textColor="@color/black"
             android:layout_toRightOf="@+id/img_pending"
-            android:layout_below="@+id/Title_pending"
+            android:layout_below="@+id/offer_desc"
             android:textSize="13sp"
             android:fontFamily="@font/roboto_light"
             android:text="MOBILE"/>
         <TextView
             android:layout_marginRight="30dp"
-            android:id="@+id/Price_pending"
+            android:id="@+id/count_pending"
             android:layout_marginTop="10dp"
             android:layout_marginLeft="10dp"
             android:layout_width="wrap_content"
@@ -59,10 +72,37 @@
             android:layout_toRightOf="@+id/img_pending"
             android:textSize="13sp"
             android:fontFamily="@font/roboto_light"
+            android:text="COUNT"/>
+        <TextView
+            android:layout_marginRight="30dp"
+            android:id="@+id/Price_pending"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:layout_below="@+id/count_pending"
+            android:layout_toRightOf="@+id/img_pending"
+            android:textSize="13sp"
+            android:fontFamily="@font/roboto_light"
+            android:text="MOBILE"/>
+
+        <TextView
+            android:layout_marginRight="30dp"
+            android:id="@+id/payment_pending"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:layout_below="@+id/Price_pending"
+            android:layout_toRightOf="@+id/img_pending"
+            android:textSize="13sp"
+            android:fontFamily="@font/roboto_light"
             android:text="MOBILE"/>
         <TextView
             android:id="@+id/address_pending"
-            android:layout_below="@+id/Price_pending"
+            android:layout_below="@+id/payment_pending"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
             android:textColor="@color/black"
@@ -86,6 +126,19 @@
 
 
         >
+        <TextView
+            android:layout_marginRight="30dp"
+            android:id="@+id/oder_date_pending"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:textAlignment="center"
+            android:gravity="center"
+            android:textColor="@color/colorPrimary"
+            android:textSize="13sp"
+            android:fontFamily="@font/roboto_light"
+            android:text="MOBILE"/>
             <Button
                 android:layout_marginTop="10dp"
                 android:id="@+id/pending_pending"

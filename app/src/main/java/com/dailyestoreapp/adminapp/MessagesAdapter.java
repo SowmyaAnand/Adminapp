@@ -45,7 +45,7 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.MyView
 
     @Override
     public void onBindViewHolder(final MessagesAdapter.MyViewHolder holder, final int position) {
-
+Log.e("message adapter","message adapter"+personNames+person_email+person_mob);
         // set the data in items
         if(personNames.size()>0)
         {

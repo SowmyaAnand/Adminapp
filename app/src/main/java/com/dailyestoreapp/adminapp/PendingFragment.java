@@ -36,9 +36,14 @@ ACProgressFlower dialog;
     ArrayList<String> pending_orders_list_array_item = new ArrayList<>();
     ArrayList<String> pending_orders_list_array_address = new ArrayList<>();
     ArrayList<String> pending_orders_list_array_satus = new ArrayList<>();
+    ArrayList<String> offer_desc = new ArrayList<>();
     ArrayList<String> orders_list_array_quantity_pending = new ArrayList<>();
     ArrayList<String> orders_list_array_amount_pending = new ArrayList<>();
     ArrayList<Integer> pending_orders_list_array_orderid = new ArrayList<>();
+
+    ArrayList<String> payment_typeadapter_pending = new ArrayList<>();
+    ArrayList<String> count_typeadapter_pending = new ArrayList<>();
+    ArrayList<String> order_Date_pending = new ArrayList<>();
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
@@ -50,7 +55,7 @@ ACProgressFlower dialog;
         recyclerView_offers.setLayoutManager(linearLayoutManager);
         //  call the constructor of CustomAdapter to send the reference and data to Adapter
 
-        customAdapter_offers_pending = new PendingNotificationAdapter(root.getContext(),pending_orders_list_array_address,pending_orders_list_array_item,pending_orders_list_array_satus,pending_orders_list_array_orderid,orders_list_array_quantity_pending,orders_list_array_amount_pending,item_image_pending);
+        customAdapter_offers_pending = new PendingNotificationAdapter(root.getContext(),pending_orders_list_array_address,pending_orders_list_array_item,pending_orders_list_array_satus,pending_orders_list_array_orderid,orders_list_array_quantity_pending,orders_list_array_amount_pending,item_image_pending,payment_typeadapter_pending,count_typeadapter_pending, order_Date_pending,offer_desc);
         recyclerView_offers.setAdapter(customAdapter_offers_pending);
         return root;
 
@@ -99,7 +104,7 @@ ACProgressFlower dialog;
                             String item_name = dt.getItemName();
                             String status = dt.getStatus();
                             int st = Integer.parseInt(status);
-                            if(st == 0)
+                            if(st == 0||st == 2)
                             {
 
 
@@ -111,6 +116,25 @@ ACProgressFlower dialog;
                                 String amount_pending = dt.getPrice();
                                 String imageurl = dt.getImage();
                                 String imageurl_total=url1+imageurl;
+                                String order_dt =  dt.getCreatedAt();
+                                String count =dt.getCount();
+                                String offer_descc = dt.getDescription();
+                                String pay_type =dt.getpaymentType();
+                                String pay_text="";
+                                if(pay_type.equals("0"))
+                                {
+
+                                    pay_text="CASH ON DELIVERY";
+                                }
+                                else
+                                    if(pay_type.equals("1"))
+                                    {
+                                        pay_text="PAID ON GPAY";
+                                    }
+                                    payment_typeadapter_pending.add(pay_text);
+                                count_typeadapter_pending.add(count);
+                                order_Date_pending.add(order_dt);
+                                offer_desc.add(offer_descc);
                                 pending_orders_list_array_satus.add(status);
                                 item_image_pending.add(imageurl_total);
                                 pending_orders_list_array_address.add(address);
