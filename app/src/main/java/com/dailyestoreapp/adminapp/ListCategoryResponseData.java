@@ -110,6 +110,9 @@ public class ListCategoryResponseData {
     @SerializedName("pinCode")
     @Expose
     private String pinCode;
+    @SerializedName("postCode")
+    @Expose
+    private String postCode;
     @SerializedName("dob")
     @Expose
     private String dob;
@@ -295,6 +298,13 @@ public class ListCategoryResponseData {
 
     public void setPinCode(String pinCode) {
         this.pinCode = pinCode;
+    }
+    public String getPostCode() {
+        return postCode;
+    }
+
+    public void setPostCode(String postCode) {
+        this.postCode = postCode;
     }
 
     public String getDob() {

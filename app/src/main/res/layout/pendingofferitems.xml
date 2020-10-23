@@ -113,7 +113,19 @@
             android:fontFamily="@font/roboto_light"
             android:text="Address"
             />
-
+        <TextView
+            android:id="@+id/pincode_pending"
+            android:layout_below="@+id/address_pending"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/img_pending"
+            android:textSize="13sp"
+            android:fontFamily="@font/roboto_light"
+            android:text="Address"
+            />
 
 
 
@@ -121,8 +133,9 @@
     <RelativeLayout
         android:id="@+id/priceadd"
         android:layout_width="match_parent"
+        android:layout_marginTop="20dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/address_pending"
+        android:layout_below="@+id/pincode_pending"
 
 
         >
@@ -138,7 +151,7 @@
             android:textColor="@color/colorPrimary"
             android:textSize="13sp"
             android:fontFamily="@font/roboto_light"
-            android:text="MOBILE"/>
+            android:text=""/>
             <Button
                 android:layout_marginTop="10dp"
                 android:id="@+id/pending_pending"

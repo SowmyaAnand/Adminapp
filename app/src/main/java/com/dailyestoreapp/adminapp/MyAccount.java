@@ -64,8 +64,9 @@ logout.setOnClickListener(new View.OnClickListener() {
                address="abc";
                pincode ="585225";
                dob="0000-00-00";
+               Log.e("admin","phno ="+phone);
                 userdetailsEdit("1",firstname,lastname,email,phone,address,pincode,dob);
-                logout.setText("EDIT");
+
 
 
             }
@@ -130,7 +131,7 @@ logout.setOnClickListener(new View.OnClickListener() {
                         mob_account.setText(mob_accountVal);
                         email_account.setText(email_accountVal);
                         logout =(Button)findViewById(R.id.logout_admin);
-
+                        logout.setText("EDIT");
 
                     }
                     else {

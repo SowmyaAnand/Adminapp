@@ -42,6 +42,7 @@ ACProgressFlower dialog;
     ArrayList<Integer> pending_orders_list_array_orderid = new ArrayList<>();
 
     ArrayList<String> payment_typeadapter_pending = new ArrayList<>();
+    ArrayList<String> payment_typeadapter_postcode = new ArrayList<>();
     ArrayList<String> count_typeadapter_pending = new ArrayList<>();
     ArrayList<String> order_Date_pending = new ArrayList<>();
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -55,7 +56,7 @@ ACProgressFlower dialog;
         recyclerView_offers.setLayoutManager(linearLayoutManager);
         //  call the constructor of CustomAdapter to send the reference and data to Adapter
 
-        customAdapter_offers_pending = new PendingNotificationAdapter(root.getContext(),pending_orders_list_array_address,pending_orders_list_array_item,pending_orders_list_array_satus,pending_orders_list_array_orderid,orders_list_array_quantity_pending,orders_list_array_amount_pending,item_image_pending,payment_typeadapter_pending,count_typeadapter_pending, order_Date_pending,offer_desc);
+        customAdapter_offers_pending = new PendingNotificationAdapter(root.getContext(),pending_orders_list_array_address,pending_orders_list_array_item,pending_orders_list_array_satus,pending_orders_list_array_orderid,orders_list_array_quantity_pending,orders_list_array_amount_pending,item_image_pending,payment_typeadapter_pending,count_typeadapter_pending, order_Date_pending,offer_desc,payment_typeadapter_postcode);
         recyclerView_offers.setAdapter(customAdapter_offers_pending);
         return root;
 
@@ -121,6 +122,7 @@ ACProgressFlower dialog;
                                 String offer_descc = dt.getDescription();
                                 String pay_type =dt.getpaymentType();
                                 String pay_text="";
+                                String ptcode= dt.getPostCode();
                                 if(pay_type.equals("0"))
                                 {
 
@@ -132,6 +134,7 @@ ACProgressFlower dialog;
                                         pay_text="PAID ON GPAY";
                                     }
                                     payment_typeadapter_pending.add(pay_text);
+                                    payment_typeadapter_postcode.add(ptcode);
                                 count_typeadapter_pending.add(count);
                                 order_Date_pending.add(order_dt);
                                 offer_desc.add(offer_descc);

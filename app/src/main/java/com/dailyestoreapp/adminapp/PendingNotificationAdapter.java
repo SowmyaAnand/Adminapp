@@ -51,6 +51,7 @@ public class PendingNotificationAdapter extends RecyclerView.Adapter<PendingNoti
   ACProgressFlower  dialog;
     ArrayList<String> lts=new ArrayList<String>();
     ArrayList<String> pending_orders_list_array_item_image = new ArrayList<>();
+    ArrayList<String> pending_orders_list_array_item_postcode = new ArrayList<>();
     ArrayList<String> pending_orders_list_array_item = new ArrayList<>();
     ArrayList<String> pending_orders_list_array_address = new ArrayList<>();
     ArrayList<String> pending_orders_list_array_quantity = new ArrayList<>();
@@ -63,7 +64,7 @@ public class PendingNotificationAdapter extends RecyclerView.Adapter<PendingNoti
     ArrayList<String> order_Date_pending_adapter = new ArrayList<>();
     //ArrayList pending_orders_list_array_item_offers = new ArrayList<>(Arrays.asList("ITEM1", "ITEM2", "ITEM3", "ITEM4", "ITEM5", "ITEM6", "ITEM7"));
     int quantity=1;
-    public PendingNotificationAdapter(Context context, ArrayList<String> pending_orders_list_array_address,ArrayList<String> pending_orders_list_array_item, ArrayList<String> pending_orders_list_array_satus, ArrayList<Integer> pending_orders_list_array_orderid,ArrayList<String> pending_orders_list_array_qnty,ArrayList<String> pending_orders_list_array_amnt,ArrayList<String> pending_orders_list_array_item_img,    ArrayList<String> payment_typeadapter_pending_adpater, ArrayList<String> count_typeadapter_pending_adapter,ArrayList<String> order_Date_pending_adapter,ArrayList<String> offer_desc) {
+    public PendingNotificationAdapter(Context context, ArrayList<String> pending_orders_list_array_address,ArrayList<String> pending_orders_list_array_item, ArrayList<String> pending_orders_list_array_satus, ArrayList<Integer> pending_orders_list_array_orderid,ArrayList<String> pending_orders_list_array_qnty,ArrayList<String> pending_orders_list_array_amnt,ArrayList<String> pending_orders_list_array_item_img,    ArrayList<String> payment_typeadapter_pending_adpater, ArrayList<String> count_typeadapter_pending_adapter,ArrayList<String> order_Date_pending_adapter,ArrayList<String> offer_desc,ArrayList<String> pending_orders_list_array_item_postcode) {
         this.context = context;
         this.pending_orders_list_array_address=pending_orders_list_array_address;
         this.pending_orders_list_array_item_image=pending_orders_list_array_item_img;
@@ -76,6 +77,7 @@ public class PendingNotificationAdapter extends RecyclerView.Adapter<PendingNoti
                         this.pending_orders_list_array_quantity=pending_orders_list_array_qnty;
                         this.pending_orders_list_array_amount=pending_orders_list_array_amnt;
                         this.offer_desc=offer_desc;
+                        this.pending_orders_list_array_item_postcode=pending_orders_list_array_item_postcode;
         this.lts.addAll(pending_orders_list_array_item);
 
     }
@@ -92,6 +94,7 @@ public class PendingNotificationAdapter extends RecyclerView.Adapter<PendingNoti
     public void onBindViewHolder(final PendingNotificationAdapter.MyViewHolder holder, final int position) {
 
         // set the data in items
+        String pin =  pending_orders_list_array_item_postcode.get(position);
         String name = pending_orders_list_array_item.get(position);
         holder.name_pending.setText(name);
         String address = pending_orders_list_array_address.get(position);
@@ -114,6 +117,8 @@ public class PendingNotificationAdapter extends RecyclerView.Adapter<PendingNoti
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(holder.pImage);
         holder.q_pending.setText(qty);
+        String pin_string = "PINCODE:"+pin;
+        holder.pincode.setText(pin_string);
         holder.p_pending.setText(pr);
         holder.pay_type_pending.setText(payment_typeadapter_pending_adpater.get(position));
         String cntt ="COUNT: "+count_typeadapter_pending_adapter.get(position);
@@ -214,6 +219,7 @@ dialog.dismiss();
     }
     public class MyViewHolder extends RecyclerView.ViewHolder {
         TextView name_pending,address_pending,q_pending,p_pending,pay_type_pending,cnt_pending,dt_pending,ofr_description;// init the item view's
+        TextView pincode;
         Button pd_pending;
         ImageView pImage;
         public MyViewHolder(View itemView) {
@@ -228,6 +234,7 @@ dialog.dismiss();
             cnt_pending=itemView.findViewById(R.id.count_pending);
             dt_pending=itemView.findViewById(R.id.oder_date_pending);
             ofr_description=itemView.findViewById(R.id.offer_desc);
+            pincode=itemView.findViewById(R.id.pincode_pending);
             // get the reference of item view's
 
         }
