@@ -48,9 +48,11 @@ public class PendingNotificationAdapter extends RecyclerView.Adapter<PendingNoti
     //ArrayList<String> pending_orders_list_array_item = new ArrayList<String>();
     Context context;
   Integer orderid_adapter;
-  ACProgressFlower  dialog;
+  Integer order_common=0;
+
     ArrayList<String> lts=new ArrayList<String>();
     ArrayList<String> pending_orders_list_array_item_image = new ArrayList<>();
+    ArrayList<String> common_order_no = new ArrayList<>();
     ArrayList<String> pending_orders_list_array_item_postcode = new ArrayList<>();
     ArrayList<String> pending_orders_list_array_item = new ArrayList<>();
     ArrayList<String> pending_orders_list_array_address = new ArrayList<>();
@@ -62,9 +64,10 @@ public class PendingNotificationAdapter extends RecyclerView.Adapter<PendingNoti
     ArrayList<String> payment_typeadapter_pending_adpater = new ArrayList<>();
     ArrayList<String> count_typeadapter_pending_adapter = new ArrayList<>();
     ArrayList<String> order_Date_pending_adapter = new ArrayList<>();
+    ArrayList<String> common_order_noo_adapter = new ArrayList<>();
     //ArrayList pending_orders_list_array_item_offers = new ArrayList<>(Arrays.asList("ITEM1", "ITEM2", "ITEM3", "ITEM4", "ITEM5", "ITEM6", "ITEM7"));
     int quantity=1;
-    public PendingNotificationAdapter(Context context, ArrayList<String> pending_orders_list_array_address,ArrayList<String> pending_orders_list_array_item, ArrayList<String> pending_orders_list_array_satus, ArrayList<Integer> pending_orders_list_array_orderid,ArrayList<String> pending_orders_list_array_qnty,ArrayList<String> pending_orders_list_array_amnt,ArrayList<String> pending_orders_list_array_item_img,    ArrayList<String> payment_typeadapter_pending_adpater, ArrayList<String> count_typeadapter_pending_adapter,ArrayList<String> order_Date_pending_adapter,ArrayList<String> offer_desc,ArrayList<String> pending_orders_list_array_item_postcode) {
+    public PendingNotificationAdapter(Context context, ArrayList<String> pending_orders_list_array_address,ArrayList<String> pending_orders_list_array_item, ArrayList<String> pending_orders_list_array_satus, ArrayList<Integer> pending_orders_list_array_orderid,ArrayList<String> pending_orders_list_array_qnty,ArrayList<String> pending_orders_list_array_amnt,ArrayList<String> pending_orders_list_array_item_img,    ArrayList<String> payment_typeadapter_pending_adpater, ArrayList<String> count_typeadapter_pending_adapter,ArrayList<String> order_Date_pending_adapter,ArrayList<String> offer_desc,ArrayList<String> pending_orders_list_array_item_postcode,ArrayList<String> common_order_noo_adapter) {
         this.context = context;
         this.pending_orders_list_array_address=pending_orders_list_array_address;
         this.pending_orders_list_array_item_image=pending_orders_list_array_item_img;
@@ -77,8 +80,10 @@ public class PendingNotificationAdapter extends RecyclerView.Adapter<PendingNoti
                         this.pending_orders_list_array_quantity=pending_orders_list_array_qnty;
                         this.pending_orders_list_array_amount=pending_orders_list_array_amnt;
                         this.offer_desc=offer_desc;
+                        this.common_order_noo_adapter=common_order_noo_adapter;
                         this.pending_orders_list_array_item_postcode=pending_orders_list_array_item_postcode;
         this.lts.addAll(pending_orders_list_array_item);
+         order_common=0;
 
     }
     @Override
@@ -99,7 +104,16 @@ public class PendingNotificationAdapter extends RecyclerView.Adapter<PendingNoti
         holder.name_pending.setText(name);
         String address = pending_orders_list_array_address.get(position);
         holder.address_pending.setText(address);
-
+        String co  = common_order_noo_adapter.get(position);
+//        if(co==0)
+//        {
+//           holder.ordernoo_vl.setText("");
+//        }
+//        else
+//        {
+//            String stringco = String.valueOf(co);
+//            holder.ordernoo_vl.setText(stringco);
+//        }
         holder.ofr_description.setText(offer_desc.get(position));
         String qty = pending_orders_list_array_quantity.get(position);
         String price_val = pending_orders_list_array_amount.get(position);
@@ -124,6 +138,18 @@ public class PendingNotificationAdapter extends RecyclerView.Adapter<PendingNoti
         String cntt ="COUNT: "+count_typeadapter_pending_adapter.get(position);
         holder.cnt_pending.setText(cntt);
         holder.dt_pending.setText(order_Date_pending_adapter.get(position));
+        String st =pending_orders_list_array_satus.get(position);
+        int intial_status_val = Integer.parseInt(st);
+        if(intial_status_val==1)
+        {
+            holder.pd_pending.setText("Approved");
+            holder.pd_pending.setBackgroundColor(ContextCompat.getColor(context, green));
+        }
+        else if(intial_status_val==3)
+        {
+            holder.pd_pending.setText("Return Approved");
+            holder.pd_pending.setBackgroundColor(ContextCompat.getColor(context, green));
+        }
 if(pending_orders_list_array_satus.get(position).equals("2"))
 {
     holder.pd_pending.setText("RETURN REQUESTED");
@@ -148,11 +174,11 @@ Log.e("pending","changes_status_val="+changes_status_val);
                 holder.pd_pending.setTextColor(ContextCompat.getColor(context, white));
                 holder.pd_pending.setBackgroundColor(ContextCompat.getColor(context, green));
                // Toast.makeText(context,"Aproved",Toast.LENGTH_LONG).show();
-                dialog = new ACProgressFlower.Builder(context)
-                        .direction(ACProgressConstant.DIRECT_CLOCKWISE)
-                        .borderPadding(1)
-                        .fadeColor(Color.WHITE).build();
-                dialog.show();
+//                dialog = new ACProgressFlower.Builder(context)
+//                        .direction(ACProgressConstant.DIRECT_CLOCKWISE)
+//                        .borderPadding(1)
+//                        .fadeColor(Color.WHITE).build();
+//                dialog.show();
                 String url = "http://dailyestoreapp.com/dailyestore/api/";
 
                 HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
@@ -194,14 +220,14 @@ Log.e("pending","changes_status_val="+changes_status_val);
 
 
 
-                        dialog.dismiss();
+                        //dialog.dismiss();
 
                     }
 
                     @Override
                     public void onFailure(Call<ListCategoryResponse> call, Throwable t) {
 
-dialog.dismiss();
+//dialog.dismiss();
                     }
                 });
 
@@ -222,6 +248,7 @@ dialog.dismiss();
         TextView pincode;
         Button pd_pending;
         ImageView pImage;
+        TextView ordernoo_vl;
         public MyViewHolder(View itemView) {
             super(itemView);
             name_pending = (TextView) itemView.findViewById(R.id.Title_pending);
@@ -235,6 +262,7 @@ dialog.dismiss();
             dt_pending=itemView.findViewById(R.id.oder_date_pending);
             ofr_description=itemView.findViewById(R.id.offer_desc);
             pincode=itemView.findViewById(R.id.pincode_pending);
+          //  ordernoo_vl=itemView.findViewById(R.id.order_common_no_text);
             // get the reference of item view's
 
         }
